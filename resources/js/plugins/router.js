@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import Welcome from '../views/Welcome.vue'
+// import Welcome from '../views/Welcome.vue'
 import Index from '../views/Index.vue'
 import About from '../views/About.vue'
 // import store from '../store'
@@ -8,15 +8,15 @@ import About from '../views/About.vue'
 Vue.use(VueRouter)
 
 const routes = [
+    // {
+    // path: '/',
+    // name: 'welcome',
+    // component: Welcome
+    // component: require('../views/Index.vue').default
+    // component: _ => import('../views/Index.vue')
+    // },
     {
         path: '/',
-        name: 'welcome',
-        component: Welcome
-        // component: require('../views/Index.vue').default
-        // component: _ => import('../views/Index.vue')
-    },
-    {
-        path: '/index',
         name: 'index',
         component: Index,
         // beforeEnter: (to, from, next) => {

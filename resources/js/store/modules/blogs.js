@@ -4,7 +4,7 @@ export default {
         blogs: [],
     },
     mutations: {
-        fetch_blogs(state, blogs) {
+        get_blogs(state, blogs) {
             return state.blogs = blogs
         }
     },
@@ -17,10 +17,10 @@ export default {
         //             console.log(err)
         //         })
         // },
-        fetchBlogs({ commit }) {
+        getBlogs({ commit }) {
             axios.get('/api/blogs')
                 .then(res => {
-                    commit('fetch_blogs', res.data)
+                    commit('get_blogs', res.data)
                 }).catch(err => {
                     console.log(err)
                 })
