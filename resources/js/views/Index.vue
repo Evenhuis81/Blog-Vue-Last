@@ -3,7 +3,7 @@
     <v-container>
       <!-- <v-card class="ma-3"> -->
       <v-row>
-        <!-- <v-col v-for="category in fiveRandomCategories()" :key="category.id"></v-col> -->
+        <v-col v-for="(category, index) in fiveRandomCategories" :key="index">{{ category }}</v-col>
       </v-row>
       <div class="d-flex flex-no-wrap justify-space-between">
         <v-avatar size="125" tile>
@@ -43,7 +43,7 @@ export default {
     // }
   },
   computed: {
-    ...mapGetters(["blogs", "categories"])
+    ...mapGetters(["blogs", "categories", "fiveRandomCategories"])
     // how to combine array and object in map?
     // fiveRandomCategories() {
     //
