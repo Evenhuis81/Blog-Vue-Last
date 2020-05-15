@@ -20,6 +20,7 @@ export default {
         getBlogs({ commit }) {
             axios.get('/api/blogs')
                 .then(res => {
+
                     commit('get_blogs', res.data)
                 }).catch(err => {
                     console.log(err)
@@ -47,6 +48,9 @@ export default {
         blogs: state => {
             return state.blogs
         },
+        // categories: state => {
+        //     return state.categories
+        // }
         // categories: state => {
         //     return state.categories
         // }

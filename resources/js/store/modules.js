@@ -1,11 +1,13 @@
 import blogs from "./modules/blogs.js"
-import auth from "./modules/auth.js"
-import routing from "./modules/routing.js"
+import categories from "./modules/categories.js"
+// import auth from "./modules/auth.js"
+// import routing from "./modules/routing.js"
 
 let modules = {
-    auth,
+    // auth,
     blogs,
-    routing
+    categories,
+    // routing
 }
 
 export default modules

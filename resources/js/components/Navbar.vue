@@ -61,9 +61,9 @@ import userNavigation from "./UserNavigation.vue";
 export default {
   components: { userNavigation },
   data: () => ({
-    loggedIn: false,
+    // loggedIn: false,
     spaTitle: SPA_TITLE,
-    drawer: false,
+    // drawer: false,
     menuItems: [{ name: "About Us", route: "/about" }]
   }),
   computed: {

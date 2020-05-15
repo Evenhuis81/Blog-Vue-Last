@@ -1,10 +1,18 @@
 <template>
   <div>
-    <v-card>
+    <v-container>
+      <!-- <v-card class="ma-3"> -->
+      <v-row>
+        <!-- <v-col v-for="category in fiveRandomCategories()" :key="category.id"></v-col> -->
+      </v-row>
       <div class="d-flex flex-no-wrap justify-space-between">
-        <v-img src="https://picsum.photos/200" max-height="200" contain></v-img>
+        <v-avatar size="125" tile>
+          <v-img src="https://picsum.photos/200"></v-img>
+        </v-avatar>
+        <v-card-title></v-card-title>
       </div>
-    </v-card>
+      <!-- </v-card> -->
+    </v-container>
   </div>
 </template>
 
@@ -35,14 +43,18 @@ export default {
     // }
   },
   computed: {
-    ...mapGetters({ blogs: "blogs" })
+    ...mapGetters(["blogs", "categories"])
     // how to combine array and object in map?
+    // fiveRandomCategories() {
+    //
+    // }
   },
   mounted() {
     // this.getBlogs();
     // this.$store.dispatch("fetchCategories");
     // setTimeout(() => {
     this.$store.dispatch("getBlogs");
+    this.$store.dispatch("getCategories");
     // }, 1000);
   }
 };
