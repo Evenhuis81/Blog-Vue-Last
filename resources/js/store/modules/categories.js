@@ -33,10 +33,10 @@ export default {
             //     let catCopy = [...state.categories];
             //     console.log(catCopy);
             for (let i = 0; i < 5; i++) {
-                console.log(copyArr);
+                // console.log(copyArr);
                 let j = Math.floor((Math.random() * (state.categories.length - i)));
                 newArr.push(copyArr[j]);
-                copyArr[j] = copyArr[state.categories.length - i]
+                copyArr[j] = copyArr[state.categories.length - i - 1]
             }
             return newArr;
         }

@@ -1,18 +1,23 @@
 <template>
+  <!-- Mount point Vuetify Components -->
   <v-app>
-    <Navbar />
+    <!-- Application Markup -->
+    <layout />
+    <!-- Main Content Area -->
     <v-content>
-      <!-- <loading-dialog /> -->
+      <!-- On Screen Popups, etc. -->
+      <!-- <dialogs-snackbars /> -->
+      <!-- Routes -->
       <router-view></router-view>
     </v-content>
   </v-app>
 </template>
 
 <script>
-import Navbar from "./components/Navbar";
-// import LoadingDialog from "./components/LoadingDialog";
+import Layout from "./components/markup/Layout";
+// import DialogsSnackbars from "./components/DialogsSnackbars";
 
 export default {
-  components: { Navbar }
+  components: { Layout }
 };
 </script>

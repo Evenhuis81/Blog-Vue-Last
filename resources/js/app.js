@@ -1,23 +1,23 @@
-// localStorage.setItem('token', 'blabla')
+window.axios = require('axios');
+window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 
-require('./plugins/bootstrap');
-// require('./plugins/interceptors');
-// require("./store/subscriber");
-
-import Vue from 'vue'
-Vue.config.productionTip = false
-import App from "./App.vue"
-import vuetify from "./plugins/vuetify.js"
-import router from './plugins/router.js'
-import store from './store'
+import Vue from "vue";
+Vue.config.productionTip = false;
+import App from "./App.vue";
+import vuetify from "./plugins/vuetify.js";
+import router from './plugins/router.js';
+import store from './store';
 import Vuex from "vuex";
-
 Vue.use(Vuex);
+
+// Vue.prototype.$moment = moment;
 
 new Vue({
     store,
     router,
     vuetify,
-    el: '#root',
-    components: { App }
-});
+    // created() {
+    //     console.log(store.getters['auth/userVerified'])
+    // },
+    render: h => h(App)
+}).$mount('#root');
