@@ -1,97 +1,69 @@
 <template>
   <div>
     <v-container v-if="blogs.length">
-      <!-- <v-card class="ma-3"> -->
-      <!-- <v-row>
-        <v-col v-for="(category, index) in fiveRandomCategories" :key="index">{{ category }}</v-col>
-      </v-row>-->
-      <v-row justify="center" v-for="rowNr in 2" :key="rowNr">
-        <v-col cols="4" v-for="columnNr in 2" :key="columnNr">
+      <v-pagination v-model="page" :length="Math.ceil(blogs.length/perPage)"></v-pagination>
+      <v-row justify="center" v-for="rowNr in Math.ceil((visibleBlogs.length/2))" :key="rowNr">
+        <v-col cols="5" v-for="colNr in 2" :key="colNr">
           <v-card
             outlined
-            :to="{ name: 'blog', params: { id: visibleBlogs[(rowNr - 1) * 2 + (columnNr - 1)].id}}"
+            :to="{ name: 'blog', params: { id: currentBlog(rowNr, colNr).id}}"
+            class="blue lighten-5"
           >
             <v-list-item three-line>
               <v-list-item-content>
-                <div
-                  class="overline mb-4"
-                >{{ visibleBlogs[(rowNr - 1) * 2 + (columnNr - 1)].title }}</div>
-                <!-- <div v-text="n-1"></div>
-                <div v-text="o-1"></div>-->
-                <v-list-item-title class="headline mb-1">Headline 5</v-list-item-title>
-                <v-list-item-subtitle>Greyhound divisely hello coldly fonwderfully</v-list-item-subtitle>
+                <v-row>
+                  <v-col cols="6" class="py-0">
+                    <div class="overline mb-4">by {{ currentBlog(rowNr, colNr).owner.name }}</div>
+                  </v-col>
+                  <v-col cols="6" class="py-0">
+                    <div
+                      class="overline mb-4 text-right"
+                    >{{ blogCreatedFromNow(currentBlog(rowNr, colNr).created_at) }}</div>
+                  </v-col>
+                </v-row>
+                <v-list-item-title class="headline mb-1">{{ currentBlog(rowNr, colNr).title }}</v-list-item-title>
+                <v-list-item-subtitle>{{ currentBlog(rowNr, colNr).description }}</v-list-item-subtitle>
               </v-list-item-content>
             </v-list-item>
           </v-card>
         </v-col>
       </v-row>
-      <!-- <div class="d-flex flex-no-wrap justify-space-between">
-        <v-avatar size="125" tile>
-          <v-img src="https://picsum.photos/200"></v-img>
-        </v-avatar>
-        <v-card-title></v-card-title>
-      </div>-->
-
-      <!-- </v-card> -->
-      <!-- <div v-for="(blog, index) in visiblePages" :key="index">{{ blog.id }}</div> -->
-
-      <v-pagination v-model="page" :length="Math.ceil(blogs.length/perPage)"></v-pagination>
     </v-container>
   </div>
 </template>
 
     <script>
 import { mapGetters } from "vuex";
-// import { mapMutations } from "vuex";
-// import * as moment from "moment";
 
 export default {
   data() {
     return {
       page: 1,
-      perPage: 4
-      // pages: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13]
-      //     timeout: 2000
-      // blogs: null,
-      // pagination: {
-      //   current: 1,
-      //   total: 0
-      // }
+      perPage: 8
     };
   },
-  // name: "Blogs",
-  methods: {
-    bloggy(n, o) {
-      return (n - 1) * 2 + (o - 1);
-    }
-    // ...mapMutations({ closeSnackbar: "auth/closeSnackbar" }),
-    // blogCreatedFromNow(date) {
-    //   return moment(date).fromNow();
-    // }
-    // deleteBlog(blog) {
-    //   this.$store.dispatch("deleteBlog", blog);
-    // }
-  },
   computed: {
-    ...mapGetters(["blogs", "categories", "fiveRandomCategories"]),
+    ...mapGetters(["blogs", "categories"]),
     visibleBlogs() {
+      if (this.page * this.perPage > this.blogs.length) {
+        return this.blogs.slice(
+          (this.page - 1) * this.perPage,
+          this.blogs.length
+        );
+      }
       return this.blogs.slice(
         (this.page - 1) * this.perPage,
         this.page * this.perPage
       );
     }
-    // how to combine array and object in map?
-    // fiveRandomCategories() {
-    //
-    // }
   },
-  mounted() {
-    // this.getBlogs();
-    // this.$store.dispatch("fetchCategories");
-    // setTimeout(() => {
-    this.$store.dispatch("getBlogs");
-    this.$store.dispatch("getCategories");
-    // }, 1000);
+  methods: {
+    blogCreatedFromNow(date) {
+      return this.$moment(date).fromNow();
+    },
+    currentBlog(row, col) {
+      return this.visibleBlogs[(row - 1) * 2 + (col - 1)];
+    }
   }
 };
 </script>

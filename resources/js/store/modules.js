@@ -1,11 +1,11 @@
-// import auth from "./modules/auth.js"
+import auth from "./modules/auth.js"
 import blogs from "./modules/blogs.js"
 import categories from "./modules/categories.js"
 // import routing from "./modules/routing.js"
 import layoutelements from "./modules/layoutelements.js"
 
 let modules = {
-    // auth,
+    auth,
     blogs,
     categories,
     // routing,

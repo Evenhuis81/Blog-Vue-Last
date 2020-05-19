@@ -1,25 +1,11 @@
 export default {
     namespaced: true,
     state: {
-        loginDialog: false,
-        loadingDialog: false,
-        // signedInDialog: false,
-        // loggedInSnackbar: false,
-        loginLoading: false,
-        registerLoading: false,
         token: localStorage.getItem('token'),
-        user: null
+        user: null,
+        loginLoading: false
     },
     mutations: {
-        // open_signedin_dialog(state) {
-        //     state.signedInDialog = true
-        // },
-        // openSnackbar(state) {
-        //     state.loggedInSnackbar = true
-        // },
-        // closeSnackbar(state) {
-        //     state.loggedInSnackbar = false
-        // },
         set_token(state, token) {
             localStorage.setItem('token', token);
             state.token = token;
@@ -31,12 +17,12 @@ export default {
             localStorage.removeItem('token');
             state.token = data;
         },
-        set_login_dialog(state) {
-            state.loginDialog = !state.loginDialog;
-        },
-        set_loading_dialog(state) {
-            state.loadingDialog = !state.loadingDialog;
-        }
+        // set_login_dialog(state) {
+        //     state.loginDialog = !state.loginDialog;
+        // },
+        // set_loading_dialog(state) {
+        //     state.loadingDialog = !state.loadingDialog;
+        // }
         // set_log_load(state) {
         //     state.loginLoading = true;
         // },
@@ -49,12 +35,12 @@ export default {
 
     },
     actions: {
-        setLoadingDialog({ commit }) {
-            commit('set_loading_dialog');
-        },
-        setLoginDialog({ commit }) {
-            commit('set_login_dialog');
-        },
+        // setLoadingDialog({ commit }) {
+        //     commit('set_loading_dialog');
+        // },
+        // setLoginDialog({ commit }) {
+        //     commit('set_login_dialog');
+        // },
         // setFakeUser({ commit }) {
         //     commit('set_fake_user')
         // },
@@ -126,12 +112,6 @@ export default {
         //     })
     },
     getters: {
-        loginDialog(state) {
-            return state.loginDialog;
-        },
-        loadingDialog(state) {
-            return state.loadingDialog;
-        },
         unverifiedToken(state) {
             return (state.token && !state.user) ? state.token : false;
         },
@@ -147,14 +127,14 @@ export default {
             // else return 'in'
             return state.token && state.user;
         },
-        user(state) {
-            return state.user;
-        },
+        // user(state) {
+        //     return state.user;
+        // },
         loginLoading: state => {
             return state.loginLoading;
         },
-        registerLoading: state => {
-            return state.registerLoading;
-        }
+        // registerLoading: state => {
+        //     return state.registerLoading;
+        // }
     }
 }

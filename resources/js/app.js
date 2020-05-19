@@ -8,16 +8,20 @@ import vuetify from "./plugins/vuetify.js";
 import router from './plugins/router.js';
 import store from './store';
 import Vuex from "vuex";
+import * as moment from 'moment';
+
 Vue.use(Vuex);
 
-// Vue.prototype.$moment = moment;
+Vue.prototype.$moment = moment;
 
 new Vue({
     store,
     router,
     vuetify,
-    // created() {
-    //     console.log(store.getters['auth/userVerified'])
-    // },
-    render: h => h(App)
+    created() {
+        this.$store.dispatch("getBlogs");
+        this.$store.dispatch("getCategories");
+        // console.log(store.getters['auth/userVerified'])
+    },
+    render: h => h(App),
 }).$mount('#root');

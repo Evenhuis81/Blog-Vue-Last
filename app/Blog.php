@@ -11,7 +11,7 @@ class Blog extends Model
     ];
 
     // 2 times a One to Many relation (inverse)
-    public function author()
+    public function owner()
     {
         return $this->belongsTo('App\User');
     }

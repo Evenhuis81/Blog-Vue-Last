@@ -1,11 +1,27 @@
 <template>
   <div>
-    <!-- <div v-if="unverifiedToken">
+    <div v-if="unverifiedToken">
       <v-btn icon>
         <v-icon>mdi-account-remove</v-icon>
       </v-btn>
     </div>
-    <v-dialog :value="loginDialog" persistent max-width="600px" v-else-if="!authenticated">
+    <v-btn icon @click="$router.push('login')" v-else-if="!authenticated">
+      <v-icon>mdi-login-variant</v-icon>
+    </v-btn>
+    <v-menu offset-y v-else-if="authenticated">
+      <template v-slot:activator="{ on }">
+        <v-btn icon v-on="on">
+          <v-icon>mdi-account</v-icon>
+        </v-btn>
+      </template>
+
+      <v-list>
+        <v-list-item @click="logOut">
+          <v-list-item-title>Logout</v-list-item-title>
+        </v-list-item>
+      </v-list>
+    </v-menu>
+    <!-- <v-dialog :value="loginDialog" persistent max-width="600px" v-else-if="!authenticated">
       <template v-slot:activator="{ on }">
         <v-btn icon v-on="on" @click="setLoginDialog">
           <v-icon>mdi-login-variant</v-icon>
@@ -45,8 +61,8 @@
 <script>
 // import registerForm from "./RegisterForm.vue";
 // import loginForm from "./LoginForm.vue";
-// import { mapGetters } from "vuex";
-// import { mapActions } from "vuex";
+import { mapGetters } from "vuex";
+import { mapActions } from "vuex";
 
 export default {
   //   components: { registerForm, loginForm },
@@ -56,22 +72,22 @@ export default {
     };
   },
   computed: {
-    // ...mapGetters({
-    //   loginDialog: "auth/loginDialog",
-    //   loginLoading: "auth/loginLoading",
-    //   registerLoading: "auth/registerLoading",
-    //   authenticated: "auth/authenticated",
-    //   unverifiedToken: "auth/unverifiedToken"
-    // })
+    ...mapGetters({
+      //   loginDialog: "auth/loginDialog",
+      //   loginLoading: "auth/loginLoading",
+      //   registerLoading: "auth/registerLoading",
+      authenticated: "auth/authenticated",
+      unverifiedToken: "auth/unverifiedToken"
+    })
   },
   methods: {
-    // ...mapActions({
-    //   setLoadingDialog: "auth/setLoadingDialog",
-    //   setLoginDialog: "auth/setLoginDialog",
-    //   logOutAction: "auth/logOut",
-    //   verifyToken: "auth/verifyToken",
-    //   toDashboard: "routing/dashboard"
-    // }),
+    ...mapActions({
+      //   setLoadingDialog: "auth/setLoadingDialog",
+      //   setLoginDialog: "auth/setLoginDialog",
+      logOut: "auth/logOut"
+      //   verifyToken: "auth/verifyToken",
+      //   toDashboard: "routing/dashboard"
+    })
     // logOut() {
     //   // this.setLoadingDialog();
     //   // setTimeout(() => {

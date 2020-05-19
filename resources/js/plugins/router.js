@@ -1,6 +1,8 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Index from '../views/Index.vue'
+import Login from '../views/Login.vue'
+import Register from '../views/Register.vue'
 import Show from '../views/Show.vue'
 import About from '../views/About.vue'
 // import store from '../store'
@@ -33,6 +35,10 @@ const routes = [
         //     next()
         // }
         // },
+    },
+    {
+        path: '/login',
+        component: Login
     },
     {
         path: '/blog/:id',
