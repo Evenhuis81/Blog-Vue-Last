@@ -3,7 +3,13 @@
     <v-form ref="form" v-model="valid" @submit.prevent="submitLoginForm">
       <v-row justify="center">
         <v-col cols="6">
-          <v-text-field v-model="form.email" :rules="rules.email" label="E-mail" required></v-text-field>
+          <v-text-field
+            ref="email"
+            v-model="form.email"
+            :rules="rules.email"
+            label="E-mail"
+            required
+          ></v-text-field>
         </v-col>
       </v-row>
       <v-row justify="center">
@@ -77,13 +83,23 @@ export default {
     //   this.$emit("close");
     // },
     ...mapActions({
-      login: "auth/login"
-      //   setLoginLoading: "auth/setLoginLoading",
+      login: "auth/login",
+      setLoginLoading: "auth/setLoginLoading"
       //   signedInDialog: "auth/openSignedInDialog"
     }),
     submitLoginForm() {
       if (this.$refs.form.validate()) {
-        this.login(this.form);
+        this.setLoginLoading();
+        this.login(this.form)
+          .then(res => {
+            this.$router.go(-1);
+            // this.$router.back;
+          })
+          .catch(err => console.log(err))
+          .finally(() => {
+            // console.log("finally");
+            this.setLoginLoading();
+          });
       } else {
         this.errors.loginForm =
           "Something went wrong with validation, contact support!!";
@@ -95,7 +111,11 @@ export default {
       this.form.email = "";
       this.form.password = "";
       this.$refs.form.resetValidation();
+      this.$refs.email.focus();
     }
+  },
+  mounted() {
+    this.$refs.email.focus();
   }
 };
 </script>

@@ -5,7 +5,7 @@
         <v-icon>mdi-account-remove</v-icon>
       </v-btn>
     </div>
-    <v-btn icon @click="$router.push('login')" v-else-if="!authenticated">
+    <v-btn icon @click="$router.push('login', () => {})" v-else-if="!authenticated">
       <v-icon>mdi-login-variant</v-icon>
     </v-btn>
     <v-menu offset-y v-else-if="authenticated">
@@ -85,7 +85,7 @@ export default {
       //   setLoadingDialog: "auth/setLoadingDialog",
       //   setLoginDialog: "auth/setLoginDialog",
       logOut: "auth/logOut"
-      //   verifyToken: "auth/verifyToken",
+      // verifyToken: "auth/verifyToken"
       //   toDashboard: "routing/dashboard"
     })
     // logOut() {

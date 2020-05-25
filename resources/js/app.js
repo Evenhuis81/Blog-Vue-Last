@@ -21,7 +21,10 @@ new Vue({
     created() {
         this.$store.dispatch("getBlogs");
         this.$store.dispatch("getCategories");
-        // console.log(store.getters['auth/userVerified'])
+        let token = localStorage.getItem('token')
+        if (token) {
+            store.dispatch('auth/verifyToken', token);
+        }
     },
     render: h => h(App),
 }).$mount('#root');

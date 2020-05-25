@@ -23,9 +23,9 @@ export default {
         // set_loading_dialog(state) {
         //     state.loadingDialog = !state.loadingDialog;
         // }
-        // set_log_load(state) {
-        //     state.loginLoading = true;
-        // },
+        set_log_load(state) {
+            state.loginLoading = !state.loginLoading;
+        },
         // deset_log_load(state) {
         //     state.loginLoading = false;
         // },
@@ -50,37 +50,43 @@ export default {
         // openSignedInDialog({ commit }) {
         //     commit("open_signedin_dialog");
         // },
-        // setLoginLoading({ commit }) {
-        //     commit('set_log_load');
-        // },
-        login({ dispatch }, credentials) {
-            axios.post("api/auth/login", credentials).then(response => dispatch('verifyToken', response.data.access_token))
+        setLoginLoading({ commit }) {
+            commit('set_log_load');
+        },
+        login({ commit, dispatch }, credentials) {
+            return new Promise((res, rej) => {
+                return axios.post("api/auth/login", credentials)
+                    .then(response => {
+                        commit('set_token', response.data.access_token);
+                        dispatch('verifyToken', response.data.access_token);
+                        res(response.data.access_token);
+                    }).catch(error => {
+                        rej(error);
+                    });
+            })
         },
         verifyToken({ commit }, token) {
-            commit('set_token', token);
-
             axios({
                 url: 'api/auth/me', method: 'POST', headers: { 'Authorization': 'Bearer ' + token }
             }).then(response => {
                 commit('set_user', response.data)
             }).catch(e => {
-                console.log(e)
+                // console.log(e)
                 commit('remove_token')
                 commit('set_user', null)
             })
+            // console.log(token);
         },
-        logOut({ commit }) {
-            // axios({ url: '/api/auth/logout', method: 'POST' })
-            //     .then(() => {
-            //         commit('remove_token', null)
-            //         commit('set_user', null)
-            //             .catch(e => {
-            //                 console.log(e);
-            //             })
-            //     });
-            return axios.post('api/auth/logout').then(() => {
-                console.log('ye');
-            })
+        logOut({ commit, state }) {
+            axios({
+                url: '/api/auth/logout', method: 'POST', headers: { 'Authorization': 'Bearer ' + state.token }
+            }).then(() => {
+                commit('remove_token', null)
+                commit('set_user', null)
+            }).catch(e => console.log(e))
+            // return axios.post('api/auth/logout').then(() => {
+            //     console.log('ye');
+            // })
         }
         // if (!state.token) {
         //     commit('set_initialToken')
