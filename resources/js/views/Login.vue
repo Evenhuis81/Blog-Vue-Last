@@ -2,7 +2,7 @@
   <v-container>
     <v-form ref="form" v-model="valid" @submit.prevent="submitLoginForm">
       <v-row justify="center">
-        <v-col cols="6">
+        <v-col cols="6" class="white">
           <v-text-field
             ref="email"
             v-model="form.email"
@@ -13,7 +13,7 @@
         </v-col>
       </v-row>
       <v-row justify="center">
-        <v-col cols="5">
+        <v-col cols="5" class="white">
           <v-text-field
             v-model="form.password"
             :append-icon="showPassword ? 'mdi-eye' : 'mdi-eye-off'"
@@ -29,7 +29,7 @@
       </v-row>
       <span class="red--text">{{ errors.loginForm }}</span>
       <v-row justify="center">
-        <v-col cols="4">
+        <v-col cols="4" class="white">
           <v-card-actions>
             <v-btn
               text
@@ -45,6 +45,12 @@
         </v-col>
       </v-row>
     </v-form>
+    <v-row justify="center" class="mt-12">
+      <v-col cols="3" class="white d-flex">
+        <span>No account yet?</span>
+        <v-btn class="ml-auto" outlined text>Register</v-btn>
+      </v-col>
+    </v-row>
   </v-container>
 </template>
 
@@ -84,7 +90,9 @@ export default {
     // },
     ...mapActions({
       login: "auth/login",
-      setLoginLoading: "auth/setLoginLoading"
+      setLoginLoading: "auth/setLoginLoading",
+      setSnackbar: "snackbar/setSnackbar",
+      setSnackbarText: "snackbar/setSnackbarText"
       //   signedInDialog: "auth/openSignedInDialog"
     }),
     submitLoginForm() {
@@ -93,11 +101,11 @@ export default {
         this.login(this.form)
           .then(res => {
             this.$router.go(-1);
-            // this.$router.back;
+            this.setSnackbarText("You are now logged in");
+            this.setSnackbar();
           })
           .catch(err => console.log(err))
           .finally(() => {
-            // console.log("finally");
             this.setLoginLoading();
           });
       } else {

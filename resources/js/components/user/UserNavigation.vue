@@ -16,7 +16,7 @@
       </template>
 
       <v-list>
-        <v-list-item @click="logOut">
+        <v-list-item @click="loggingOut">
           <v-list-item-title>Logout</v-list-item-title>
         </v-list-item>
       </v-list>
@@ -84,25 +84,24 @@ export default {
     ...mapActions({
       //   setLoadingDialog: "auth/setLoadingDialog",
       //   setLoginDialog: "auth/setLoginDialog",
-      logOut: "auth/logOut"
+      logOut: "auth/logOut",
+      setSnackbar: "snackbar/setSnackbar",
+      setSnackbarText: "snackbar/setSnackbarText"
       // verifyToken: "auth/verifyToken"
       //   toDashboard: "routing/dashboard"
-    })
-    // logOut() {
-    //   // this.setLoadingDialog();
-    //   // setTimeout(() => {
-    //   this.logOutAction()
-    //     .then(() => {
-    //       // this.setLoadingDialog();
-    //       if (this.$route.path !== "/") {
-    //         this.$router.push({ path: "/" });
-    //       }
-    //     })
-    //     .catch(e => {
-    //       console.log(e);
-    //     });
-    //   // }, 2000);
-    // },
+    }),
+    loggingOut() {
+      this.logOut()
+        .then(res => {
+          // this.$router.push("/", () => {});
+          this.setSnackbarText("You are now logged out");
+          this.setSnackbar();
+        })
+        .catch(err => console.log(err))
+        .finally(() => {
+          //
+        });
+    }
     // clearLoginForm() {
     //   this.tab === 1 ? "" : this.$refs.loginForm.resetLoginForm();
     // },

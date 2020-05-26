@@ -5,7 +5,7 @@ import Vue from "vue";
 Vue.config.productionTip = false;
 import App from "./App.vue";
 import vuetify from "./plugins/vuetify.js";
-import router from './plugins/router.js';
+import router from './router';
 import store from './store';
 import Vuex from "vuex";
 import * as moment from 'moment';

@@ -4,9 +4,9 @@
     <!-- Application Markup -->
     <layout />
     <!-- Main Content Area -->
-    <v-content>
+    <v-content class="grey lighten-5">
       <!-- On Screen Popups, etc. -->
-      <!-- <dialogs-snackbars /> -->
+      <dialogs-snackbars />
       <!-- Routes -->
       <router-view></router-view>
     </v-content>
@@ -15,9 +15,9 @@
 
 <script>
 import Layout from "./components/markup/Layout";
-// import DialogsSnackbars from "./components/DialogsSnackbars";
+import DialogsSnackbars from "./components/DialogsSnackbars";
 
 export default {
-  components: { Layout }
+  components: { Layout, DialogsSnackbars }
 };
 </script>
