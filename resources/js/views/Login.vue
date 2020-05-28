@@ -1,54 +1,58 @@
 <template>
   <v-container>
-    <v-form ref="form" v-model="valid" @submit.prevent="submitLoginForm">
-      <v-row justify="center">
-        <v-col cols="6" class="white">
-          <v-text-field
-            ref="email"
-            v-model="form.email"
-            :rules="rules.email"
-            label="E-mail"
-            required
-          ></v-text-field>
-        </v-col>
-      </v-row>
-      <v-row justify="center">
-        <v-col cols="5" class="white">
-          <v-text-field
-            v-model="form.password"
-            :append-icon="showPassword ? 'mdi-eye' : 'mdi-eye-off'"
-            :rules="[rules.password.required, rules.password.min]"
-            :type="showPassword ? 'text' : 'password'"
-            label="Password"
-            :hint="form.password.length >= 5 ? '' : 'At least 5 characters'"
-            counter
-            @click:append="showPassword = !showPassword"
-            required
-          ></v-text-field>
-        </v-col>
-      </v-row>
-      <span class="red--text">{{ errors.loginForm }}</span>
-      <v-row justify="center">
-        <v-col cols="4" class="white">
-          <v-card-actions>
-            <v-btn
-              text
-              outlined
-              :loading="loginLoading"
-              :disabled="!valid"
-              color="primary"
-              type="submit"
-            >Login</v-btn>
-            <v-spacer></v-spacer>
-            <v-btn :disabled="loginLoading" text @click="resetLoginForm">CLEAR INPUT</v-btn>
-          </v-card-actions>
-        </v-col>
-      </v-row>
-    </v-form>
-    <v-row justify="center" class="mt-12">
-      <v-col cols="3" class="white d-flex">
-        <span>No account yet?</span>
-        <v-btn class="ml-auto" outlined text>Register</v-btn>
+    <v-row>
+      <v-col class="white" cols="8" offset="2">
+        <v-form ref="form" v-model="valid" @submit.prevent="submitLoginForm">
+          <v-row justify="center">
+            <v-col cols="6">
+              <v-text-field
+                ref="email"
+                v-model="form.email"
+                :rules="rules.email"
+                label="E-mail"
+                required
+              ></v-text-field>
+            </v-col>
+          </v-row>
+          <v-row justify="center">
+            <v-col cols="5">
+              <v-text-field
+                v-model="form.password"
+                :append-icon="showPassword ? 'mdi-eye' : 'mdi-eye-off'"
+                :rules="[rules.password.required, rules.password.min]"
+                :type="showPassword ? 'text' : 'password'"
+                label="Password"
+                :hint="form.password.length >= 5 ? '' : 'At least 5 characters'"
+                counter
+                @click:append="showPassword = !showPassword"
+                required
+              ></v-text-field>
+            </v-col>
+          </v-row>
+          <span class="red--text">{{ errors.loginForm }}</span>
+          <v-row justify="center">
+            <v-col cols="4">
+              <v-card-actions>
+                <v-btn
+                  text
+                  outlined
+                  :loading="loginLoading"
+                  :disabled="!valid"
+                  color="primary"
+                  type="submit"
+                >Login</v-btn>
+                <v-spacer></v-spacer>
+                <v-btn :disabled="loginLoading" text @click="resetLoginForm">CLEAR INPUT</v-btn>
+              </v-card-actions>
+            </v-col>
+          </v-row>
+        </v-form>
+        <v-row justify="center" class="mt-12">
+          <v-col cols="3" class="d-flex">
+            <span>No account yet?</span>
+            <v-btn to="/register" class="ml-auto" outlined text>Register</v-btn>
+          </v-col>
+        </v-row>
       </v-col>
     </v-row>
   </v-container>
@@ -84,16 +88,21 @@ export default {
     ...mapGetters({ loginLoading: "auth/loginLoading" })
   },
   methods: {
-    // closeDialog() {
-    //   this.resetLoginForm();
-    //   this.$emit("close");
-    // },
-    ...mapActions({
-      login: "auth/login",
-      setLoginLoading: "auth/setLoginLoading",
-      setSnackbar: "snackbar/setSnackbar",
-      setSnackbarText: "snackbar/setSnackbarText"
-      //   signedInDialog: "auth/openSignedInDialog"
+    ...mapActions(
+      "auth",
+      {
+        login: "login",
+        setLoginLoading: "setLoginLoading"
+      }
+      // "snackbar",
+      // {
+      //   setSnackbar: "setSnackbar",
+      //   setSnackbarText: "setSnackbarText"
+      // }
+    ),
+    ...mapActions("snackbar", {
+      setSnackbar: "setSnackbar",
+      setSnackbarText: "setSnackbarText"
     }),
     submitLoginForm() {
       if (this.$refs.form.validate()) {

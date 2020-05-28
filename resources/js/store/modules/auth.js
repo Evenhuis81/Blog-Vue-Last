@@ -56,16 +56,18 @@ export default {
             commit('set_log_load');
         },
         login({ commit, dispatch }, credentials) {
-            return new Promise((resolve, reject) => {
-                return axios.post("api/auth/login", credentials)
-                    .then(res => {
-                        commit('set_token', res.data.access_token);
-                        dispatch('verifyToken', res.data.access_token);
-                        resolve(res.data.access_token);
-                    }).catch(err => {
-                        reject(err);
-                    });
-            })
+            // return new Promise((resolve, reject) => {
+            return axios.post("api/auth/login", credentials)
+                .then(res => {
+                    commit('set_token', res.data.access_token);
+                    dispatch('verifyToken', res.data.access_token);
+                    return;
+                    // resolve(res.data.access_token);
+                }).catch(err => {
+                    // reject(err);
+                    return (err);
+                });
+            // })
         },
         verifyToken({ commit }, token) {
             axios({

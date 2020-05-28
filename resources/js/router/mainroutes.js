@@ -1,6 +1,6 @@
 import Index from '../views/Index.vue'
 import Login from '../views/Login.vue'
-// import Register from '../views/Register.vue'
+import Register from '../views/Register.vue'
 import Show from '../views/Show.vue'
 import About from '../views/About.vue'
 // import store from '../store'
@@ -36,6 +36,10 @@ export default [
     {
         path: '/login',
         component: Login
+    },
+    {
+        path: '/register',
+        component: Register
     },
     {
         path: '/blog/:id',
