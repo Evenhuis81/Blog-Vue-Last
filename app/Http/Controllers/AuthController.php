@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\Auth\LoginUser;
+use App\Http\Requests\Auth\RegisterUser;
 
 class AuthController extends Controller
 {
@@ -16,7 +17,7 @@ class AuthController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('auth:api', ['except' => ['login']]);
+        $this->middleware('auth:api', ['except' => ['login', 'register']]);
     }
 
     /**
@@ -37,6 +38,12 @@ class AuthController extends Controller
         return $this->respondWithToken($token);
     }
 
+    public function register(RegisterUser $request)
+    {
+        $validated = $request->validated();
+        return response()->json($validated);
+        //
+    }
     /**
      * Get the authenticated User.
      *

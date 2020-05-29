@@ -92,7 +92,26 @@ export default {
                 }).catch(err => reject(err))
             }
             )
-        }
+        },
+        register({ commit, dispatch }, credentials) {
+            // return new Promise((resolve, reject) => {
+            // console.log(credentials);
+            return axios.post("api/auth/register", credentials)
+                .then(res => {
+                    console.log(res.data.checkbox);
+                    if (res.data.checkbox) {
+                        return;
+                    }
+                    // commit('set_token', res.data.access_token);
+                    // dispatch('verifyToken', res.data.access_token);
+                    // return res.checkbox;
+                    // resolve(res.data.access_token);
+                }).catch(err => {
+                    // reject(err);
+                    return err;
+                });
+            // })
+        },
         // if (!state.token) {
         //     commit('set_initialToken')
         // commit('set_token', null)

@@ -1,70 +1,72 @@
 <template>
-  <v-container>
-    <v-row>
-      <v-col class="white" cols="8" offset="2">
+  <div>
+    <v-row justify="center">
+      <v-card-title class="headline">Registration Form</v-card-title>
+    </v-row>
+    <v-row justify="center">
+      <v-col cols="6">
         <v-form ref="form" v-model="valid" @submit.prevent="submitRegisterForm">
-          <v-row justify="center">
-            <v-col cols="6">
-              <v-text-field
-                ref="focuspoint"
-                v-model="form.name"
-                :rules="rules.name"
-                label="Username"
-                required
-              ></v-text-field>
-            </v-col>
-          </v-row>
-          <v-row justify="center">
-            <v-col cols="5">
-              <v-text-field v-model="form.email" :rules="rules.email" label="E-mail" required></v-text-field>
-            </v-col>
-          </v-row>
-          <v-row justify="center">
-            <v-col cols="4">
-              <v-text-field
-                v-model="form.password"
-                :append-icon="showPassword ? 'mdi-eye' : 'mdi-eye-off'"
-                :rules="[rules.password.required, rules.password.min]"
-                type="password"
-                label="Password"
-                :hint="form.password.length >= 5 ? '' : 'At least 5 characters'"
-                counter
-                @click:append="showPassword = !showPassword"
-                required
-              ></v-text-field>
-            </v-col>
-          </v-row>
-          <span class="red--text">{{ errors.registerForm }}</span>
-          <v-row justify="center">
-            <v-col cols="3">
-              <v-card-actions>
-                <v-btn
-                  text
-                  outlined
-                  :loading="loginLoading"
-                  :disabled="!valid"
-                  color="primary"
-                  type="submit"
-                >Register</v-btn>
-                <v-spacer></v-spacer>
-                <v-btn :disabled="loginLoading" text @click="resetRegisterForm">CLEAR INPUT</v-btn>
-              </v-card-actions>
-            </v-col>
-          </v-row>
+          <v-text-field
+            ref="name"
+            v-model="form.name"
+            :counter="10"
+            :rules="nameRules"
+            label="Name"
+            required
+          ></v-text-field>
 
-          <!-- <v-card-actions>
+          <v-text-field v-model="form.email" :rules="emailRules" label="E-mail" required></v-text-field>
+
+          <v-text-field
+            v-model="form.password"
+            :append-icon="showPassword ? 'mdi-eye' : 'mdi-eye-off'"
+            :rules="[passwordRules.required, passwordRules.min]"
+            type="password"
+            label="Password"
+            :hint="form.password.length >= 5 ? '' : 'At least 5 characters'"
+            counter
+            @click:append="showPassword = !showPassword"
+            required
+          ></v-text-field>
+
+          <v-text-field
+            v-model="form.verifypassword"
+            :rules="[(form.password === form.verifypassword) || 'Password must match']"
+            type="password"
+            label="Type password again"
+            required
+          ></v-text-field>
+
+          <v-checkbox v-model="form.checkbox" label="Keep me logged in." required></v-checkbox>
+
+          <!-- <v-btn :disabled="!valid" color="success" class="mr-4" @click="validate">Validate</v-btn>
+
+          <v-btn color="error" class="mr-4" @click="reset">Reset Form</v-btn>
+
+          <v-btn color="warning" @click="resetValidation">Reset Validation</v-btn>-->
+          <span class="red--text">{{ errors.registerForm }}</span>
+          <!-- <v-row justify="center"> -->
+          <!-- <v-col cols> -->
+          <v-card-actions>
             <v-btn
+              text
               outlined
-              :loading="loading"
+              :loading="loginLoading"
               :disabled="!valid"
               color="primary"
               type="submit"
             >Register</v-btn>
-          </v-card-actions>-->
+            <v-spacer></v-spacer>
+            <v-btn :disabled="loginLoading" text @click="resetRegisterForm">CLEAR INPUT</v-btn>
+          </v-card-actions>
+          <!-- </v-col> -->
+          <!-- </v-row> -->
         </v-form>
       </v-col>
     </v-row>
-  </v-container>
+  </div>
+  <!-- </v-card> -->
+  <!-- </v-container> -->
 </template>
 
 <script>
@@ -72,33 +74,39 @@ import { mapGetters } from "vuex";
 import { mapActions } from "vuex";
 
 export default {
-  data() {
-    return {
-      errors: {
-        registerForm: ""
-      },
-      form: {
-        name: "",
-        email: "",
-        password: ""
-      },
-      rules: {
-        name: [v => !!v || "Username is required"],
-        email: [
-          v => !!v || "E-mail is required",
-          v => /.+@.+\..+/.test(v) || "E-mail must be valid"
-        ],
-        password: {
-          required: value => !!value || "Password is required",
-          min: v => v.length >= 5 || "Min 5 characters"
-        }
-      },
-      showPassword: false,
-      valid: true
-    };
-  },
+  data: () => ({
+    errors: {
+      registerForm: ""
+    },
+    form: {
+      name: "",
+      email: "",
+      password: "",
+      verifypassword: "",
+      checkbox: false
+    },
+    valid: true,
+    showPassword: false,
+    nameRules: [
+      v => !!v || "Name is required",
+      v => (v && v.length <= 10) || "Name must be less than 10 characters"
+    ],
+    emailRules: [
+      v => !!v || "E-mail is required",
+      v => /.+@.+\..+/.test(v) || "E-mail must be valid"
+    ],
+
+    passwordRules: {
+      required: value => !!value || "Password is required",
+      min: v => v.length >= 5 || "Min 5 characters",
+      match: v => v === this.form.password || "Password must match"
+    }
+  }),
   computed: {
     ...mapGetters({ loginLoading: "auth/loginLoading" })
+    // passwordConfirmationRule() {
+    //   return this.password === this.rePassword || "Password must match";
+    // }
   },
   methods: {
     ...mapActions({
@@ -109,6 +117,7 @@ export default {
     }),
     submitRegisterForm() {
       if (this.$refs.form.validate()) {
+        // this.errors.registerForm = "Validated!";
         this.setLoginLoading();
         this.register(this.form)
           .then(res => {
@@ -125,18 +134,28 @@ export default {
           "Something went wrong with validation, contact support!!";
       }
     },
+    // validate() {
+    //   this.$refs.form.validate();
+    // },
+    // reset() {
+    //   this.$refs.form.reset();
+    // },
+    // resetValidation() {
+    //   this.$refs.form.resetValidation();
+    // },
     resetRegisterForm() {
       this.showPassword = false;
       this.errors.registerForm = "";
       this.form.name = "";
       this.form.email = "";
       this.form.password = "";
+      this.form.verifypassword = "";
       this.$refs.form.resetValidation();
-      this.$refs.focuspoint.focus();
+      this.$refs.name.focus();
     }
   },
   mounted() {
-    this.$refs.focuspoint.focus();
+    this.$refs.name.focus();
   }
 };
 </script>
