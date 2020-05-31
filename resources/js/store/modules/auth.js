@@ -64,26 +64,26 @@ export default {
                     return;
                     // resolve(res.data.access_token);
                 }).catch(err => {
-                    // reject(err);
+                    console.log('caught login error');
                     return (err);
                 });
             // })
         },
-        verifyToken({ commit }, token) {
+        verifyToken({ commit, rootState }) {
             axios({
-                url: 'api/auth/me', method: 'POST', headers: { 'Authorization': 'Bearer ' + token }
+                url: 'api/auth/me', method: 'POST'
             }).then(res => {
                 commit('set_user', res.data)
-            }).catch(err => {
-                console.log(err);
+            }).catch(() => {
                 commit('remove_token');
                 commit('set_user', null);
+                rootState.router.push("/", () => { });
             })
         },
-        logOut({ commit, state, rootState }) {
+        logOut({ commit, rootState }) {
             return new Promise((resolve, reject) => {
                 axios({
-                    url: '/api/auth/logout', method: 'POST', headers: { 'Authorization': 'Bearer ' + state.token }
+                    url: '/api/auth/logout', method: 'POST'
                 }).then(() => {
                     commit('remove_token', null);
                     commit('set_user', null);

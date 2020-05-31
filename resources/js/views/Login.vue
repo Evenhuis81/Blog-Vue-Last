@@ -113,7 +113,7 @@ export default {
             this.setSnackbarText("You are now logged in");
             this.setSnackbar();
           })
-          .catch(err => console.log(err))
+          .catch(err => console.log('caught error in Login.vue'))
           .finally(() => {
             this.setLoginLoading();
           });
