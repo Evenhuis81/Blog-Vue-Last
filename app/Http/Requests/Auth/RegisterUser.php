@@ -24,11 +24,16 @@ class RegisterUser extends FormRequest
     public function rules()
     {
         return [
-            'name' => 'required|string|max:10',
+            'name' => 'required|string|min:3',
             'email' => 'required|string|email',
-            'password' => 'required|string|min:5',
-            'verifypassword' => 'required|string|min:5',
-            'checkbox' => 'required'
+            'password' => 'required|string|min:5|confirmed'
         ];
+    }
+    public function validated()
+    {
+            // dd($this->validated());
+            $validated = parent::validated();
+            $validated['password'] = bcrypt($validated['password']);
+            return $validated;
     }
 }

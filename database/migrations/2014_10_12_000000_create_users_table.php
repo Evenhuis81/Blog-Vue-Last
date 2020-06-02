@@ -20,8 +20,8 @@ class CreateUsersTable extends Migration
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
-            // 1 = admin(1), 2 = author(5), 3 = guest(15)
-            $table->unsignedInteger('role');
+            // admin, author(5) & guest
+            $table->string('role')->default('guest');
             $table->rememberToken();
             $table->timestamps();
         });

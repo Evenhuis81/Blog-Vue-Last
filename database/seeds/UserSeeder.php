@@ -18,34 +18,34 @@ class UserSeeder extends Seeder
             'name' => 'Admin',
             'email' => 'admin@admin.nl',
             'password' => bcrypt('admin'),
-            'role' => 1
+            'role' => 'admin'
         ]);
         User::create([
             'name' => 'Author',
             'email' => 'author@author.nl',
             'password' => bcrypt('author'),
-            'role' => 2
+            'role' => 'author'
+        ]);
+        User::create([
+            'name' => 'Reader',
+            'email' => 'reader@reader.nl',
+            'password' => bcrypt('reader'),
+            'role' => 'guest'
         ]);
         foreach (range(3, 6) as $steps) {
             User::create([
                 'name' => $faker->firstName(rand(0,1) ? 'male' : 'female').' '.$faker->lastName,
                 'email' => $faker->unique()->safeEmail,
                 'password' => bcrypt($faker->password),
-                'role' => 2
+                'role' => 'guest'
             ]);
         };
-        User::create([
-            'name' => 'Reader',
-            'email' => 'reader@reader.nl',
-            'password' => bcrypt('reader'),
-            'role' => 3
-        ]);
         foreach (range(8, 21) as $steps) {
             User::create([
                 'name' => $faker->firstName(rand(0,1) ? 'male' : 'female').' '.$faker->lastName,
                 'email' => $faker->unique()->safeEmail,
                 'password' => bcrypt($faker->password),
-                'role' => 3
+                'role' => 'guest'
             ]);
         };
     }
