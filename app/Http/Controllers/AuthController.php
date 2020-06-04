@@ -17,10 +17,10 @@ class AuthController extends Controller
      *
      * @return void
      */
-    // public function __construct()
-    // {
-    //     $this->middleware('auth:api', ['except' => ['login', 'register']]);
-    // }
+    public function __construct()
+    {
+        // $this->middleware('auth:api', ['except' => ['login', 'register']]);
+    }
 
     public function register(RegisterUser $request)
     {
@@ -61,6 +61,9 @@ class AuthController extends Controller
 
     public function login(LoginUser $request)
     {
+        // dd($user = $request->user());
+        // $user = Auth::user();
+        // dd($user);
         // dd($request->remember_me);
         // $password = $request->password;
         // $email = $request->email;
@@ -76,7 +79,9 @@ class AuthController extends Controller
             //         'status_code' => 200
             //     ], 200);
         }
-        $user = $request->user();
+        // dd($user = $request->user());
+        $user = Auth::user();
+        dd($user);
 
         if ($user->role == 'admin') {
             $tokenData = $user->createToken('Personal Access Token', ['do_anything']);
@@ -85,7 +90,7 @@ class AuthController extends Controller
         }
         $token = $tokenData->token;
 
-        if ($request->remember_me) {
+        if ($request->remember) {
             $token->expires_at = Carbon::now()->addWeeks(1);
         }
 

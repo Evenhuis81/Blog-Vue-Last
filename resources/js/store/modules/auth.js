@@ -52,13 +52,16 @@ export default {
             // return new Promise((resolve, reject) => {
             return axios.post("api/auth/login", credentials)
                 .then(res => {
-                    commit('set_token', res.data.access_token);
-                    dispatch('verifyToken', res.data.access_token);
-                    return;
+                    // commit('set_token', res.data.access_token);
+                    // dispatch('verifyToken', res.data.access_token);
+                    // return res.data.access_token;
                     // resolve(res.data.access_token);
+                    console.log('login succeed');
+                    console.log(res);
                 }).catch(err => {
                     console.log('caught login error');
-                    return (err);
+                    // return (err);
+                    console.log(err)
                 });
             // })
         },

@@ -8,7 +8,7 @@
       <!-- On Screen Popups, etc. -->
       <dialogs-snackbars />
       <!-- Routes -->
-      <router-view></router-view>
+      <router-view />
     </v-content>
   </v-app>
 </template>

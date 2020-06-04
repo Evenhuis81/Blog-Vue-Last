@@ -1,16 +1,14 @@
 import Index from '../views/Index.vue'
-import Login from '../views/Login.vue'
-import Register from '../views/Register.vue'
 import Show from '../views/Show.vue'
 import About from '../views/About.vue'
 // import store from '../store'
 
-import PageNotFound from '../views/PageNotFound.vue'
+// import PageNotFound from '../views/PageNotFound.vue'
 
 export default [
-    {
-        path: '*', component: PageNotFound
-    },
+    // {
+        // path: '*', component: PageNotFound
+    // },
     {
         path: '/',
         name: 'index',
@@ -34,18 +32,15 @@ export default [
         // },
     },
     {
-        path: '/login',
-        name: 'login',
-        component: Login
-    },
-    {
-        path: '/register',
-        component: Register
-    },
-    {
         path: '/blog/:id',
         name: 'blog',
         component: Show,
-        //   props: true
-    }
+    },
+    // {
+    //     path: "/404",
+    //     alias: "*",
+    //     name: "PageNotFound",
+    //     component: () =>
+    //         import(/* webpackChunkName: "NotFound" */"../views/PageNotFound")
+    // }
 ]

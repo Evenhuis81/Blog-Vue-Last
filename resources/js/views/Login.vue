@@ -2,13 +2,13 @@
   <v-container>
     <v-row>
       <v-col class="white" cols="8" offset="2">
-        <v-form ref="form" v-model="valid" @submit.prevent="submitLoginForm">
+        <v-form ref="form" v-model="valid" @submit.prevent="submitLogin">
           <v-row justify="center">
             <v-col cols="6">
-              <p
+              <p outlined
                 v-show="just_registered"
                 class="green--text"
-              >You are now registered and can continue to login...</p>
+              >You are now registered, please login</p>
               <v-text-field
                 ref="email"
                 v-model="form.email"
@@ -31,10 +31,10 @@
                 @click:append="showPassword = !showPassword"
                 required
               ></v-text-field>
-              <v-checkbox v-model="form.checkbox" label="Keep me logged in." required></v-checkbox>
+              <v-checkbox v-model="form.remember" label="Keep me logged in." required></v-checkbox>
             </v-col>
           </v-row>
-          <span class="red--text">{{ errors.loginForm }}</span>
+          
           <v-row justify="center">
             <v-col cols="4">
               <v-card-actions>
@@ -49,6 +49,7 @@
                 <v-spacer></v-spacer>
                 <v-btn :disabled="buttonLoading" text @click="resetLoginForm">CLEAR INPUT</v-btn>
               </v-card-actions>
+              <p class="red--text">{{ errors.loginForm }}</p>
             </v-col>
           </v-row>
         </v-form>
@@ -75,7 +76,8 @@ export default {
     },
     form: {
       email: "",
-      password: ""
+      password: "",
+      remember: ""
     },
     rules: {
       email: [
@@ -100,32 +102,28 @@ export default {
         login: "login",
         setButtonLoading: "setButtonLoading"
       }
-      // "snackbar",
-      // {
-      //   setSnackbar: "setSnackbar",
-      //   setSnackbarText: "setSnackbarText"
-      // }
     ),
     ...mapActions("snackbar", {
       setSnackbar: "setSnackbar",
       setSnackbarText: "setSnackbarText"
     }),
-    submitLoginForm() {
+    submitLogin() {
       if (this.$refs.form.validate()) {
         this.setButtonLoading();
         this.login(this.form)
           .then(res => {
-            this.$router.go(-1);
-            this.setSnackbarText("You are now logged in");
-            this.setSnackbar();
-          })
-          .catch(err => console.log("caught error in Login.vue"))
-          .finally(() => {
+            console.log("caught response login")
+            // this.$router.go(-1);
+            // this.setSnackbarText("You are now logged in");
+            // this.setSnackbar();
+          }).catch(err => {
+            console.log("caught error login")
+          }).finally(() => {
             this.setButtonLoading();
           });
       } else {
         this.errors.loginForm =
-          "Something went wrong with validation, contact support!!";
+          "Something went wrong";
       }
     },
     resetLoginForm() {
