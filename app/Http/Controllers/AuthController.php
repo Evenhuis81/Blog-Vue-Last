@@ -22,6 +22,23 @@ class AuthController extends Controller
     //     $this->middleware('auth:api', ['except' => ['login', 'register']]);
     // }
 
+    public function register(RegisterUser $request)
+    {
+        $validated = $request->validated();
+        if (User::create($validated)) {
+            return response()->json([
+                'message' => 'User created successfully',
+                'status_code' => 201
+            ], 201);
+        } else {
+            return response()->json([
+                'message' => 'Some error occurred, Please try again',
+                'status_code' => 500
+            ], 500);
+        }
+    }
+
+
     /**
      * Get a JWT via given credentials.
      *
@@ -40,21 +57,7 @@ class AuthController extends Controller
     //     return $this->respondWithToken($token);
     // }
 
-    public function register(RegisterUser $request)
-    {
-        $validated = $request->validated();
-        if (User::create($validated)) {
-            return response()->json([
-                'message' => 'User created successfully',
-                'status_code' => 201
-            ], 201);
-        } else {
-            return response()->json([
-                'message' => 'Some error occurred, Please try again',
-                'status_code' => 500
-            ], 500);
-        }
-    }
+
 
     public function login(LoginUser $request)
     {
@@ -66,12 +69,12 @@ class AuthController extends Controller
             return response()->json([
                 'message' => 'Unauthorized',
                 'status_code' => 401
-                ], 401);
-        // } else {
-        //     return response()->json([
-        //         'message' => 'Succes',
-        //         'status_code' => 200
-        //     ], 200);
+            ], 401);
+            // } else {
+            //     return response()->json([
+            //         'message' => 'Succes',
+            //         'status_code' => 200
+            //     ], 200);
         }
         $user = $request->user();
 
@@ -114,7 +117,8 @@ class AuthController extends Controller
         ], 200);
     }
 
-    public function details() {
+    public function details()
+    {
         $user = Auth::user();
         dd($user);
     }

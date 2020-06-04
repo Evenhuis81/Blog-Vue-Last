@@ -30,14 +30,12 @@
           ></v-text-field>
 
           <v-text-field
-            v-model="form.verifypassword"
-            :rules="[(form.password === form.verifypassword) || 'Password must match']"
+            v-model="form.password_confirmation"
+            :rules="[(form.password === form.password_confirmation) || 'Password must match']"
             type="password"
             label="Type password again"
             required
           ></v-text-field>
-
-          <v-checkbox v-model="form.checkbox" label="Keep me logged in." required></v-checkbox>
 
           <!-- <v-btn :disabled="!valid" color="success" class="mr-4" @click="validate">Validate</v-btn>
 
@@ -51,13 +49,13 @@
             <v-btn
               text
               outlined
-              :loading="loginLoading"
+              :loading="buttonLoading"
               :disabled="!valid"
               color="primary"
               type="submit"
             >Register</v-btn>
             <v-spacer></v-spacer>
-            <v-btn :disabled="loginLoading" text @click="resetRegisterForm">CLEAR INPUT</v-btn>
+            <v-btn :disabled="buttonLoading" text @click="resetRegisterForm">CLEAR INPUT</v-btn>
           </v-card-actions>
           <!-- </v-col> -->
           <!-- </v-row> -->
@@ -82,8 +80,7 @@ export default {
       name: "",
       email: "",
       password: "",
-      verifypassword: "",
-      checkbox: false
+      password_confirmation: ""
     },
     valid: true,
     showPassword: false,
@@ -103,31 +100,35 @@ export default {
     }
   }),
   computed: {
-    ...mapGetters({ loginLoading: "auth/loginLoading" })
-    // passwordConfirmationRule() {
-    //   return this.password === this.rePassword || "Password must match";
-    // }
+    ...mapGetters({ buttonLoading: "auth/buttonLoading" })
   },
   methods: {
     ...mapActions({
       register: "auth/register",
-      setLoginLoading: "auth/setLoginLoading",
+      setButtonLoading: "auth/setButtonLoading",
       setSnackbar: "snackbar/setSnackbar",
       setSnackbarText: "snackbar/setSnackbarText"
     }),
     submitRegisterForm() {
       if (this.$refs.form.validate()) {
-        // this.errors.registerForm = "Validated!";
-        this.setLoginLoading();
+        this.setButtonLoading();
         this.register(this.form)
           .then(res => {
-            this.$router.go(-1);
-            this.setSnackbarText("You are now registered");
+            this.$router.push({
+              name: "login",
+              query: { just_registered: true }
+            });
+            this.setSnackbarText("Response");
+            // this.setSnackbarText("You are now registered");
             this.setSnackbar();
           })
-          .catch(err => console.log(err))
+          .catch(err => {
+            console.log(err);
+            this.setSnackbarText("Error");
+            this.setSnackbar();
+          })
           .finally(() => {
-            this.setLoginLoading();
+            this.setButtonLoading();
           });
       } else {
         this.errors.registerForm =
@@ -149,7 +150,7 @@ export default {
       this.form.name = "";
       this.form.email = "";
       this.form.password = "";
-      this.form.verifypassword = "";
+      this.form.password_confirmation = "";
       this.$refs.form.resetValidation();
       this.$refs.name.focus();
     }

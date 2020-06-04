@@ -5,7 +5,7 @@ export default {
     state: {
         token: localStorage.getItem('token'),
         user: null,
-        loginLoading: false
+        buttonLoading: false
     },
     mutations: {
         set_token(state, token) {
@@ -25,8 +25,8 @@ export default {
         // set_loading_dialog(state) {
         //     state.loadingDialog = !state.loadingDialog;
         // }
-        set_log_load(state) {
-            state.loginLoading = !state.loginLoading;
+        set_button_loading(state) {
+            state.buttonLoading = !state.buttonLoading;
         },
         // deset_log_load(state) {
         //     state.loginLoading = false;
@@ -37,23 +37,16 @@ export default {
 
     },
     actions: {
-        // setLoadingDialog({ commit }) {
-        //     commit('set_loading_dialog');
-        // },
-        // setLoginDialog({ commit }) {
-        //     commit('set_login_dialog');
-        // },
-        // setFakeUser({ commit }) {
-        //     commit('set_fake_user')
-        // },
-        // closeSignedInDialog({ commit }) {
-        //     commit("close_signedin_dialog")
-        // },
-        // openSignedInDialog({ commit }) {
-        //     commit("open_signedin_dialog");
-        // },
-        setLoginLoading({ commit }) {
-            commit('set_log_load');
+        setButtonLoading({ commit }) {
+            commit('set_button_loading');
+        },
+        register({ }, credentials) {
+            return axios.post("api/auth/register", credentials)
+            // .then(response => {
+            //     return response;
+            // }).catch(error => {
+            //     throw error;
+            // })
         },
         login({ commit, dispatch }, credentials) {
             // return new Promise((resolve, reject) => {
@@ -92,25 +85,6 @@ export default {
                 }).catch(err => reject(err))
             }
             )
-        },
-        register({ commit, dispatch }, credentials) {
-            // return new Promise((resolve, reject) => {
-            // console.log(credentials);
-            return axios.post("api/auth/register", credentials)
-                .then(res => {
-                    console.log(res.data.checkbox);
-                    if (res.data.checkbox) {
-                        return;
-                    }
-                    // commit('set_token', res.data.access_token);
-                    // dispatch('verifyToken', res.data.access_token);
-                    // return res.checkbox;
-                    // resolve(res.data.access_token);
-                }).catch(err => {
-                    // reject(err);
-                    return err;
-                });
-            // })
         },
         // if (!state.token) {
         //     commit('set_initialToken')
@@ -160,8 +134,8 @@ export default {
         // user(state) {
         //     return state.user;
         // },
-        loginLoading: state => {
-            return state.loginLoading;
+        buttonLoading: state => {
+            return state.buttonLoading;
         },
         // registerLoading: state => {
         //     return state.registerLoading;
