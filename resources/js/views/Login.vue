@@ -5,7 +5,8 @@
         <v-form ref="form" v-model="valid" @submit.prevent="submitLogin">
           <v-row justify="center">
             <v-col cols="6">
-              <p outlined
+              <p
+                outlined
                 v-show="just_registered"
                 class="green--text"
               >You are now registered, please login</p>
@@ -34,7 +35,7 @@
               <v-checkbox v-model="form.remember" label="Keep me logged in." required></v-checkbox>
             </v-col>
           </v-row>
-          
+
           <v-row justify="center">
             <v-col cols="4">
               <v-card-actions>
@@ -77,7 +78,7 @@ export default {
     form: {
       email: "",
       password: "",
-      remember: ""
+      remember: false
     },
     rules: {
       email: [
@@ -96,34 +97,32 @@ export default {
     ...mapGetters({ buttonLoading: "auth/buttonLoading" })
   },
   methods: {
-    ...mapActions(
-      "auth",
-      {
-        login: "login",
-        setButtonLoading: "setButtonLoading"
-      }
-    ),
+    ...mapActions("auth", {
+      login: "login",
+      setButtonLoading: "setButtonLoading"
+    }),
     ...mapActions("snackbar", {
       setSnackbar: "setSnackbar",
       setSnackbarText: "setSnackbarText"
     }),
     submitLogin() {
+      this.errors.loginForm = "";
       if (this.$refs.form.validate()) {
         this.setButtonLoading();
         this.login(this.form)
-          .then(res => {
-            console.log("caught response login")
-            // this.$router.go(-1);
-            // this.setSnackbarText("You are now logged in");
-            // this.setSnackbar();
-          }).catch(err => {
-            console.log("caught error login")
-          }).finally(() => {
+          .then(() => {
+            this.$router.go(-1);
+            this.setSnackbarText("You are now logged in");
+            this.setSnackbar();
+          })
+          .catch(err => {
+            this.errors.loginForm = err;
+          })
+          .finally(() => {
             this.setButtonLoading();
           });
       } else {
-        this.errors.loginForm =
-          "Something went wrong";
+        this.errors.loginForm = "Something went wrong";
       }
     },
     resetLoginForm() {

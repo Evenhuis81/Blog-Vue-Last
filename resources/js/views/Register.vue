@@ -110,23 +110,17 @@ export default {
       setSnackbarText: "snackbar/setSnackbarText"
     }),
     submitRegisterForm() {
+      this.errors.registerForm = "";
       if (this.$refs.form.validate()) {
         this.setButtonLoading();
         this.register(this.form)
-          .then(res => {
+          .then(() => {
             this.$router.push({
               name: "login",
               query: { just_registered: true }
             });
-            this.setSnackbarText("Response");
-            // this.setSnackbarText("You are now registered");
-            this.setSnackbar();
           })
-          .catch(err => {
-            console.log(err);
-            this.setSnackbarText("Error");
-            this.setSnackbar();
-          })
+          .catch(err => {})
           .finally(() => {
             this.setButtonLoading();
           });
@@ -135,15 +129,6 @@ export default {
           "Something went wrong with validation, contact support!!";
       }
     },
-    // validate() {
-    //   this.$refs.form.validate();
-    // },
-    // reset() {
-    //   this.$refs.form.reset();
-    // },
-    // resetValidation() {
-    //   this.$refs.form.resetValidation();
-    // },
     resetRegisterForm() {
       this.showPassword = false;
       this.errors.registerForm = "";

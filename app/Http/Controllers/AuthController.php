@@ -38,50 +38,23 @@ class AuthController extends Controller
         }
     }
 
-
-    /**
-     * Get a JWT via given credentials.
-     *
-     * @return \Illuminate\Http\JsonResponse
-     */
-    // public function login(LoginUser $request)
-    // {
-    //     $validated = $request->validated();
-
-    //     // $credentials = request(['email', 'password']);
-
-    //     if (! $token = auth()->attempt($validated)) {
-    //         return response()->json(['error' => 'login failed'], 401);
-    //     }
-
-    //     return $this->respondWithToken($token);
-    // }
-
-
-
     public function login(LoginUser $request)
     {
-        // dd($user = $request->user());
-        // $user = Auth::user();
-        // dd($user);
-        // dd($request->remember_me);
-        // $password = $request->password;
-        // $email = $request->email;
-        // dd(Auth::attempt(['email' => $request->email, 'password' => $request->password]));
-        if (!Auth::attempt(['email' => $request->email, 'password' => $request->password])) {
+        $emailCheck = User::where('email', $request->email)->get();
+        if(sizeof($emailCheck) === 0) {
             return response()->json([
-                'message' => 'Unauthorized',
-                'status_code' => 401
+                'error' => 'Email not found'
             ], 401);
-            // } else {
-            //     return response()->json([
-            //         'message' => 'Succes',
-            //         'status_code' => 200
-            //     ], 200);
         }
-        // dd($user = $request->user());
-        $user = Auth::user();
-        dd($user);
+
+        $credentials = $request->only('email', 'password');   
+        if (!Auth::attempt($credentials)) {
+            return response()->json([
+                // Email checked above and exists, but attempt failed, so password is not correct
+                'error' => 'Password incorrect'
+            ], 401);
+        }
+        $user = auth()->user();
 
         if ($user->role == 'admin') {
             $tokenData = $user->createToken('Personal Access Token', ['do_anything']);
@@ -90,8 +63,8 @@ class AuthController extends Controller
         }
         $token = $tokenData->token;
 
-        if ($request->remember) {
-            $token->expires_at = Carbon::now()->addWeeks(1);
+        if (!$request->remember) {
+            $token->expires_at = Carbon::now()->addHours(12);
         }
 
         if ($token->save()) {
@@ -111,11 +84,9 @@ class AuthController extends Controller
         }
     }
 
-    public function logout(Request $request)
+    public function logout()
     {
-        $user = $request->user();
-        dd($user);
-        // $request->user()->token()->revoke();
+        auth()->user()->token()->revoke();
         return response()->json([
             'message' => 'Logout successfully',
             'status_code' => 200
@@ -124,9 +95,28 @@ class AuthController extends Controller
 
     public function details()
     {
-        $user = Auth::user();
-        dd($user);
+        return response()->json(auth()->user());
     }
+
+    
+
+    /**
+     * Get a JWT via given credentials.
+     *
+     * @return \Illuminate\Http\JsonResponse
+     */
+    // public function login(LoginUser $request)
+    // {
+    //     $validated = $request->validated();
+
+    //     // $credentials = request(['email', 'password']);
+
+    //     if (! $token = auth()->attempt($validated)) {
+    //         return response()->json(['error' => 'login failed'], 401);
+    //     }
+
+    //     return $this->respondWithToken($token);
+    // }
 
     /**
      * Get the authenticated User.

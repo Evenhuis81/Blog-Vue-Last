@@ -92,8 +92,8 @@ export default {
     }),
     loggingOut() {
       this.logOut()
-        .then(res => {
-          // this.$router.push("/", () => {});
+        .then(() => {
+          this.$router.push("/", () => {});
           this.setSnackbarText("You are now logged out");
           this.setSnackbar();
         })

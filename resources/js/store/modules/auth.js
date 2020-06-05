@@ -42,52 +42,46 @@ export default {
         },
         register({ }, credentials) {
             return axios.post("api/auth/register", credentials)
-            // .then(response => {
-            //     return response;
-            // }).catch(error => {
-            //     throw error;
-            // })
         },
         login({ commit, dispatch }, credentials) {
             // return new Promise((resolve, reject) => {
             return axios.post("api/auth/login", credentials)
-                .then(res => {
-                    // commit('set_token', res.data.access_token);
-                    // dispatch('verifyToken', res.data.access_token);
-                    // return res.data.access_token;
-                    // resolve(res.data.access_token);
-                    console.log('login succeed');
-                    console.log(res);
-                }).catch(err => {
-                    console.log('caught login error');
-                    // return (err);
-                    console.log(err)
+                .then(response => {
+                    commit('set_token', response.data.access_token);
+                    commit('set_user', response.data.user);
+                    // dispatch('verifyToken', response.data.access_token);
+                    return;
+                }).catch(error => {
+                    throw error.response.data.error;
                 });
             // })
         },
-        verifyToken({ commit, rootState }) {
-            axios({
-                url: 'api/auth/me', method: 'POST'
-            }).then(res => {
-                commit('set_user', res.data)
-            }).catch(() => {
-                commit('remove_token');
-                commit('set_user', null);
-                rootState.router.push("/", () => { });
+        verifyToken({ commit, rootState }, token) {
+            axios.get({
+                url: 'api/auth/details', headers: { 'Authorization': 'Bearer ' + token }
+                // }).then(response => {
+                //     console.log(response);
+                // commit('set_user', res.data)
+                // }).catch(error => {
+                // console.log(error);
+                //     // commit('remove_token');
+                //     // commit('set_user', null);
+                //     // rootState.router.push("/", () => { });
             })
         },
         logOut({ commit, rootState }) {
-            return new Promise((resolve, reject) => {
-                axios({
-                    url: '/api/auth/logout', method: 'POST'
-                }).then(() => {
-                    commit('remove_token', null);
-                    commit('set_user', null);
-                    rootState.router.push("/", () => { });
-                    resolve();
-                }).catch(err => reject(err))
-            }
-            )
+            // return new Promise((resolve, reject) => {
+            axios.get({
+                url: '/api/auth/logout', headers: { 'Authorization': 'Bearer ' + token }
+            }).then(() => {
+                commit('remove_token', null);
+                commit('set_user', null);
+                return
+            }).catch(err => {
+                throw err
+            })
+            // }
+            // )
         },
         // if (!state.token) {
         //     commit('set_initialToken')
