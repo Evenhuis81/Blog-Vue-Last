@@ -19,52 +19,36 @@ class AuthController extends Controller
      */
     public function __construct()
     {
-        // $this->middleware('auth:api', ['except' => ['login', 'register']]);
+        //
     }
 
     public function register(RegisterUser $request)
     {
         $validated = $request->validated();
         if (User::create($validated)) {
-            return response()->json([
-                'message' => 'User created successfully',
-                'status_code' => 201
-            ], 201);
+            return response()->json('User created', 201);
         } else {
-            return response()->json([
-                'message' => 'Some error occurred, Please try again',
-                'status_code' => 500
-            ], 500);
+            return response()->json(['errors' => ['server' => ['Internal Server Error']]], 500);
         }
     }
 
     public function login(LoginUser $request)
     {
-        $emailCheck = User::where('email', $request->email)->get();
-        if(sizeof($emailCheck) === 0) {
-            return response()->json([
-                'error' => 'Email not found'
-            ], 401);
-        }
-
         $credentials = $request->only('email', 'password');   
         if (!Auth::attempt($credentials)) {
-            return response()->json([
-                // Email checked above and exists, but attempt failed, so password is not correct
-                'error' => 'Password incorrect'
-            ], 401);
+            return response()->json(['errors' => ['error' => ['Email or Password incorrect']]], 401);
         }
         $user = auth()->user();
 
-        if ($user->role == 'admin') {
-            $tokenData = $user->createToken('Personal Access Token', ['do_anything']);
-        } elseif ($user->role == 'author') {
-            $tokenData = $user->createToken('Personal Access Token', ['can_create']);
+        if ($user->role === 'admin') {
+            $tokenData = $user->createToken('Personal Access Token', ['all_access']);
+        } elseif ($user->role === 'author') {
+            $tokenData = $user->createToken('Personal Access Token', ['create_blog']);
         }
         $token = $tokenData->token;
 
         if (!$request->remember) {
-            $token->expires_at = Carbon::now()->addHours(12);
+            $token->expires_at = Carbon::now()->addHours(2);
         }
 
         if ($token->save()) {
@@ -74,13 +58,9 @@ class AuthController extends Controller
                 'token_type' => 'Bearer',
                 'token_scope' => $tokenData->token->scopes[0],
                 'expires_at' => Carbon::parse($tokenData->token->expires_at)->toDateTimeString(),
-                'status_code' => 200
             ], 200);
         } else {
-            return response()->json([
-                'message' => 'Some error occurred, Please try again',
-                'status_code' => 500
-            ], 500);
+            return response()->json(['errors' => ['server' => ['Internal Server Error']]], 500);
         }
     }
 
@@ -89,7 +69,6 @@ class AuthController extends Controller
         auth()->user()->token()->revoke();
         return response()->json([
             'message' => 'Logout successfully',
-            'status_code' => 200
         ], 200);
     }
 

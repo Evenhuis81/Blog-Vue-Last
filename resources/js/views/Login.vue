@@ -50,7 +50,7 @@
                 <v-spacer></v-spacer>
                 <v-btn :disabled="buttonLoading" text @click="resetLoginForm">CLEAR INPUT</v-btn>
               </v-card-actions>
-              <p class="red--text">{{ errors.loginForm }}</p>
+              <p v-for="(error, index) in errors.loginForm" :key="index" class="red--text">{{ error[0] }}</p>
             </v-col>
           </v-row>
         </v-form>
@@ -111,7 +111,7 @@ export default {
         this.setButtonLoading();
         this.login(this.form)
           .then(() => {
-            this.$router.go(-1);
+            this.$router.push({ name: "userdashboard" });
             this.setSnackbarText("You are now logged in");
             this.setSnackbar();
           })
@@ -122,7 +122,7 @@ export default {
             this.setButtonLoading();
           });
       } else {
-        this.errors.loginForm = "Something went wrong";
+        this.errors.loginForm = [["Something went wrong"]];
       }
     },
     resetLoginForm() {

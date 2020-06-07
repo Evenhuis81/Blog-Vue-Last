@@ -42,7 +42,7 @@
           <v-btn color="error" class="mr-4" @click="reset">Reset Form</v-btn>
 
           <v-btn color="warning" @click="resetValidation">Reset Validation</v-btn>-->
-          <span class="red--text">{{ errors.registerForm }}</span>
+          <p v-for="(error, index) in errors.registerForm" :key="index" class="red--text">{{ error[0] }}</p>
           <!-- <v-row justify="center"> -->
           <!-- <v-col cols> -->
           <v-card-actions>
@@ -120,13 +120,14 @@ export default {
               query: { just_registered: true }
             });
           })
-          .catch(err => {})
+          .catch(error => {
+              this.errors.registerForm = error.response.data.errors;
+          })
           .finally(() => {
             this.setButtonLoading();
           });
       } else {
-        this.errors.registerForm =
-          "Something went wrong with validation, contact support!!";
+        this.errors.registerForm = [["Something went wrong with validation."]];
       }
     },
     resetRegisterForm() {

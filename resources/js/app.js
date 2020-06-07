@@ -20,13 +20,12 @@ new Vue({
     router,
     vuetify,
     created() {
-        // this.$store.dispatch("getMainPageBlogs");
         this.$store.dispatch("getBlogs");
         this.$store.dispatch("getCategories");
-        // let token = localStorage.getItem('token')
-        // if (token) {
-        //     store.dispatch('auth/verifyToken', token);
-        // }
+        let token = localStorage.getItem('token')
+        if (token) {
+            store.dispatch('auth/verifyToken', token);
+        }
     },
     render: h => h(App),
 }).$mount('#root');
