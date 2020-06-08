@@ -1,11 +1,16 @@
 export default {
     namespaced: true,
     state: {
+        blog: null,
         blogs: [],
+        showBlog: null
     },
     mutations: {
-        get_blogs(state, blogs) {
-            return state.blogs = blogs
+        set_blogs(state, blogs) {
+            state.blogs = blogs;
+        },
+        set_blog(state, id) {
+            state.blog = state.blogs[id];
         }
     },
     actions: {
@@ -21,11 +26,16 @@ export default {
             axios.get('/api/blogs')
                 .then(res => {
 
-                    commit('get_blogs', res.data)
+                    commit('set_blogs', res.data)
                 }).catch(err => {
                     console.log(err)
                 })
         },
+        setBlog({ commit, state }, id) {
+            // state.blog = state.blogs[id];
+            console.log(id);
+            commit('set_blog', id);
+        }
         // fetchCategories({ commit }) {
         //     axios.get('api/categories')
         //         .then(res => {
@@ -48,9 +58,16 @@ export default {
         blogs: state => {
             return state.blogs
         },
-        getBlog: (state) => (id) => {
-            return state.blogs.find(blog => blog.id === id);
-        }
+        getBlog: state => {
+            return state.blog;
+        },
+        // getParams: (state, getters, rootState) => {
+        //     return rootState.route.params;
+        // }
+        // gett(state) {
+        //     return state.blogs.find(blog => blog.id === 25)
+            // return state.blogs.find(blog => blog.id === id);
+        // }
         // categories: state => {
         //     return state.categories
         // }

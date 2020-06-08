@@ -40,6 +40,7 @@ export default [
         path: '/blog/:id',
         name: 'blog',
         component: Show,
+        props: true
     },
     {
         path: "/404",

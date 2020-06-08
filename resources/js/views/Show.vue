@@ -1,5 +1,5 @@
 <template>
-  <v-card
+  <v-card v-if="blogs.length"
     class="mx-auto"
     max-width="1200"
   >
@@ -9,7 +9,7 @@
       src="https://cdn.vuetifyjs.com/images/cards/docks.jpg"
     >
       <!-- <v-card-title>{{ getBlog(11).title }}</v-card-title> -->
-      <v-card-title>Title</v-card-title>
+      <v-card-title>{{ blogs[id].title }}</v-card-title>
     </v-img>
 
     <v-card-subtitle class="pb-0">Number 10</v-card-subtitle>
@@ -40,31 +40,42 @@
 
 <script>
 import { mapGetters } from "vuex"
+import { mapActions } from "vuex"
 
 export default {
+  props: ['id'],
   data() {
     return {
-      blog: null
+      // blog: null
       // routeid: this.$route.params.id
     }
   },
   computed: {
-    ...mapGetters({getBlog: "blogs/getBlog"})
+    ...mapGetters({blog: "blogs/getBlog", blogs: "blogs/blogs"})
     // blog() {
       // return this.getBlog(this.$route.params.id);
     // }
   },
   methods: {
-    setBlog() {
-      console.log(this.$store.getters['blogs/getBlog'](11));
-      this.blog = "yes";
-    }
+    ...mapActions({setBlog: "blogs/setBlog"})
+    // setBlog() {
+      // console.log(this.$store.getters['blogs/getBlog'](11));
+      // this.blog = "yes";
+      // console.log(this.blog)
+      // this.blog = this.getBlog(25);
+
+    // }
   },
   created() {
     // console.log(getBlog(2))
     // this.blog = getBlog(2);
-    this.setBlog()
+    // conmsoslethis.id
+    
 
+  },
+  mounted() {
+    console.log(this.id);
+    this.setBlog(this.id);
   }
 }
 </script>
