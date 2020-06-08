@@ -43,7 +43,8 @@ export default {
     };
   },
   computed: {
-    ...mapGetters(["blogs", "categories"]),
+    ...mapGetters({ blogs: "blogs/blogs",
+                    categories: "categories/categories"}),
     visibleBlogs() {
       if (this.page * this.perPage > this.blogs.length) {
         return this.blogs.slice(

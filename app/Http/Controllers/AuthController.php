@@ -36,19 +36,22 @@ class AuthController extends Controller
     {
         $credentials = $request->only('email', 'password');   
         if (!Auth::attempt($credentials)) {
-            return response()->json(['errors' => ['error' => ['Email or Password incorrect']]], 401);
+            return response()->json(['errors' => ['credentials' => ['Email or Password incorrect']]], 401);
         }
         $user = auth()->user();
 
-        if ($user->role === 'admin') {
-            $tokenData = $user->createToken('Personal Access Token', ['all_access']);
-        } elseif ($user->role === 'author') {
-            $tokenData = $user->createToken('Personal Access Token', ['create_blog']);
-        }
+        $role = $user->role;
+        // if ($user->role === 'admin') {
+            $tokenData = $user->createToken('Personal Access Token', [$role.'_access']);
+        // } elseif ($user->role === 'author') {
+            // $tokenData = $user->createToken('Personal Access Token', ['author_access']);
+        // } else {
+            // $tokenData = $user->createToken('Personal Access Token', ['author_access']);
+        // }
         $token = $tokenData->token;
 
         if (!$request->remember) {
-            $token->expires_at = Carbon::now()->addHours(2);
+            $token->expires_at = Carbon::now()->addHours(1);
         }
 
         if ($token->save()) {
@@ -76,72 +79,4 @@ class AuthController extends Controller
     {
         return response()->json(auth()->user());
     }
-
-    
-
-    /**
-     * Get a JWT via given credentials.
-     *
-     * @return \Illuminate\Http\JsonResponse
-     */
-    // public function login(LoginUser $request)
-    // {
-    //     $validated = $request->validated();
-
-    //     // $credentials = request(['email', 'password']);
-
-    //     if (! $token = auth()->attempt($validated)) {
-    //         return response()->json(['error' => 'login failed'], 401);
-    //     }
-
-    //     return $this->respondWithToken($token);
-    // }
-
-    /**
-     * Get the authenticated User.
-     *
-     * @return \Illuminate\Http\JsonResponse
-     */
-    // public function me()
-    // {
-    //     return response()->json(auth()->user());
-    // }
-
-    /**
-     * Log the user out (Invalidate the token).
-     *
-     * @return \Illuminate\Http\JsonResponse
-     */
-    // public function logout()
-    // {
-    //     auth()->logout();
-
-    //     return response()->json(['message' => 'Successfully logged out']);
-    // }
-
-    /**
-     * Refresh a token.
-     *
-     * @return \Illuminate\Http\JsonResponse
-     */
-    // public function refresh()
-    // {
-    //     return $this->respondWithToken(auth()->refresh());
-    // }
-
-    /**
-     * Get the token array structure.
-     *
-     * @param  string $token
-     *
-     * @return \Illuminate\Http\JsonResponse
-     */
-    // protected function respondWithToken($token)
-    // {
-    //     return response()->json([
-    //         'access_token' => $token,
-    //         'token_type' => 'bearer',
-    //         'expires_in' => auth()->factory()->getTTL() * 60
-    //     ]);
-    // }
 }

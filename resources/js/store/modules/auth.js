@@ -17,24 +17,11 @@ export default {
         },
         remove_token(state) {
             localStorage.removeItem('token');
-            state.token = "";
+            state.token = null;
         },
-        // set_login_dialog(state) {
-        //     state.loginDialog = !state.loginDialog;
-        // },
-        // set_loading_dialog(state) {
-        //     state.loadingDialog = !state.loadingDialog;
-        // }
         set_button_loading(state) {
             state.buttonLoading = !state.buttonLoading;
         },
-        // deset_log_load(state) {
-        //     state.loginLoading = false;
-        // },
-        // close_signedin_dialog(state) {
-        //     state.signedInDialog = false;
-        // }
-
     },
     actions: {
         setButtonLoading({ commit }) {
@@ -49,88 +36,48 @@ export default {
                     commit('set_token', response.data.access_token);
                     commit('set_user', response.data.user);
                     return response.data.user.role;
-                    // return;
                 }).catch(error => {
                     // if 401 or 429 resp.data.status
-                    throw error.response.data.errors;
+                    throw error;
                 });
             // })
         },
         verifyToken({ commit, rootState }, token) {
             axios.get('api/auth/details', { headers: { 'Authorization': 'Bearer ' + token }
                 }).then(response => {
-                    console.log(response);
-                commit('set_user', response.data)
+                    //use handler (internal success handler + log)
+                    commit('set_user', response.data)
                 }).catch(error => {
-                console.log(error);
+                    // use handler (internal error handler + log)
+                    console.log(error);
                     commit('remove_token');
                     commit('set_user', null);
                     rootState.router.push("/", () => { });
             })
         },
-        logOut({ commit, rootState }) {
-            axios.get('api/auth/logout', { headers: { 'Authorization': 'Bearer ' + token }
+        logOut({ commit, state }) {
+            axios.get('api/auth/logout', { headers: { 'Authorization': 'Bearer ' + state.token }
             }).then(() => {
-                commit('remove_token', null);
+                //use handler (internal success handler + log)
+            }).catch(() => {
+                // use handler (internal error handler + log)
+            }).then(() => {
+                // this always runs and not in 1st then and catch, cause no matter the outcome, user must log out
+                // in this case, the token should be revoked in another matter, if tempered with, can't revoke from localstorage
+                commit('remove_token');
                 commit('set_user', null);
-                return;
-            }).catch(err => {
-                throw err;
             })
         },
-        // if (!state.token) {
-        //     commit('set_initialToken')
-        // commit('set_token', null)
-        // commit('set_user', null)
-        // return;
-        // }
-
-        // try {
-        //     let response = axios.post('api/auth/me')
-        //     commit('set_user', response.data)
-        // } catch (e) {
-        //     commit('set_token', null)
-        //     commit('set_user', null)
-        // }
-        // axios.get('api/auth/me')
-        //     .then(response => {
-        //         commit('set_user', response.data)
-        //         // commit('deset_log_load')
-        //         // only show dialog when firstly signed in
-        //         // commit("open_signedin_dialog")
-        //         // console.log(response)
-        //     })
-        //     .catch(e => {
-        //         console.log(e)
-        //         commit('set_token', null)
-        //         commit('set_user', null)
-        //         // commit('deset_log_load')
-        //     })
     },
     getters: {
         unverifiedToken(state) {
             return (state.token && !state.user) ? state.token : false;
         },
-        // signedInDialog(state) {
-        //     return state.signedInDialog;
-        // },
-        // loggedInSnackbar(state) {
-        //     return state.loggedInSnackbar
-        // },
         authenticated(state) {
-            // if (state.token === 'unset' && state.user === 'unset') { return 'unset' }
-            // else if (!state.token && !state.user) { return 'out' }
-            // else return 'in'
             return state.token && state.user;
         },
-        // user(state) {
-        //     return state.user;
-        // },
         buttonLoading: state => {
             return state.buttonLoading;
         },
-        // registerLoading: state => {
-        //     return state.registerLoading;
-        // }
     }
 }

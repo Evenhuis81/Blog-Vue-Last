@@ -1,8 +1,9 @@
 import Index from '../views/Index.vue'
 import Show from '../views/Show.vue'
 import About from '../views/About.vue'
-import UserDashboard from '../views/UserDashboard.vue'
 import AdminDashboard from '../views/AdminDashboard.vue'
+import AuthorDashboard from '../views/AuthorDashboard.vue'
+import ReaderDashboard from '../views/ReaderDashboard.vue'
 // import store from '../store'
 
 import PageNotFound from '../views/PageNotFound.vue'
@@ -21,14 +22,19 @@ export default [
         component: About,
     },
     {
-        path: '/userdashboard',
-        name: 'userdashboard',
-        component: UserDashboard,
-    },
-    {
         path: '/admindashboard',
         name: 'admindashboard',
         component: AdminDashboard,
+    },
+    {
+        path: '/authordashboard',
+        name: 'authordashboard',
+        component: AuthorDashboard,
+    },
+    {
+        path: '/readerdashboard',
+        name: 'readerdashboard',
+        component: ReaderDashboard,
     }, 
     {
         path: '/blog/:id',

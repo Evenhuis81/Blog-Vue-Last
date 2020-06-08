@@ -4,7 +4,7 @@
     <!-- Application Markup -->
     <layout />
     <!-- Main Content Area -->
-    <v-content class="grey lighten-5">
+    <v-content class="grey lighten-5 ma-2">
       <!-- On Screen Popups, etc. -->
       <dialogs-snackbars />
       <!-- Routes -->

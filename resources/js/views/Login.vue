@@ -110,13 +110,24 @@ export default {
       if (this.$refs.form.validate()) {
         this.setButtonLoading();
         this.login(this.form)
-          .then(() => {
-            this.$router.push({ name: "userdashboard" });
+          .then(role => {
+            // if (role === 'admin') {
+              this.$router.push({ name: role + "dashboard" });
+            // } else if (role === 'author') {
+            //   this.$router.push({ name: "authordashboard" });
+            // } else {
+            //   this.$router.push({ name: "readerdashboard" });
+            // }
+            
             this.setSnackbarText("You are now logged in");
             this.setSnackbar();
           })
-          .catch(err => {
-            this.errors.loginForm = err;
+          .catch(error => {
+            if (error.response.status === 429) {
+              this.errors.loginForm = [[error.response.statusText + ' (wait 5 minutes before trying again)']];
+            } else {
+              this.errors.loginForm = error.response.data.errors;
+            } 
           })
           .finally(() => {
             this.setButtonLoading();

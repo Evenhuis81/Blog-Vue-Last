@@ -30,22 +30,22 @@ class UserSeeder extends Seeder
             'name' => 'Reader',
             'email' => 'reader@reader.nl',
             'password' => bcrypt('reader'),
-            'role' => 'guest'
+            'role' => 'reader'
         ]);
         foreach (range(3, 6) as $steps) {
             User::create([
                 'name' => $faker->firstName(rand(0,1) ? 'male' : 'female').' '.$faker->lastName,
                 'email' => $faker->unique()->safeEmail,
                 'password' => bcrypt($faker->password),
-                'role' => 'guest'
+                'role' => 'author'
             ]);
         };
-        foreach (range(8, 21) as $steps) {
+        foreach (range(7, 21) as $steps) {
             User::create([
                 'name' => $faker->firstName(rand(0,1) ? 'male' : 'female').' '.$faker->lastName,
                 'email' => $faker->unique()->safeEmail,
                 'password' => bcrypt($faker->password),
-                'role' => 'guest'
+                'role' => 'reader'
             ]);
         };
     }

@@ -1,5 +1,5 @@
 export default {
-    // namespaced: true,
+    namespaced: true,
     state: {
         blogs: [],
     },
@@ -48,6 +48,9 @@ export default {
         blogs: state => {
             return state.blogs
         },
+        getBlog: (state) => (id) => {
+            return state.blogs.find(blog => blog.id === id);
+        }
         // categories: state => {
         //     return state.categories
         // }

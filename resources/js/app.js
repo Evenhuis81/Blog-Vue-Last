@@ -20,9 +20,9 @@ new Vue({
     router,
     vuetify,
     created() {
-        this.$store.dispatch("getBlogs");
-        this.$store.dispatch("getCategories");
-        let token = localStorage.getItem('token')
+        this.$store.dispatch("blogs/getBlogs");
+        this.$store.dispatch("categories/getCategories");
+        let token = localStorage.getItem('token');
         if (token) {
             store.dispatch('auth/verifyToken', token);
         }

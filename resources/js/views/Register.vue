@@ -121,7 +121,11 @@ export default {
             });
           })
           .catch(error => {
+            if (error.response.status === 429) {
+              this.errors.registerForm = [[error.response.statusText]];
+            } else {
               this.errors.registerForm = error.response.data.errors;
+            } 
           })
           .finally(() => {
             this.setButtonLoading();
