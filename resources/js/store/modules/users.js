@@ -7,7 +7,7 @@ export default {
         //
     },
     actions: {
-        // register({ commit }, nput)
+        //
     },
     getters: {
         //

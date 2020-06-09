@@ -17,6 +17,24 @@ store.state.router = router;
 
 Vue.prototype.$moment = moment;
 
+router.beforeEach(async(to, from, next) => {
+    if (store.getters['auth/unverifiedToken']) {
+      store.commit('setLoading');
+      await store.dispatch('auth/verifyToken').then(() => { store.commit('setLoading')
+        }).catch(() => {
+          store.commit('setLoading');
+          next({ name: "index" });
+      });
+    }
+    if (store.getters['auth/authenticated'] && to.meta.guestRouteOnly) {
+      next({ name: store.getters['auth/role'] + "dashboard" });
+    }
+    if (to.meta.guestRouteOnly) {
+      //
+    }
+    next();
+});
+
 
 new Vue({
     store,
@@ -25,10 +43,6 @@ new Vue({
     created() {
         this.$store.dispatch("blogs/getBlogs");
         this.$store.dispatch("categories/getCategories");
-        // let token = localStorage.getItem('token');
-        // if (localStorage.getItem('token')) {
-        //     store.dispatch('auth/verifyToken');
-        // }
     },
     render: h => h(App),
 }).$mount('#root');

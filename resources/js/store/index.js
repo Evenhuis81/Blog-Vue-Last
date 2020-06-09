@@ -6,5 +6,6 @@ import router from "../router";
 Vue.use(Vuex);
 export default new Vuex.Store({
     modules,
-    state: { router: undefined }
+    state: { router: undefined, loading: false },
+    mutations: { setLoading(state) { state.loading = !state.loading }}
 })

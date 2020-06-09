@@ -155,6 +155,6 @@ export default {
   },
   mounted() {
     this.$refs.name.focus();
-  }
+  },
 };
 </script>

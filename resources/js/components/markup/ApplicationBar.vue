@@ -13,6 +13,7 @@
     <!-- Right: Login- register- & usericons/menus -->
     <v-spacer></v-spacer>
     <user-navigation></user-navigation>
+    <v-progress-linear indeterminate :active="true" absolute bottom></v-progress-linear>
   </v-app-bar>
 </template>
 
