@@ -9,15 +9,15 @@
       src="https://cdn.vuetifyjs.com/images/cards/docks.jpg"
     >
       <!-- <v-card-title>{{ getBlog(11).title }}</v-card-title> -->
-      <v-card-title>{{ blogs[id].title }}</v-card-title>
+      <v-card-title>{{ blog.title }}</v-card-title>
     </v-img>
 
-    <v-card-subtitle class="pb-0">Number 10</v-card-subtitle>
+    <v-card-subtitle class="pb-0">{{ blog.category.name }}</v-card-subtitle>
 
     <v-card-text class="text--primary">
-      <div>Whitehaven Beach</div>
+      <div>by {{ blog.owner.name }}</div>
 
-      <div>Whitsunday Island, Whitsunday Islands</div>
+      <div>{{ blog.description }}</div>
     </v-card-text>
 
     <v-card-actions>
@@ -51,13 +51,13 @@ export default {
     }
   },
   computed: {
-    ...mapGetters({blog: "blogs/getBlog", blogs: "blogs/blogs"})
-    // blog() {
-      // return this.getBlog(this.$route.params.id);
-    // }
+    ...mapGetters({ blogs: "blogs/blogs" }),
+    blog() {
+      return this.blogs[this.id];
+    }
   },
   methods: {
-    ...mapActions({setBlog: "blogs/setBlog"})
+    // ...mapActions({setBlog: "blogs/setBlog"})
     // setBlog() {
       // console.log(this.$store.getters['blogs/getBlog'](11));
       // this.blog = "yes";
@@ -74,8 +74,8 @@ export default {
 
   },
   mounted() {
-    console.log(this.id);
-    this.setBlog(this.id);
+    // console.log(this.id);
+    // this.setBlog(this.id);
   }
 }
 </script>
