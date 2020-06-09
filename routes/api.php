@@ -1,8 +1,10 @@
 <?php
 
 Route::group(['prefix' => 'auth', 'middleware' => 'throttle:60,5'], function () {
+    Route::group(['middleware' => 'guest'], function () {
     Route::post('login', 'AuthController@login');
     Route::post('register', 'AuthController@register');
+    });
     Route::group(['middleware' => 'auth:api'], function () {
         Route::get('logout', 'AuthController@logout');
         // Dont really want to throttle details, but then more complex/cluttered grouping

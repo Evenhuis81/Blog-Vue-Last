@@ -6,12 +6,12 @@ export default [
         path: '/register',
         name: 'register',
         component: Register,
-        meta: { requiresAuth: false }
+        meta: { guestRouteOnly: true }
     },
     {
         path: '/login',
         name: 'login',
         component: Login,
-        meta: { requiresAuth: false }
+        meta: { guestRouteOnly: true }
     },
 ]

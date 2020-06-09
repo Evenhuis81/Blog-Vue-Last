@@ -1,5 +1,3 @@
-// import router from '../../plugins/router.js'
-
 export default {
     namespaced: true,
     state: {
@@ -42,22 +40,23 @@ export default {
                 });
             // })
         },
-        verifyToken({ commit, rootState }, token) {
-            axios.get('api/auth/details', { headers: { 'Authorization': 'Bearer ' + token }
-                }).then(response => {
-                    //use handler (internal success handler + log)
-                    commit('set_user', response.data)
-                }).catch(error => {
-                    // use handler (internal error handler + log)
-                    console.log(error);
-                    commit('remove_token');
-                    commit('set_user', null);
-                    rootState.router.push("/", () => { });
+        verifyToken({ commit, rootState }) {
+            return axios.get('api/auth/details'
+            ).then(response => {
+                //use handler (internal success handler + log)
+                commit('set_user', response.data)
+                // return;
+            }).catch(error => {
+                // use handler (internal error handler + log)
+                commit('remove_token');
+                commit('set_user', null);
+                // rootState.router.push("/", () => { });
+                throw error;
             })
         },
-        logOut({ commit, state }) {
-            axios.get('api/auth/logout', { headers: { 'Authorization': 'Bearer ' + state.token }
-            }).then(() => {
+        logOut({ commit }) {
+            axios.get('api/auth/logout'
+            ).then(() => {
                 //use handler (internal success handler + log)
             }).catch(() => {
                 // use handler (internal error handler + log)
@@ -74,10 +73,13 @@ export default {
             return (state.token && !state.user) ? state.token : false;
         },
         authenticated(state) {
-            return state.token && state.user;
+            return (state.token && state.user) ? true : false;
         },
         buttonLoading: state => {
             return state.buttonLoading;
         },
+        role(state) {
+            return state.user.role;
+        }
     }
 }

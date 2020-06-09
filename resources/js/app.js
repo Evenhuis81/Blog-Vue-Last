@@ -13,7 +13,10 @@ import * as moment from 'moment';
 
 Vue.use(Vuex);
 
+store.state.router = router;
+
 Vue.prototype.$moment = moment;
+
 
 new Vue({
     store,
@@ -22,10 +25,10 @@ new Vue({
     created() {
         this.$store.dispatch("blogs/getBlogs");
         this.$store.dispatch("categories/getCategories");
-        let token = localStorage.getItem('token');
-        if (token) {
-            store.dispatch('auth/verifyToken', token);
-        }
+        // let token = localStorage.getItem('token');
+        // if (localStorage.getItem('token')) {
+        //     store.dispatch('auth/verifyToken');
+        // }
     },
     render: h => h(App),
 }).$mount('#root');

@@ -50,7 +50,11 @@
                 <v-spacer></v-spacer>
                 <v-btn :disabled="buttonLoading" text @click="resetLoginForm">CLEAR INPUT</v-btn>
               </v-card-actions>
-              <p v-for="(error, index) in errors.loginForm" :key="index" class="red--text">{{ error[0] }}</p>
+              <p
+                v-for="(error, index) in errors.loginForm"
+                :key="index"
+                class="red--text"
+              >{{ error[0] }}</p>
             </v-col>
           </v-row>
         </v-form>
@@ -94,7 +98,7 @@ export default {
     valid: true
   }),
   computed: {
-    ...mapGetters({ buttonLoading: "auth/buttonLoading" })
+    ...mapGetters({ buttonLoading: "auth/buttonLoading", role: "auth/role" })
   },
   methods: {
     ...mapActions("auth", {
@@ -112,22 +116,31 @@ export default {
         this.login(this.form)
           .then(role => {
             // if (role === 'admin') {
-              this.$router.push({ name: role + "dashboard" });
+            this.$router.push({ name: role + "dashboard" });
             // } else if (role === 'author') {
             //   this.$router.push({ name: "authordashboard" });
             // } else {
             //   this.$router.push({ name: "readerdashboard" });
             // }
-            
+
             this.setSnackbarText("You are now logged in");
             this.setSnackbar();
           })
           .catch(error => {
             if (error.response.status === 429) {
-              this.errors.loginForm = [[error.response.statusText + ' (wait 5 minutes before trying again)']];
+              this.errors.loginForm = [
+                [
+                  error.response.statusText +
+                    " (wait 5 minutes before trying again)"
+                ]
+              ];
+            } else if (error.response.status === 403) {
+              this.setSnackbarText(error.response.data.message);
+              this.setSnackbar();
+              this.$router.push({ name: this.role + "dashboard" });
             } else {
               this.errors.loginForm = error.response.data.errors;
-            } 
+            }
           })
           .finally(() => {
             this.setButtonLoading();

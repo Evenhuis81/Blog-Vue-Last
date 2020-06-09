@@ -24,6 +24,9 @@ class AuthController extends Controller
 
     public function register(RegisterUser $request)
     {
+        if ($request->header('Authorization')) {
+            abort(403, "You are already registered and logged in!");
+        }
         $validated = $request->validated();
         if (User::create($validated)) {
             return response()->json('User created', 201);
@@ -34,6 +37,9 @@ class AuthController extends Controller
 
     public function login(LoginUser $request)
     {
+        if ($request->header('Authorization')) {
+            abort(403, "You are already logged in!");
+        }
         $credentials = $request->only('email', 'password');   
         if (!Auth::attempt($credentials)) {
             return response()->json(['errors' => ['credentials' => ['Email or Password incorrect']]], 401);

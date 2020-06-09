@@ -42,7 +42,11 @@
           <v-btn color="error" class="mr-4" @click="reset">Reset Form</v-btn>
 
           <v-btn color="warning" @click="resetValidation">Reset Validation</v-btn>-->
-          <p v-for="(error, index) in errors.registerForm" :key="index" class="red--text">{{ error[0] }}</p>
+          <p
+            v-for="(error, index) in errors.registerForm"
+            :key="index"
+            class="red--text"
+          >{{ error[0] }}</p>
           <!-- <v-row justify="center"> -->
           <!-- <v-col cols> -->
           <v-card-actions>
@@ -100,7 +104,7 @@ export default {
     }
   }),
   computed: {
-    ...mapGetters({ buttonLoading: "auth/buttonLoading" })
+    ...mapGetters({ buttonLoading: "auth/buttonLoading", role: "auth/role" })
   },
   methods: {
     ...mapActions({
@@ -123,9 +127,13 @@ export default {
           .catch(error => {
             if (error.response.status === 429) {
               this.errors.registerForm = [[error.response.statusText]];
+            } else if (error.response.status === 403) {
+              this.setSnackbarText(error.response.data.message);
+              this.setSnackbar();
+              this.$router.push({ name: this.role + "dashboard" });
             } else {
               this.errors.registerForm = error.response.data.errors;
-            } 
+            }
           })
           .finally(() => {
             this.setButtonLoading();
