@@ -70,7 +70,7 @@ export default {
     },
     getters: {
         unverifiedToken(state) {
-            return (state.token && !state.user) ? state.token : false;
+            return (state.token && !state.user) ? true : false;
         },
         authenticated(state) {
             return (state.token && state.user) ? true : false;
@@ -79,7 +79,7 @@ export default {
             return state.buttonLoading;
         },
         role(state) {
-            return state.user.role;
+            return state.user ? state.user.role : null;
         }
     }
 }

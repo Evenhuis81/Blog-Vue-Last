@@ -27,5 +27,5 @@ new Vue({
         this.$store.dispatch("blogs/getBlogs");
         this.$store.dispatch("categories/getCategories");
     },
-    render: h => h(App),
+    render: h => h(App)
 }).$mount('#root');
