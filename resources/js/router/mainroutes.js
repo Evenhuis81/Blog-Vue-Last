@@ -4,7 +4,6 @@ import About from '../views/About.vue'
 
 const PageNotFound = { template: "<div>Page Not Found</div>" };
 
-
 export default [
     {
         path: '/',
@@ -28,4 +27,4 @@ export default [
         name: "pagenotfound",
         component: PageNotFound
     }
-]
+];

@@ -10,31 +10,14 @@ import router from './router';
 import store from './store';
 import Vuex from "vuex";
 import * as moment from 'moment';
+// import Axios from 'axios'
 
 Vue.use(Vuex);
 
-store.state.router = router;
+// store.state.router = router;
 
+// Vue.prototype.$http = Axios;
 Vue.prototype.$moment = moment;
-
-router.beforeEach(async(to, from, next) => {
-    if (store.getters['auth/unverifiedToken']) {
-      store.commit('setLoading');
-      await store.dispatch('auth/verifyToken').then(() => { store.commit('setLoading')
-        }).catch(() => {
-          store.commit('setLoading');
-          next({ name: "index" });
-      });
-    }
-    if (store.getters['auth/authenticated'] && to.meta.guestRouteOnly) {
-      next({ name: store.getters['auth/role'] + "dashboard" });
-    }
-    if (to.meta.guestRouteOnly) {
-      //
-    }
-    next();
-});
-
 
 new Vue({
     store,

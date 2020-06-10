@@ -7,9 +7,6 @@ export default {
         set_blogs(state, blogs) {
             state.blogs = blogs;
         },
-        // set_blog(state, id) {
-        //     state.blog = state.blogs[id];
-        // }
     },
     actions: {
         // createBlog({ commit }, blog) {
@@ -59,18 +56,5 @@ export default {
         // getBlog: state => {
         //     return state.blog;
         // },
-        // getParams: (state, getters, rootState) => {
-        //     return rootState.route.params;
-        // }
-        // gett(state) {
-        //     return state.blogs.find(blog => blog.id === 25)
-        // return state.blogs.find(blog => blog.id === id);
-        // }
-        // categories: state => {
-        //     return state.categories
-        // }
-        // categories: state => {
-        //     return state.categories
-        // }
     }
 }
