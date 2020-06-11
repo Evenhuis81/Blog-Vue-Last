@@ -1,6 +1,6 @@
 <?php
 
-Route::group(['prefix' => 'auth', 'middleware' => 'throttle:60,5'], function () {
+Route::group(['prefix' => 'auth', 'middleware' => 'throttle:20,5'], function () {
     Route::group(['middleware' => 'guest'], function () {
     Route::post('login', 'AuthController@login');
     Route::post('register', 'AuthController@register');

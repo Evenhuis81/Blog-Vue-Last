@@ -1,60 +1,54 @@
-import Index from '../views/Index.vue';
-import Show from '../views/Show.vue';
-import About from '../views/About.vue';
-import Redirect from '../views/Redirect.vue';
+import Index from '../views/Index.vue'
+import Show from '../views/Show.vue'
+import About from '../views/About.vue'
+import Redirect from '../views/Redirect.vue'
 import Login from '../views/Login.vue'
 import Register from '../views/Register.vue'
 
-const PageNotFound = { template: "<div>Page Not Found</div>" };
+const PageNotFound = { template: "<div>Page Not Found => " + window.location.pathname.substr(1) + "</div>" }
 
 const routes = [
     {
-        path: '/',
-        name: 'index',
-        component: Index
+        // => index
     },
     {
-        path: '/about',
-        name: 'about',
-        component: About,
+        // => about
     },
     {
-        path: '/blog/:id',
-        name: 'blog',
-        component: Show,
+        // => blog/id
         props: true
     },
     {
-        path: "/404",
+        // => 404
         alias: "*",
-        name: "pagenotfound",
-        component: PageNotFound
     },
     {
-        path: "/auth/redirect",
-        name: "redirect",
-        component: Redirect
+        // => redirect
     },
     {
-        path: '/register',
-        name: 'register',
-        component: Register,
+        // => register
         meta: { guestRouteOnly: true }
     },
     {
-        path: '/login',
-        name: 'login',
-        component: Login,
+        // => login
         meta: { guestRouteOnly: true }
     },
-];
+]
 
-export default routes.map((route) => 
-    {
-        const meta = 
-        {
+const path = ['/', '/about', '/blog/:id', '/404', '/redirect', '/register', '/login']
+const name = ['index', 'about', 'blog', 'pagenotfound', 'redirect', 'register', 'login']
+const component = [Index, About, Show, PageNotFound, Redirect, Register, Login]
+
+export default routes.map((route, index) => {
+    route.path = path[index]
+    route.name = name[index]
+    route.component = component[index]
+    if (!route.meta) {
+        route.meta = {
             requiresAuth: false
         }
-    
-        return { ...route, meta };
-    });
+    } else {
+        route.meta = { requiresAuth: false, ...route.meta }
+    }
+    return route
+});

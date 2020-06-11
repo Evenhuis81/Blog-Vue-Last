@@ -38,19 +38,16 @@ export default {
                     // if 401 or 429 resp.data.status
                     throw error;
                 });
-            // })
         },
         verifyToken({ commit, rootState }) {
             return axios.get('api/auth/details'
             ).then(response => {
                 //use handler (internal success handler + log)
                 commit('set_user', response.data)
-                return;
             }).catch(error => {
                 // use handler (internal error handler + log)
                 commit('remove_token');
                 commit('set_user', null);
-                // rootState.router.push("/", () => { });
                 throw error;
             })
         },

@@ -8,11 +8,11 @@
       <v-card-title>{{ blogs[id].title }}</v-card-title>
     </v-img>
 
-    <v-card-subtitle class="pb-0">{{ blog.category.name }}</v-card-subtitle>
+    <v-card-subtitle class="pb-2">{{ blog.category.name }}</v-card-subtitle>
 
     <v-card-text class="text--primary">
-      <div>by {{ blog.owner.name }}</div>
-
+      <div class>by {{ blog.owner.name }}</div>
+      <div>{{ underscore }}</div>
       <div>{{ blog.description }}</div>
     </v-card-text>
 
@@ -33,6 +33,13 @@ export default {
     ...mapGetters({ blogs: "blogs/blogs" }),
     blog() {
       return this.blogs[this.id];
+    },
+    underscore() {
+      let under = "";
+      for (let i = 0; i < this.blog.owner.name.length; i++) {
+        under += "--";
+      }
+      return under;
     }
   }
 };

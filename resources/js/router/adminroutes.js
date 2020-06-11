@@ -5,6 +5,6 @@ export default [
         path: '/admindashboard',
         name: 'admindashboard',
         component: AdminDashboard,
-        meta: { requiresAuth: true, scopes: ['admin_access'] }
+        meta: { requiresAuth: true, scope: 'admin_access' }
     },
 ]
