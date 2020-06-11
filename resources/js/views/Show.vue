@@ -5,7 +5,7 @@
       height="200px"
       src="https://cdn.vuetifyjs.com/images/cards/docks.jpg"
     >
-      <v-card-title>{{ blogs[id].title }}</v-card-title>
+      <v-card-title>{{ blog.title }}</v-card-title>
     </v-img>
 
     <v-card-subtitle class="pb-2">{{ blog.category.name }}</v-card-subtitle>
@@ -17,7 +17,7 @@
     </v-card-text>
 
     <v-card-actions>
-      <v-btn color="orange" text>Share</v-btn>
+      <v-btn color="primary" text>Share</v-btn>
 
       <v-btn color="orange" text>Explore</v-btn>
     </v-card-actions>
@@ -32,7 +32,8 @@ export default {
   computed: {
     ...mapGetters({ blogs: "blogs/blogs" }),
     blog() {
-      return this.blogs[this.id];
+      // return this.id
+      return this.blogs.find(x => x.id == this.id);
     },
     underscore() {
       let under = "";

@@ -66,17 +66,9 @@ export default {
         },
     },
     getters: {
-        unverifiedToken(state) {
-            return (state.token && !state.user) ? true : false;
-        },
-        authenticated(state) {
-            return (state.token && state.user) ? true : false;
-        },
-        buttonLoading: state => {
-            return state.buttonLoading;
-        },
-        role(state) {
-            return state.user ? state.user.role : null;
-        }
+        unverifiedToken: state => (state.token && !state.user) ? true : false,
+        authenticated: state => (state.token && state.user) ? true : false,
+        buttonLoading: state => state.buttonLoading,
+        role: state => state.user ? state.user.role : null
     }
 }
