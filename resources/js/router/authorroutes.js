@@ -5,6 +5,6 @@ export default [
         path: '/authordashboard',
         name: 'authordashboard',
         component: AuthorDashboard,
-        meta: { public: false, role: 'author' }
+        meta: { requiresAuth: true, scopes: ['author_access'] }
     },
 ]

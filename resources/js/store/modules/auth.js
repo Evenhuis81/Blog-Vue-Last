@@ -45,7 +45,7 @@ export default {
             ).then(response => {
                 //use handler (internal success handler + log)
                 commit('set_user', response.data)
-                // return;
+                return;
             }).catch(error => {
                 // use handler (internal error handler + log)
                 commit('remove_token');

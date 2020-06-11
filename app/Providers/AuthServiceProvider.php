@@ -33,5 +33,7 @@ class AuthServiceProvider extends ServiceProvider
             'author_access' => 'Author',
             'reader_access' => 'Reader'
         ]);
+
+        // Passport::setDefaultScope(['reader_access']);
     }
 }

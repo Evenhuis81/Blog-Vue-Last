@@ -53,7 +53,7 @@ export default routes.map((route) =>
     {
         const meta = 
         {
-            public: true,
+            requiresAuth: false
         }
     
         return { ...route, meta };

@@ -5,6 +5,6 @@ export default [
         path: '/readerdashboard',
         name: 'readerdashboard',
         component: ReaderDashboard,
-        meta: { public: false, role: 'reader' }
+        meta: { requiresAuth: true, scopes: ['reader_access'] }
     }
 ];
