@@ -32,7 +32,16 @@
                 @click:append="showPassword = !showPassword"
                 required
               ></v-text-field>
-              <v-checkbox v-model="form.remember" label="Keep me logged in." required></v-checkbox>
+              <v-row justify="space-between">
+                <v-checkbox v-model="form.remember" label="Keep me logged in." required>
+                </v-checkbox>
+                                            <v-tooltip top>
+      <template v-slot:activator="{ on, attrs }">
+        <v-icon v-bind="attrs" v-on="on" color="grey lighten-1">mdi-information</v-icon>
+      </template>
+      <span>If unchecked you will be logged out after an hour, you can change this behaviour in your profile settings</span>
+    </v-tooltip>
+              </v-row>
             </v-col>
           </v-row>
 

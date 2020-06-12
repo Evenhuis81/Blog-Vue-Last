@@ -59,6 +59,7 @@ class AuthController extends Controller
     
     public function details()
     {
+        // Check personal access token for expiration and refresh if needed
         return response()->json(auth()->user());
     }
     
