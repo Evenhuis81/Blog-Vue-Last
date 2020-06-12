@@ -20,6 +20,10 @@ import Layout from "./components/markup/Layout";
 import DialogsSnackbars from "./components/DialogsSnackbars";
 
 export default {
-  components: { Layout, DialogsSnackbars }
+  components: { Layout, DialogsSnackbars },
+  created() {
+    this.$store.dispatch("blogs/getBlogs")
+    this.$store.dispatch("categories/getCategories")
+  },
 };
 </script>

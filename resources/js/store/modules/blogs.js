@@ -10,7 +10,7 @@ export default {
     },
     actions: {
         // createBlog({ commit }, blog) {
-        //     axios.post('/api/blogs', blog)
+        //     this.$http().post('/api/blogs', blog)
         //         .then(res => {
         //             commit('CREATE_BLOG', res.data)
         //         }).catch(err => {
@@ -18,7 +18,7 @@ export default {
         //         })
         // },
         getBlogs({ commit }) {
-            axios.get('/api/blogs')
+            this._vm.$http.get('/api/blogs')
                 .then(res => {
 
                     commit('set_blogs', res.data)
@@ -32,7 +32,7 @@ export default {
         //     commit('set_blog', id);
         // }
         // fetchCategories({ commit }) {
-        //     axios.get('api/categories')
+        //     this.$http().get('api/categories')
         //         .then(res => {
         //             commit('FETCH_CATEGORIES', res.data)
         //         }).catch(err => {
@@ -40,7 +40,7 @@ export default {
         //         })
         // },
         // deleteBlog({ commit }, blog) {
-        //     axios.delete(`/api/blogs/${blog.id}`)
+        //     this.$http().delete(`/api/blogs/${blog.id}`)
         //         .then(res => {
         //             if (res.data === 'ok')
         //                 commit('DELETE_BLOG', blog)

@@ -1,15 +1,16 @@
-axios.interceptors.request.use(config => {
+import Axios from "axios"
+Axios.interceptors.request.use(config => {
     /**
      * Here we will fecth the token from local storage and 
      * attach it (if exists) to the Authorization header on EVERY request.
      */
-    let token = window.localStorage.getItem('token');
+    let token = window.localStorage.getItem('token')
 
     if (token) {
-        config.headers['Authorization'] = 'Bearer ' + token;
+        config.headers['Authorization'] = 'Bearer ' + token
     }
 
-    return config;
+    return config
 
     /**
      * Here is where we can refresh the token.
@@ -42,5 +43,5 @@ axios.interceptors.request.use(config => {
     // })
 },
     function (error) {
-        return Promise.reject(error);
-    });
+        return Promise.reject(error)
+    })

@@ -65,6 +65,6 @@ export default {
     currentBlog(row, col) {
       return this.visibleBlogs[(row - 1) * 2 + (col - 1)];
     }
-  }
+  },
 };
 </script>

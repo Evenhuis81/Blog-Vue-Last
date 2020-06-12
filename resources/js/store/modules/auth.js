@@ -26,10 +26,10 @@ export default {
             commit('set_button_loading');
         },
         register({ }, credentials) {
-            return axios.post("api/auth/register", credentials)
+            return this._vm.$http.post("api/auth/register", credentials)
         },
         login({ commit }, credentials) {
-            return axios.post("api/auth/login", credentials)
+            return this._vm.$http.post("api/auth/login", credentials)
                 .then(response => {
                     commit('set_token', response.data.access_token);
                     commit('set_user', response.data.user);
@@ -40,7 +40,7 @@ export default {
                 });
         },
         verifyToken({ commit, rootState }) {
-            return axios.get('api/auth/details'
+            return this._vm.$http.get('api/auth/details'
             ).then(response => {
                 //use handler (internal success handler + log)
                 commit('set_user', response.data)
@@ -52,7 +52,7 @@ export default {
             })
         },
         logOut({ commit }) {
-            axios.get('api/auth/logout'
+            this._vm.$http.get('api/auth/logout'
             ).then(() => {
                 //use handler (internal success handler + log)
             }).catch(() => {

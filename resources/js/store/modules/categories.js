@@ -10,7 +10,7 @@ export default {
     },
     actions: {
         getCategories({ commit }) {
-            axios.get('/api/categories')
+            this._vm.$http.get('/api/categories')
                 .then(res => {
 
                     commit('get_categories', res.data)

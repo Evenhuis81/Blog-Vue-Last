@@ -1,10 +1,11 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
-import modules from "./modules";
+import modules from "./modules"
 
-Vue.use(Vuex);
+Vue.use(Vuex)
+
 export default new Vuex.Store({
     modules,
-    state: { router: undefined, loading: false },
+    state: { loading: false },
     mutations: { setLoading(state) { state.loading = !state.loading }}
 })
