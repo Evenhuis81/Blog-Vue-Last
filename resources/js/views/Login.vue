@@ -111,6 +111,7 @@ export default {
   },
   methods: {
     ...mapActions("auth", {
+      loginPG: "loginPG",
       login: "login",
       setButtonLoading: "setButtonLoading"
     }),
@@ -122,7 +123,7 @@ export default {
       this.errors.loginForm = "";
       if (this.$refs.form.validate()) {
         this.setButtonLoading();
-        this.login(this.form)
+        this.loginPG(this.form)
           .then(role => {
             // if (role === 'admin') {
             this.$router.push({ name: role + "dashboard" });

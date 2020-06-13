@@ -25,6 +25,21 @@ class AuthController extends Controller
         }
     }
 
+    public function loginpg(LoginUser $request)
+    {
+        $req = Request::create(route('passport.token'), 'POST', [
+            'grant_type' => 'password',
+            'client_id' => config('passport.password_grant_client.id'),
+            'client_secret' => config('passport.password_grant_client.secret'),
+            'username' => $request->email,
+            'password' => $request->password,
+            'scope' => '*'
+        ]);
+  
+        
+        return app()->handle($req);
+    }
+
     public function login(LoginUser $request)
     {
         if ($request->header('Authorization')) {

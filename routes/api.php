@@ -1,5 +1,7 @@
 <?php
 
+use Illuminate\Http\Request;
+
 Route::group(['prefix' => 'auth', 'middleware' => 'throttle:20,5'], function () {
     Route::group(['middleware' => 'guest'], function () {
     Route::post('login', 'AuthController@login');
@@ -14,3 +16,9 @@ Route::group(['prefix' => 'auth', 'middleware' => 'throttle:20,5'], function () 
 
 Route::get('blogs', 'BlogController@index');
 Route::resource('categories', 'CategoryController');
+
+Route::post('loginpg', 'AuthController@loginpg');
+
+Route::middleware('auth:api')->get('/user', function (Request $request) {
+    return $request->user();
+});
