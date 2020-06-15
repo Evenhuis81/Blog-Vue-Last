@@ -33,14 +33,13 @@
                 required
               ></v-text-field>
               <v-row justify="space-between">
-                <v-checkbox v-model="form.remember" label="Keep me logged in." required>
-                </v-checkbox>
-                                            <v-tooltip top>
-      <template v-slot:activator="{ on, attrs }">
-        <v-icon v-bind="attrs" v-on="on" color="grey lighten-1">mdi-information</v-icon>
-      </template>
-      <span>If unchecked you will be logged out after an hour, you can change this behaviour in your profile settings</span>
-    </v-tooltip>
+                <v-checkbox v-model="form.remember" label="Keep me logged in." required></v-checkbox>
+                <v-tooltip top>
+                  <template v-slot:activator="{ on, attrs }">
+                    <v-icon v-bind="attrs" v-on="on" color="grey lighten-1">mdi-information</v-icon>
+                  </template>
+                  <span>If unchecked you will be logged out after 15 minutes of inactivity, you can change this behaviour in your profile settings</span>
+                </v-tooltip>
               </v-row>
             </v-col>
           </v-row>
@@ -125,14 +124,7 @@ export default {
         this.setButtonLoading();
         this.loginPG(this.form)
           .then(role => {
-            // if (role === 'admin') {
             this.$router.push({ name: role + "dashboard" });
-            // } else if (role === 'author') {
-            //   this.$router.push({ name: "authordashboard" });
-            // } else {
-            //   this.$router.push({ name: "readerdashboard" });
-            // }
-
             this.setSnackbarText("You are now logged in");
             this.setSnackbar();
           })
@@ -149,6 +141,7 @@ export default {
               this.setSnackbar();
               this.$router.push({ name: this.role + "dashboard" });
             } else {
+              // console.log(error.response.status);
               this.errors.loginForm = error.response.data.errors;
             }
           })

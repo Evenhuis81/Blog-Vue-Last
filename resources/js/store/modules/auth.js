@@ -29,25 +29,22 @@ export default {
             return this._vm.$http.post("api/auth/register", credentials)
         },
         loginPG({ commit }, credentials) {
-            this._vm.$http.post("api/loginpg", credentials)
+            return this._vm.$http.post("api/loginpg", credentials)
                 .then(response => {
-                    // commit('set_token', response.data.access_token);
-                    // commit('set_user', response.data.user);
-                    // return response.data.user.role;
-                    console.log(response);
+                    commit('set_token', response.data.access_token);
+                    commit('set_user', response.data.user);
+                    return response.data.user.role;
                 }).catch(error => {
-                    // if 401 or 429 resp.data.status
-                    console.log(error);
-                    // throw error;
+                    throw error;
                 });
         },
 
         login({ commit }, credentials) {
             return this._vm.$http.post("api/auth/login", credentials)
                 .then(response => {
-                    commit('set_token', response.data.access_token);
-                    commit('set_user', response.data.user);
-                    return response.data.user.role;
+                    // commit('set_token', response.data.access_token);
+                    // commit('set_user', response.data.user);
+                    // return response.data.user.role;
                 }).catch(error => {
                     // if 401 or 429 resp.data.status
                     throw error;

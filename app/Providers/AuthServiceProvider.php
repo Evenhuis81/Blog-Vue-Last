@@ -30,12 +30,16 @@ class AuthServiceProvider extends ServiceProvider
             $router->forAccessTokens();
         });
 
-        // Passport::tokensCan([
-        //     'admin_access' => 'Administrator',
-        //     'author_access' => 'Author',
-        //     'reader_access' => 'Reader'
-        // ]);
+        Passport::tokensExpireIn(now()->addMinutes(5));
 
-        // Passport::setDefaultScope(['reader_access']);
+        Passport::refreshTokensExpireIn(now()->addDays(30));
+
+        Passport::tokensCan([
+            'admin_access' => 'Administrator',
+            'author_access' => 'Author',
+            'reader_access' => 'Reader'
+        ]);
+
+        Passport::setDefaultScope(['reader_access']);
     }
 }

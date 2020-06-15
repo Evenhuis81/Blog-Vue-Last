@@ -2,8 +2,9 @@
 
 namespace App\Exceptions;
 
-use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Throwable;
+use Laravel\Passport\Exceptions\OAuthServerException;
+use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 
 class Handler extends ExceptionHandler
 {
@@ -50,6 +51,9 @@ class Handler extends ExceptionHandler
      */
     public function render($request, Throwable $exception)
     {
+        if (get_class($exception) === OAuthServerException::class) {
+            return response()->json(['message' => $exception->getMessage()], 401);
+        }
         return parent::render($request, $exception);
     }
 }
