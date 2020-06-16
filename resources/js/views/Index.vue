@@ -1,44 +1,39 @@
 <template>
-  <div>
-    <!-- <content-load v-if="blogs.length" style="height: 100%"></content-load> -->
-    <v-container v-if="blogs.length">
-      <v-pagination v-model="page" :length="Math.ceil(blogs.length/perPage)"></v-pagination>
-      <v-row justify="center" v-for="rowNr in Math.ceil((visibleBlogs.length/2))" :key="rowNr">
-        <v-col cols="5" v-for="colNr in 2" :key="colNr">
-          <v-card
-            outlined
-            :to="{ name: 'blog', params: { id: currentBlog(rowNr, colNr).id}}"
-            class="blue lighten-5"
-          >
-            <v-list-item three-line>
-              <v-list-item-content>
-                <v-row>
-                  <v-col cols="6" class="py-0">
-                    <div class="overline mb-4">by {{ currentBlog(rowNr, colNr).owner.name }}</div>
-                  </v-col>
-                  <v-col cols="6" class="py-0">
-                    <div
-                      class="overline mb-4 text-right"
-                    >{{ blogCreatedFromNow(currentBlog(rowNr, colNr).created_at) }}</div>
-                  </v-col>
-                </v-row>
-                <v-list-item-title class="headline mb-1">{{ currentBlog(rowNr, colNr).title }}</v-list-item-title>
-                <v-list-item-subtitle>{{ currentBlog(rowNr, colNr).description }}</v-list-item-subtitle>
-              </v-list-item-content>
-            </v-list-item>
-          </v-card>
-        </v-col>
-      </v-row>
-    </v-container>
-  </div>
+  <v-container v-if="blogs.length">
+    <v-pagination v-model="page" :length="Math.ceil(blogs.length/perPage)"></v-pagination>
+    <v-row justify="center" v-for="rowNr in Math.ceil((visibleBlogs.length/2))" :key="rowNr">
+      <v-col cols="5" v-for="colNr in 2" :key="colNr">
+        <v-card
+          outlined
+          :to="{ name: 'blog', params: { id: currentBlog(rowNr, colNr).id}}"
+          class="blue lighten-5"
+        >
+          <v-list-item three-line>
+            <v-list-item-content>
+              <v-row>
+                <v-col cols="6" class="py-0">
+                  <div class="overline mb-4">by {{ currentBlog(rowNr, colNr).owner.name }}</div>
+                </v-col>
+                <v-col cols="6" class="py-0">
+                  <div
+                    class="overline mb-4 text-right"
+                  >{{ blogCreatedFromNow(currentBlog(rowNr, colNr).created_at) }}</div>
+                </v-col>
+              </v-row>
+              <v-list-item-title class="headline mb-1">{{ currentBlog(rowNr, colNr).title }}</v-list-item-title>
+              <v-list-item-subtitle>{{ currentBlog(rowNr, colNr).description }}</v-list-item-subtitle>
+            </v-list-item-content>
+          </v-list-item>
+        </v-card>
+      </v-col>
+    </v-row>
+  </v-container>
 </template>
 
 <script>
-import ContentLoad from "../components/ContentLoad.vue"
 import { mapGetters } from "vuex";
 
 export default {
-  components: { ContentLoad },
   data() {
     return {
       page: 1,

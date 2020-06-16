@@ -18,19 +18,13 @@ export default {
             localStorage.removeItem('token');
             state.token = null;
         },
-        set_button_loading(state) {
-            state.buttonLoading = !state.buttonLoading;
-        },
     },
     actions: {
-        setButtonLoading({ commit }) {
-            commit('set_button_loading');
-        },
         register({ }, credentials) {
-            return this._vm.$http.post("api/auth/register", credentials)
+            return this._vm.$http.post("/api/auth/register", credentials)
         },
         loginPG({ commit }, credentials) {
-            return this._vm.$http.post("api/loginpg", credentials)
+            return this._vm.$http.post("/api/auth/login", credentials)
                 .then(response => {
                     commit('set_token', response.data.access_token);
                     commit('set_user', response.data.user);
@@ -41,7 +35,7 @@ export default {
         },
 
         login({ commit }, credentials) {
-            return this._vm.$http.post("api/auth/login", credentials)
+            return this._vm.$http.post("/api/auth/login", credentials)
                 .then(response => {
                     commit('set_token', response.data.access_token);
                     commit('set_user', response.data.user);
@@ -52,7 +46,7 @@ export default {
                 });
         },
         verifyToken({ commit, rootState }) {
-            return this._vm.$http.get('api/auth/details'
+            return this._vm.$http.get('/api/auth/details'
             ).then(response => {
                 //use handler (internal success handler + log)
                 commit('set_user', response.data)
@@ -64,7 +58,7 @@ export default {
             })
         },
         logOut({ commit }) {
-            this._vm.$http.get('api/auth/logout'
+            this._vm.$http.get('/api/auth/logout'
             ).then(() => {
                 //use handler (internal success handler + log)
             }).catch(() => {
@@ -80,7 +74,6 @@ export default {
     getters: {
         unverifiedToken: state => (state.token && !state.user) ? true : false,
         authenticated: state => (state.token && state.user) ? true : false,
-        buttonLoading: state => state.buttonLoading,
         role: state => state.user ? state.user.role : null
     }
 }

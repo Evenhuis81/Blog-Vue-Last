@@ -13,7 +13,7 @@ class RegisterUser extends FormRequest
      */
     public function authorize()
     {
-        return true;
+        return request()->header('Authorization') ? false : true;
     }
 
     /**
@@ -31,7 +31,6 @@ class RegisterUser extends FormRequest
     }
     public function validated()
     {
-            // dd($this->validated());
             $validated = parent::validated();
             $validated['password'] = bcrypt($validated['password']);
             return $validated;

@@ -15,10 +15,6 @@ const routes = [
         // => about
     },
     {
-        // => blog/id
-        props: true
-    },
-    {
         // => 404
         alias: "*",
     },
@@ -35,9 +31,9 @@ const routes = [
     },
 ]
 
-const path = ['/', '/about', '/blog/:id', '/404', '/redirect', '/register', '/login']
-const name = ['index', 'about', 'blog', 'pagenotfound', 'redirect', 'register', 'login']
-const component = [Index, About, Show, PageNotFound, Redirect, Register, Login]
+const path = ['/', '/about', '/404', '/redirect', '/register', '/login']
+const name = ['index', 'about', 'pagenotfound', 'redirect', 'register', 'login']
+const component = [Index, About, PageNotFound, Redirect, Register, Login]
 
 export default routes.map((route, index) => {
     route.path = path[index]

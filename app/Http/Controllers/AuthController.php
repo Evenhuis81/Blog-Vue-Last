@@ -14,9 +14,6 @@ class AuthController extends Controller
 {
     public function register(RegisterUser $request)
     {
-        if ($request->header('Authorization')) {
-            abort(403, "You are already registered and logged in!");
-        }
         $validated = $request->validated();
         if (User::create($validated)) {
             return response()->json('User created', 201);
@@ -25,48 +22,21 @@ class AuthController extends Controller
         }
     }
 
-    public function loginpg(LoginUser $request)
-    {
-        if ($request->header('Authorization')) abort(403, "You are already logged in!");
-        $credentials = $request->only('email', 'password');
-        if (!Auth::attempt($credentials)) return response()->json(['errors' => ['credentials' => ['Email or Password incorrect']]], 401);
-        $req = Request::create(route('passport.token'), 'POST', [
-            'grant_type' => 'password',
-            'client_id' => config('passport.password_grant_client.id'),
-            'client_secret' => config('passport.password_grant_client.secret'),
-            'username' => $request->email,
-            'password' => $request->password,
-            'scope' => auth()->user()->role.'_access', 'test'
-        ]);
-        $response = app()->handle($req);
-        if ($response->status() !== 200) abort(404, 'error trying to get oauth response');
-        $token = json_decode($response->content())->access_token;
-        return response()->json([
-            'user' => auth()->user(),
-            'access_token' => $token
-        ], 200);
-    }
-
     public function login(LoginUser $request)
     {
-        if ($request->header('Authorization')) {
-            abort(403, "You are already logged in!");
-        }
-        $credentials = $request->only('email', 'password');   
-        if (!Auth::attempt($credentials)) {
-            return response()->json(['errors' => ['credentials' => ['Email or Password incorrect']]], 401);
-        }
-        $user = auth()->user();
+        if ($request->header('Authorization')) abort(403, "You are already logged in!");
 
+        $credentials = $request->only('email', 'password');   
+        
+        if (!Auth::attempt($credentials)) return response()->json(['errors' => ['credentials' => ['Email or Password incorrect']]], 401);
+
+        $user = auth()->user();
         $role = $user->role;
         $tokenData = $user->createToken('Personal Access Token', [$role.'_access']);
         $token = $tokenData->token;
-
         if (!$request->remember) {
             $token->expires_at = Carbon::now()->addHours(1);
         }
-
-        
         if ($token->save()) {
             return response()->json([
                 'user' => $user,
