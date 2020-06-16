@@ -12,10 +12,9 @@ export default {
         getCategories({ commit }) {
             this._vm.$http.get('/api/categories')
                 .then(res => {
-
                     commit('get_categories', res.data)
                 }).catch(err => {
-                    console.log(err)
+                    throw err
                 })
         },
     },

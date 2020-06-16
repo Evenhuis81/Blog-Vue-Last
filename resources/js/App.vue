@@ -21,12 +21,5 @@ import DialogsSnackbars from "./components/DialogsSnackbars";
 
 export default {
   components: { Layout, DialogsSnackbars },
-  created() {
-    this.$store.commit('setContentLoading')
-    this.$store.dispatch("blogs/getBlogs")
-    .then((response) => this.$store.dispatch("categories/getCategories")
-    .then((response) => this.$store.commit('setContentLoading'))
-    )
-  },
 };
 </script>

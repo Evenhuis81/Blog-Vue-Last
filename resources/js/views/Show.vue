@@ -32,7 +32,6 @@ export default {
   computed: {
     ...mapGetters({ blogs: "blogs/blogs" }),
     blog() {
-      // return this.id
       return this.blogs.find(x => x.id == this.id);
     },
     underscore() {
