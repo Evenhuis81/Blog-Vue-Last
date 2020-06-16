@@ -47,14 +47,12 @@ export default {
     ...mapActions({
       logOut: "auth/logOut",
       setSnackbar: "snackbar/setSnackbar",
-      setSnackbarText: "snackbar/setSnackbarText"
     }),
     loggingOut() {
       this.logOut()
         .then(() => {
           this.$router.push("/", () => {});
-          this.setSnackbarText("You are now logged out");
-          this.setSnackbar();
+          this.setSnackbar("You are now logged out");
         })
         .catch(err => console.log(err))
         .finally(() => {

@@ -18,12 +18,11 @@ export default {
         //         })
         // },
         getBlogs({ commit }) {
-            this._vm.$http.get('/api/blogs')
+            return this._vm.$http.get('/api/blogs')
                 .then(res => {
-
                     commit('set_blogs', res.data)
                 }).catch(err => {
-                    console.log(err)
+                    throw err
                 })
         },
         // setBlog({ commit, state }, id) {

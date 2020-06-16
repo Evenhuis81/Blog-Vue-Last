@@ -111,7 +111,6 @@ export default {
       register: "auth/register",
       setButtonLoading: "auth/setButtonLoading",
       setSnackbar: "snackbar/setSnackbar",
-      setSnackbarText: "snackbar/setSnackbarText"
     }),
     submitRegisterForm() {
       this.errors.registerForm = "";
@@ -128,8 +127,7 @@ export default {
             if (error.response.status === 429) {
               this.errors.registerForm = [[error.response.statusText]];
             } else if (error.response.status === 403) {
-              this.setSnackbarText(error.response.data.message);
-              this.setSnackbar();
+              this.setSnackbar(error.response.data.message);
               this.$router.push({ name: this.role + "dashboard" });
             } else {
               this.errors.registerForm = error.response.data.errors;

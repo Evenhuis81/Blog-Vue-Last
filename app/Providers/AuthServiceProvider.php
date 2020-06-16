@@ -35,6 +35,7 @@ class AuthServiceProvider extends ServiceProvider
         Passport::refreshTokensExpireIn(now()->addDays(30));
 
         Passport::tokensCan([
+            'test' => 'restricted',
             'admin_access' => 'Administrator',
             'author_access' => 'Author',
             'reader_access' => 'Reader'

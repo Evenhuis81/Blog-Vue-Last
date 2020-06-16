@@ -36,8 +36,7 @@ class AuthController extends Controller
             'client_secret' => config('passport.password_grant_client.secret'),
             'username' => $request->email,
             'password' => $request->password,
-            'scope' => auth()->user()->role.'_access'
-            // 'scope' => '*'
+            'scope' => auth()->user()->role.'_access', 'test'
         ]);
         $response = app()->handle($req);
         if ($response->status() !== 200) abort(404, 'error trying to get oauth response');

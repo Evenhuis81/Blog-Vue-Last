@@ -8,7 +8,7 @@
     <v-content class="grey lighten-5 ma-2">
       <!-- On Screen Popups, etc. -->
       <dialogs-snackbars />
-      <v-progress-linear indeterminate :active="this.$store.state.loading" absolute top></v-progress-linear>
+      <v-progress-linear indeterminate :active="this.$store.state.contentLoading" absolute top></v-progress-linear>
       <!-- Routes -->
         <router-view />
     </v-content>
@@ -22,8 +22,11 @@ import DialogsSnackbars from "./components/DialogsSnackbars";
 export default {
   components: { Layout, DialogsSnackbars },
   created() {
+    this.$store.commit('setContentLoading')
     this.$store.dispatch("blogs/getBlogs")
-    this.$store.dispatch("categories/getCategories")
+    .then((response) => this.$store.dispatch("categories/getCategories")
+    .then((response) => this.$store.commit('setContentLoading'))
+    )
   },
 };
 </script>

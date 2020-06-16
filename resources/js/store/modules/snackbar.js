@@ -3,25 +3,20 @@ export default {
     state: {
         snackbar: false,
         snackText: "",
-        // loginLoading: false
     },
     mutations: {
-        set_snackbar(state) {
+        set_snackbar(state, text) {
+            state.snackText = text;
             state.snackbar = !state.snackbar
             setTimeout(() => {
                 state.snackbar = !state.snackbar
+                state.snackText = "";
             }, 2000)
-        },
-        set_snackbar_text(state, text) {
-            state.snackText = text;
-        }
+        },  
     },
     actions: {
-        setSnackbar({ commit }) {
-            commit('set_snackbar')
-        },
-        setSnackbarText({ commit }, text) {
-            commit('set_snackbar_text', text)
+        setSnackbar({ commit }, text) {
+            commit('set_snackbar', text)
         }
     },
     getters: {

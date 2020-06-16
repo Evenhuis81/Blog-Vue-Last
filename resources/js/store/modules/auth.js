@@ -1,9 +1,10 @@
+import { parseJWT } from "../../constants"
+
 export default {
     namespaced: true,
     state: {
         token: localStorage.getItem('token'),
         user: null,
-        buttonLoading: false
     },
     mutations: {
         set_token(state, token) {
@@ -42,9 +43,9 @@ export default {
         login({ commit }, credentials) {
             return this._vm.$http.post("api/auth/login", credentials)
                 .then(response => {
-                    // commit('set_token', response.data.access_token);
-                    // commit('set_user', response.data.user);
-                    // return response.data.user.role;
+                    commit('set_token', response.data.access_token);
+                    commit('set_user', response.data.user);
+                    return response.data.user.role;
                 }).catch(error => {
                     // if 401 or 429 resp.data.status
                     throw error;

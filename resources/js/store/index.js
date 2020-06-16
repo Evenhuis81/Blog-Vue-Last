@@ -6,7 +6,23 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
     modules,
-    state: { loading: false },
-    // v-progress-linear switch:
-    mutations: { setLoading(state) { state.loading = !state.loading }}
+    state: {
+        // v-progress-linear switch:
+        contentLoading: false,
+        // after register/login button pressed:
+        buttonLoading: false },
+    mutations: {
+        setContentLoading(state) { state.contentLoading = !state.contentLoading },
+        setButtonLoading(state) { state.buttonLoading = !state.buttonLoading }
+    },
+    actions: {
+        setButtonLoading(context) {
+            context.commit("setButtonLoading");
+        }
+    },
+    getters: {
+        buttonLoading(state) {
+            return state.buttonLoading;
+        }
+    }
 })

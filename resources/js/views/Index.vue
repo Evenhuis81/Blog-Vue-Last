@@ -1,5 +1,6 @@
 <template>
   <div>
+    <!-- <content-load v-if="blogs.length" style="height: 100%"></content-load> -->
     <v-container v-if="blogs.length">
       <v-pagination v-model="page" :length="Math.ceil(blogs.length/perPage)"></v-pagination>
       <v-row justify="center" v-for="rowNr in Math.ceil((visibleBlogs.length/2))" :key="rowNr">
@@ -32,10 +33,12 @@
   </div>
 </template>
 
-    <script>
+<script>
+import ContentLoad from "../components/ContentLoad.vue"
 import { mapGetters } from "vuex";
 
 export default {
+  components: { ContentLoad },
   data() {
     return {
       page: 1,

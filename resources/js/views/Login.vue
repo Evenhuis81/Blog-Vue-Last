@@ -106,18 +106,16 @@ export default {
     valid: true
   }),
   computed: {
-    ...mapGetters({ buttonLoading: "auth/buttonLoading", role: "auth/role" })
+    ...mapGetters({ buttonLoading: "buttonLoading", role: "auth/role" })
   },
   methods: {
     ...mapActions("auth", {
       loginPG: "loginPG",
       login: "login",
-      setButtonLoading: "setButtonLoading"
     }),
-    ...mapActions("snackbar", {
-      setSnackbar: "setSnackbar",
-      setSnackbarText: "setSnackbarText"
+    ...mapActions({ setSnackbar: "snackbar/setSnackbar",
     }),
+    ...mapActions(['setButtonLoading']),
     submitLogin() {
       this.errors.loginForm = "";
       if (this.$refs.form.validate()) {
@@ -125,8 +123,7 @@ export default {
         this.loginPG(this.form)
           .then(role => {
             this.$router.push({ name: role + "dashboard" });
-            this.setSnackbarText("You are now logged in");
-            this.setSnackbar();
+            this.setSnackbar('You are now logged in');
           })
           .catch(error => {
             if (error.response.status === 429) {
@@ -137,11 +134,9 @@ export default {
                 ]
               ];
             } else if (error.response.status === 403) {
-              this.setSnackbarText(error.response.data.message);
-              this.setSnackbar();
+              this.setSnackbar(error.response.data.message);
               this.$router.push({ name: this.role + "dashboard" });
             } else {
-              // console.log(error.response.status);
               this.errors.loginForm = error.response.data.errors;
             }
           })
