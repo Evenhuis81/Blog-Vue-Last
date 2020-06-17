@@ -45,7 +45,7 @@ export default {
                     throw error;
                 });
         },
-        verifyToken({ commit, rootState }) {
+        verifyToken({ commit }) {
             return this._vm.$http.get('/api/auth/details'
             ).then(response => {
                 //use handler (internal success handler + log)

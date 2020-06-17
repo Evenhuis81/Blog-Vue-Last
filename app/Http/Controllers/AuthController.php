@@ -24,8 +24,6 @@ class AuthController extends Controller
 
     public function login(LoginUser $request)
     {
-        if ($request->header('Authorization')) abort(403, "You are already logged in!");
-
         $credentials = $request->only('email', 'password');   
         
         if (!Auth::attempt($credentials)) return response()->json(['errors' => ['credentials' => ['Email or Password incorrect']]], 401);

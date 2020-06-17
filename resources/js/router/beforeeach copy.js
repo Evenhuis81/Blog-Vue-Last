@@ -4,29 +4,20 @@ export default async function (to, from, next) {
   // is no user is set, but has token (page refresh)
   if (store.getters['auth/unverifiedToken']) {
     store.commit('setContentLoading')
-    try {
-      await store.dispatch('auth/verifyToken')
-    } catch (e) {
+    await store.dispatch('auth/verifyToken')
+    .catch((e) => {
       return next({ name: "index" })
-    } finally {
+    }).finally(() => {
       store.commit('setContentLoading')
-    }
+    })
   }
-
   // get global data (blogs / categories) if not present (on refresh)
   if (!store.getters["blogs/blogs"].length) {
     store.commit('setContentLoading')
-    try {
-      await store.dispatch("blogs/getBlogs")
-      .then(() => store.dispatch("categories/getCategories"))
-    } catch (e) {
-      console.log(e);
-    }
-    finally {
-      store.commit('setContentLoading')
-    }
+    await store.dispatch("blogs/getBlogs")
+    await store.dispatch("categories/getCategories")
+    store.commit('setContentLoading')
   }
-
   const role = store.getters['auth/role']
   const auth = store.getters['auth/authenticated']
 
