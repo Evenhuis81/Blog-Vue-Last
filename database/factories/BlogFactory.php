@@ -15,7 +15,7 @@ $factory->define(Blog::class, function (Faker $faker) use ($autoIncrement) {
     // Storage::disk('local')->put('image'.$autoIncrement->current, $imageFile);
     return [
         'title' => $faker->text(rand(40,60)),
-        'description' => $faker->text(rand(400,600)),
+        'description' => $faker->text(rand(1200,1500)),
         // 'owner_id' => floor(($autoIncrement->current()-1) / 10) + 2,
         'owner_id' => rand(4, 7),
         'created_at' => $faker->dateTimeBetween($startDate = '-5 years', $endDate = 'now', $timezone = null),

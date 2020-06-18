@@ -10,7 +10,7 @@ export default [
         component: Show,
         
         beforeEnter (to, from, next) {
-            // console.log(store.getters)
+            console.log(store.getters["blogs/blogs"])
             // let arr = store.getters[]
             console.log(to.params.id);
             next();
