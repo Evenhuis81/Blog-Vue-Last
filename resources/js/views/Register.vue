@@ -104,12 +104,12 @@ export default {
     }
   }),
   computed: {
-    ...mapGetters({ buttonLoading: "auth/buttonLoading", role: "auth/role" })
+    ...mapGetters({ buttonLoading: "buttonLoading", role: "auth/role" })
   },
   methods: {
     ...mapActions({
       register: "auth/register",
-      setButtonLoading: "auth/setButtonLoading",
+      setButtonLoading: "setButtonLoading",
       setSnackbar: "snackbar/setSnackbar",
     }),
     submitRegisterForm() {

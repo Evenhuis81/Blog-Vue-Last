@@ -8,14 +8,16 @@ export default [
         name: 'blog',
         props: true,
         component: Show,
+        
         beforeEnter (to, from, next) {
+            // console.log(store.getters)
             // let arr = store.getters[]
             console.log(to.params.id);
             next();
         }
     },
     {    
-        path: '/blog/create',
+        path: '/:user/createblog',
         name: 'createblog',
         component: CreateBlog,
         meta: { requiresAuth: true , scope: 'author_access'},

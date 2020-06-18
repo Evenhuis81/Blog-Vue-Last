@@ -12,12 +12,15 @@ export default new Vuex.Store({
         // after register/login button pressed:
         buttonLoading: false },
     mutations: {
-        setContentLoading(state) { state.contentLoading = !state.contentLoading },
-        setButtonLoading(state) { state.buttonLoading = !state.buttonLoading }
+        set_content_loading(state, boolean) { state.contentLoading = boolean },
+        set_button_loading(state) { state.buttonLoading = !state.buttonLoading }
     },
     actions: {
         setButtonLoading(context) {
-            context.commit("setButtonLoading");
+            context.commit("set_button_loading");
+        },
+        setContentLoading(context, boolean) {
+            context.commit("set_content_loading", boolean)
         }
     },
     getters: {
