@@ -9,6 +9,7 @@
     </v-img>
 
     <v-card-subtitle class="pb-2">{{ blog.category.name }}</v-card-subtitle>
+    <!-- <v-card-subtitle class="pb-2">{{ $route.params.id }}</v-card-subtitle> -->
 
     <v-card-text class="text--primary">
       <div class>by {{ blog.owner.name }}</div>

@@ -16,7 +16,7 @@
         <v-card
         outlined
         class="mb-5"
-        v-for="(blog, index) in blogs" :key="index"
+        v-for="blog in blogs" :key="blog.id"
         >
           <v-card-text class="pa-0">
             <p class="display-1 text--primary text-center my-8">
@@ -32,6 +32,7 @@
           </v-card-text>
           <v-card-actions class="justify-center">
             <v-btn
+            :to="{ path: '/blog/' + blog.id }"
               text
               class="mb-5"
             >
