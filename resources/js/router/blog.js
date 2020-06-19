@@ -1,13 +1,17 @@
-import Show from '../views/Show.vue'
-import CreateBlog from '../views/CreateBlog.vue'
+import ShowBlog from '../views/blog/ShowBlog.vue'
+import UserDashboard from '../views/user/UserDashboard.vue'
+// import UserProfile from '../components/user/Profile.vue'
+import UserBlogs from '../components/user/Blogs.vue'
+import CreateBlog from '../views/blog/CreateBlog.vue'
+
 import store from "../store"
 
 export default [
     {    
-        path: '/blog/:id',
+        path: '/show/:id',
         name: 'blog',
         props: true,
-        component: Show,
+        component: ShowBlog,
         
         beforeEnter (to, from, next) {
             console.log(store.getters["blogs/blogs"])
@@ -17,9 +21,23 @@ export default [
         }
     },
     {    
-        path: '/:user/createblog',
-        name: 'createblog',
-        component: CreateBlog,
-        meta: { requiresAuth: true , scope: 'author_access'},
+        path: '/user/:id/',
+        name: 'user',
+        component: UserDashboard,
+        meta: { requiresAuth: true },
+        children: [
+            // {
+            //     path: 'profile',
+            //     component: UserProfile
+            // },
+            {
+                path: 'blogs',
+                component: UserBlogs
+            },
+            {
+                path: 'createblog',
+                component: CreateBlog
+            }
+          ]
     },
 ]

@@ -26,6 +26,7 @@
           </v-list-item-icon>
           <v-list-item-title>About</v-list-item-title>
         </v-list-item>
+        
       </v-list-item-group>
     </v-list>
   </v-navigation-drawer>
@@ -33,7 +34,7 @@
 
 <script>
 import { mapGetters } from "vuex";
-import { mapActions } from "vuex";
+// import { mapActions } from "vuex";
 
 export default {
   data() {
@@ -45,7 +46,7 @@ export default {
     ...mapGetters({
       //   { userVerified: "auth/userVerified",
       //     authenticated: "auth/authenticated",
-      //     user: "auth/user",
+      // userid: "auth/userid",
       navigationDrawer: "layoutelements/getNavigationDrawer"
     })
     // navigationDrawerModel: {
@@ -60,7 +61,7 @@ export default {
     // }
   },
   methods: {
-    ...mapActions({ setNavigationDrawer: "layoutelements/setNavigationDrawer" })
+    // ...mapActions({ setNavigationDrawer: "layoutelements/setNavigationDrawer" })
   }
 };
 </script>

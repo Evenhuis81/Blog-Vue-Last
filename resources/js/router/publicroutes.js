@@ -1,50 +1,61 @@
 import Index from '../views/Index.vue'
-import Show from '../views/Show.vue'
 import About from '../views/About.vue'
-import Redirect from '../views/Redirect.vue'
-import Login from '../views/Login.vue'
-import Register from '../views/Register.vue'
+import Redirect from '../views/auth/Redirect.vue'
+import Login from '../views/auth/Login.vue'
+import Register from '../views/auth/Register.vue'
 
 const PageNotFound = { template: "<div>Page Not Found => " + window.location.pathname.substr(1) + "</div>" }
 
 const routes = [
     {
-        // => index
+        path: '/',
+        name: 'index',
+        component: Index
     },
     {
-        // => about
+        path: '/about',
+        name: 'about',
+        component: About
     },
     {
-        // => 404
+        path: '/404',
+        name: 'pagenotfound',
         alias: "*",
+        component: PageNotFound
     },
     {
-        // => redirect
+        path: '/redirect',
+        name: 'redirect',
+        component: Redirect
     },
     {
-        // => register
+        path: '/login',
+        name: 'login',
+        component: Login,
         meta: { guestRouteOnly: true }
     },
     {
-        // => login
+        path: '/register',
+        name: 'register',
+        component: Register,
         meta: { guestRouteOnly: true }
     },
 ]
 
-const path = ['/', '/about', '/404', '/redirect', '/register', '/login']
-const name = ['index', 'about', 'pagenotfound', 'redirect', 'register', 'login']
-const component = [Index, About, PageNotFound, Redirect, Register, Login]
+// const path = ['/', '/about', '/404', '/redirect', '/register', '/login']
+// const name = ['index', 'about', 'pagenotfound', 'redirect', 'register', 'login']
+// const component = [Index, About, PageNotFound, Redirect, Register, Login]
 
-export default routes.map((route, index) => {
-    route.path = path[index]
-    route.name = name[index]
-    route.component = component[index]
-    if (!route.meta) {
-        route.meta = {
-            requiresAuth: false
-        }
-    } else {
-        route.meta = { requiresAuth: false, ...route.meta }
-    }
+export default routes.map((route) => {
+    // route.path = path[index]
+    // route.name = name[index]
+    // route.component = component[index]
+    // if (!route.meta) {
+    //     route.meta = {
+    //         requiresAuth: false
+    //     }
+    // } else {
+    route.meta = { requiresAuth: false, ...route.meta }
+    // }
     return route
 });

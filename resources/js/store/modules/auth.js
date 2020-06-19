@@ -74,6 +74,7 @@ export default {
     getters: {
         unverifiedToken: state => (state.token && !state.user) ? true : false,
         authenticated: state => (state.token && state.user) ? true : false,
-        role: state => state.user ? state.user.role : null
+        role: state => state.user ? state.user.role : null,
+        userId: state => state.user ? state.user.id : null
     }
 }
