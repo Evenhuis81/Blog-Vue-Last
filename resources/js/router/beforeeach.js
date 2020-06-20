@@ -24,15 +24,24 @@ export default async function (to, from, next) {
   if (role !== 'admin') {
     if (to.matched.some(record => record.meta.requiresAuth)) {
       if (auth) {
-        // const scopes = to.meta.scopes || [];
-        const scope = to.meta.scope;
-        // make auth/role authscopesarray
-        // if (role + '_access' === scopes[0]) {
-        if (role + '_access' !== scope) return next({ name: "redirect" })
-      } else return next({ name: "redirect" })
+        const scopes = to.meta.scopes || []
+        console.log(scopes)
+        if (scopes.map(x => x).includes(role + '_access')) {
+          next()
+        } else {
+          store.dispatch('snackbar/setSnackbar','You are not authorized for this route!')
+          return next({ name: "redirect" })
+        }
+      } else {
+        store.dispatch('snackbar/setSnackbar','You are not authenticated for this route!')
+        return next({ name: "redirect" })
+      }
     }
     // pages with guestRouteOnly are not available for logged in users (register, login page)
-    if (to.meta.guestRouteOnly && auth) return next({ name: "redirect" })
+    if (to.meta.guestRouteOnly && auth) {
+      store.dispatch('snackbar/setSnackbar','You are already registered and logged in!')
+      return next({ name: "redirect" })
+    }
   }
   next()
 };

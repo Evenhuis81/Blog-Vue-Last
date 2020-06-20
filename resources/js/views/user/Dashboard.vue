@@ -10,11 +10,11 @@ import { mapGetters } from "vuex"
 
 export default {
     // props: ['id],
-    data: {
-        return: {
+    // data: {
+        // return: {
             //
-        }
-    },
+        // }
+    // },
     computed: {
         ...mapGetters({
             userId: "auth/userId",

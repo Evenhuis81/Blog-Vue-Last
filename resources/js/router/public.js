@@ -4,6 +4,7 @@ import Redirect from '../views/auth/Redirect.vue'
 import Login from '../views/auth/Login.vue'
 import Register from '../views/auth/Register.vue'
 import ShowBlog from '../views/blog/ShowBlog.vue'
+import store from '../store'
 
 const PageNotFound = { template: "<div>Page Not Found => " + window.location.pathname.substr(1) + "</div>" }
 
@@ -33,13 +34,20 @@ export default [
         path: '/register',
         name: 'register',
         component: Register,
-        meta: { guestRouteOnly: true }
+        meta: { guestRouteOnly: true },
     },
     {
         path: '/blog/:id',
         name: 'blog',
         component: ShowBlog,
-        props: true
+        props: true,
+        beforeEnter: (to, from, next) => {
+            if (store.getters['blogs/blogs'].map(x => x.id).includes(parseInt(to.params.id))) {
+                next();
+            } else {
+                next({ name: 'pagenotfound' })
+            }
+        }
     },
     {
         path: '/404',

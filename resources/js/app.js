@@ -13,7 +13,7 @@ new Vue({
     router,
     vuetify,
     created() {
-        // console.log(this.$router)
+        //
     },
     render: h => h(App)
 }).$mount('#root')
