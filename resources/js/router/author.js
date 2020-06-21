@@ -11,7 +11,6 @@ export default [
         props: true,
         meta: { requiresAuth: true, scopes: ['author_access'] },
         beforeEnter: (to, from, next) => {
-            console.log(to.params.id)
             if (to.params.id == store.getters['auth/userId']) {
                 next()
             } else {
@@ -22,12 +21,18 @@ export default [
             {
                 path: 'blogs',
                 component: AuthorBlogs,
-                // meta: { scopes: ['author_access'] },
+                meta: { requiresAuth: true, scopes: ['author_access'] },
             },
             {
                 path: 'createblog',
                 component: CreateBlog,
-                // meta: { scopes: ['author_access'] },
+                meta: { scopes: ['author_access'] },
+            },
+            {
+                path: '404',
+                alias: '*',
+                component: { template: "<div>Page(2) Not Found => " + window.location.pathname.substr(1) + "</div>" },
+                meta: { requiresAuth: true, scopes: ['author_access'] },
             }
           ]
     },

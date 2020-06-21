@@ -123,9 +123,10 @@ export default {
         this.login(this.form)
           .then(role => {
             if (role === 'admin') {
-                this.$router.push({ name: this.role + "dashboard" });
+                this.$router.push({ name: role + "dashboard" });
               } else {
-                this.$router.push({ name: this.role + "dashboard" , params: { id: userId } });
+                // console.log(this.$router)
+                this.$router.push({ name: role + "dashboard", params: { id: this.userId } });
               }
             this.setSnackbar('You are now logged in');
           })

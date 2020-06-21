@@ -25,7 +25,6 @@ export default async function (to, from, next) {
     if (to.matched.some(record => record.meta.requiresAuth)) {
       if (auth) {
         const scopes = to.meta.scopes || []
-        console.log(scopes)
         if (scopes.map(x => x).includes(role + '_access')) {
           next()
         } else {
