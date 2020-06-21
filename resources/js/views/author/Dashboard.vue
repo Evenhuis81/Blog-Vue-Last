@@ -1,6 +1,6 @@
 <template>
     <div>
-        <h2>Author Dashboard</h2>
+        <h2>Author Dashboard, userId = {{ id }}</h2>
         <!-- <v-btn :to="{ path: `/user/${userId}/createblog` }" rounded color="primary" dark>Create Blog></v-btn> -->
     </div>
 </template>
@@ -9,7 +9,7 @@
 import { mapGetters } from "vuex"
 
 export default {
-    // props: ['id],
+    props: ['id'],
     // data: {
         // return: {
             //

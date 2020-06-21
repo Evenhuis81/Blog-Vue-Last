@@ -2,7 +2,8 @@ import Vue from 'vue';
 import VueRouter from 'vue-router';
 import Public from './public.js';
 import Admin from "./admin.js";
-import User from "./user.js";
+import Author from "./author.js";
+import Reader from "./reader.js";
 import BeforeEach from './beforeeach.js';
 
 Vue.use(VueRouter)
@@ -13,7 +14,8 @@ const router = new VueRouter({
   routes: [
     ...Public,
     ...Admin,
-    ...User
+    ...Author,
+    ...Reader
   ]
 })
 

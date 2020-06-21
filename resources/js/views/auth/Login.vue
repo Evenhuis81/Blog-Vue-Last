@@ -106,7 +106,7 @@ export default {
     valid: true
   }),
   computed: {
-    ...mapGetters({ buttonLoading: "buttonLoading", role: "auth/role" })
+    ...mapGetters({ buttonLoading: "buttonLoading", role: "auth/role", userId: "auth/userId" })
   },
   methods: {
     ...mapActions("auth", {
@@ -120,9 +120,13 @@ export default {
       this.errors.loginForm = "";
       if (this.$refs.form.validate()) {
         this.setButtonLoading();
-        this.loginPG(this.form)
+        this.login(this.form)
           .then(role => {
-            this.$router.push({ name: role + "dashboard" });
+            if (role === 'admin') {
+                this.$router.push({ name: this.role + "dashboard" });
+              } else {
+                this.$router.push({ name: this.role + "dashboard" , params: { id: userId } });
+              }
             this.setSnackbar('You are now logged in');
           })
           .catch(error => {
@@ -135,7 +139,6 @@ export default {
               ];
             } else if (error.response.status === 403) {
               this.setSnackbar(error.response.data.message);
-              this.$router.push({ name: this.role + "dashboard" });
             } else {
               this.errors.loginForm = error.response.data.errors;
             }

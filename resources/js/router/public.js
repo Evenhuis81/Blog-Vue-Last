@@ -3,7 +3,7 @@ import About from '../views/About.vue'
 import Redirect from '../views/auth/Redirect.vue'
 import Login from '../views/auth/Login.vue'
 import Register from '../views/auth/Register.vue'
-import ShowBlog from '../views/blog/ShowBlog.vue'
+import ShowBlog from '../views/ShowBlog.vue'
 import store from '../store'
 
 const PageNotFound = { template: "<div>Page Not Found => " + window.location.pathname.substr(1) + "</div>" }

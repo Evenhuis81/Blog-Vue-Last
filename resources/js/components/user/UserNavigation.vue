@@ -16,7 +16,7 @@
       </template>
 
       <v-list>
-        <v-list-item @click="$router.push({ name: role + 'dashboard' })">
+        <v-list-item @click="$router.push({ name: role + 'dashboard', params: { id: userId } }, () => {})">
           <v-list-item-title>Dashboard</v-list-item-title>
         </v-list-item>
         <v-list-item @click="loggingOut">
@@ -40,7 +40,8 @@ export default {
     ...mapGetters({
       authenticated: "auth/authenticated",
       unverifiedToken: "auth/unverifiedToken",
-      role: "auth/role"
+      role: "auth/role",
+      userId: "auth/userId"
     })
   },
   methods: {

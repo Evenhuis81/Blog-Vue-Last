@@ -1,4 +1,4 @@
-import AdminDashboard from '../views/admin/AdminDashboard.vue'
+import AdminDashboard from '../views/admin/Dashboard.vue'
 
 export default [
     {
