@@ -68,6 +68,7 @@ export default {
         unverifiedToken: state => (state.token && !state.user) ? true : false,
         authenticated: state => (state.token && state.user) ? true : false,
         role: state => state.user ? state.user.role : null,
-        userId: state => state.user ? state.user.id : null
+        userId: state => state.user ? state.user.id : null,
+        userName: state => state.user ? state.user.name : null
     }
 }

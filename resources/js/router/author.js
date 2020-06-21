@@ -11,7 +11,9 @@ export default [
         props: true,
         meta: { requiresAuth: true, scopes: ['author_access'] },
         beforeEnter: (to, from, next) => {
+            console.log('trigger')
             if (to.params.id == store.getters['auth/userId']) {
+                console.log(to)
                 next()
             } else {
                 next({ name: 'pagenotfound' })
@@ -21,7 +23,7 @@ export default [
             {
                 path: 'blogs',
                 component: AuthorBlogs,
-                meta: { requiresAuth: true, scopes: ['author_access'] },
+                meta: { scopes: ['author_access'] }
             },
             {
                 path: 'createblog',
@@ -32,7 +34,7 @@ export default [
                 path: '404',
                 alias: '*',
                 component: { template: "<div>Page(2) Not Found => " + window.location.pathname.substr(1) + "</div>" },
-                meta: { requiresAuth: true, scopes: ['author_access'] },
+                meta: { scopes: ['author_access'] }
             }
           ]
     },
