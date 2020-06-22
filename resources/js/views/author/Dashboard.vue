@@ -1,16 +1,24 @@
 <template>
     <v-container>
-        <div v-show="dashboardActive">
+
+        <v-tabs fixed-tabs>
+            <v-tab to="createblog">Create Blog</v-tab>
+            <v-tab to="/">Edit Blog</v-tab>
+        </v-tabs>
+
+
+        <!-- <div v-show="dashboard">
             <h2>Hello {{ userName }}</h2>
             <h3>What would you like to do?</h3>
-            <v-btn outlined color="primary" dark>Create Blog</v-btn>
-        </div>
+            <v-btn @click="createBlog()" outlined color="primary">Create Blog</v-btn>
+        </div> -->
         <router-view></router-view>
     </v-container>
 </template>
 
 <script>
 import { mapGetters } from "vuex"
+import { mapActions } from "vuex"
 
 export default {
     props: ['id'],
@@ -20,7 +28,14 @@ export default {
       }
     },
     computed: {
-        ...mapGetters({ userName: 'auth/userName', dashboardActive: 'dashboardActive'})
+        ...mapGetters({ userName: 'auth/userName', dashboard: 'dashboard'})
+    },
+    methods: {
+        ...mapActions(['setDashboard']),
+        createBlog() {
+            this.setDashboard(false)
+            this.$router.push({ path: `/author/${this.id}/createblog` })
+        }
     }
 }
 </script>

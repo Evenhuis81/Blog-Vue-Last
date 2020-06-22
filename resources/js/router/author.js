@@ -11,10 +11,16 @@ export default [
         props: true,
         meta: { requiresAuth: true, scopes: ['author_access'] },
         beforeEnter: (to, from, next) => {
-            console.log('trigger')
             if (to.params.id == store.getters['auth/userId']) {
-                console.log(to)
-                next()
+                // console.log(to.meta.createButton)
+                // if (to.meta.createButton) {
+                //     store.dispatch('setDashboard', false)
+                    next()
+                // } else {
+                //     console.log('settrue')
+                //     store.dispatch('setDashboard', true)
+                //     next()
+                // }
             } else {
                 next({ name: 'pagenotfound' })
             }
@@ -28,6 +34,7 @@ export default [
             {
                 path: 'createblog',
                 component: CreateBlog,
+                props: true,
                 meta: { scopes: ['author_access'] },
             },
             {

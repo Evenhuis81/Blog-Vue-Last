@@ -12,13 +12,13 @@ export default new Vuex.Store({
         // after register/login button pressed:
         buttonLoading: false,
         // hide dashboard when childroute is active:
-        dashboardActive: true
+        dashboard: true
     },
     mutations: {
         set_content_loading(state, boolean) { state.contentLoading = boolean },
         set_button_loading(state) { state.buttonLoading = !state.buttonLoading },
-        set_dashboard_active(state) {
-            state.dashboardActive = !state.dashboardActive
+        set_dashboard(state, boolean) {
+            state.dashboard = boolean
         }
     },
     actions: {
@@ -28,16 +28,16 @@ export default new Vuex.Store({
         setContentLoading(context, boolean) {
             context.commit("set_content_loading", boolean)
         },
-        setDashboardActive(context) {
-            context.commit('set_dashboard_active')
+        setDashboard(context, boolean) {
+            context.commit('set_dashboard', boolean)
         }
     },
     getters: {
         buttonLoading(state) {
             return state.buttonLoading
         },
-        dashboardActive(state) {
-            return state.dashboardActive
+        dashboard(state) {
+            return state.dashboard
         }
     }
 })

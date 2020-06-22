@@ -62,6 +62,7 @@
 
 <script>
   export default {
+    props: ['id'],
     data: () => ({
       valid: true,
       name: '',
