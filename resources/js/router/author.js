@@ -1,10 +1,11 @@
 import AuthorDashboard from '../views/author/Dashboard.vue'
+import AuthorProfile from '../views/author/Profile.vue'
 import AuthorBlogs from '../views/author/Blogs.vue'
 import CreateBlog from '../views/author/CreateBlog.vue'
 import store from '../store'
 
 export default [
-    {    
+    {
         path: '/author/:id/',
         name: 'authordashboard',
         component: AuthorDashboard,
@@ -15,7 +16,7 @@ export default [
                 // console.log(to.meta.createButton)
                 // if (to.meta.createButton) {
                 //     store.dispatch('setDashboard', false)
-                    next()
+                next()
                 // } else {
                 //     console.log('settrue')
                 //     store.dispatch('setDashboard', true)
@@ -26,6 +27,11 @@ export default [
             }
         },
         children: [
+            {
+                path: 'profile',
+                component: AuthorProfile,
+                meta: { scopes: ['author_access'] }
+            },
             {
                 path: 'blogs',
                 component: AuthorBlogs,
@@ -43,6 +49,6 @@ export default [
                 component: { template: "<div>Page(2) Not Found => " + window.location.pathname.substr(1) + "</div>" },
                 meta: { scopes: ['author_access'] }
             }
-          ]
+        ]
     },
 ]

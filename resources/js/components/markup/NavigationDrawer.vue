@@ -4,31 +4,56 @@
       <img src="/storage/navdrawerlogo_1833982-200.png" height="50" alt="avatar" />
     </v-col>
 
-    <!-- <v-col class="mt-5" align="center" v-else-if="authenticated">
-      <img src="/storage/2786494-200.png" height="50" alt="avatar" />
-      <p class="title mt-1">{{ user.name }}</p>
-    </v-col>-->
+    <v-list dense>
+      <v-divider></v-divider>
 
-    <v-divider></v-divider>
-
-    <v-list nav dense>
-      <v-list-item-group class="mt-2" color="primary">
-        <v-list-item router to="/">
+      <v-list-item-group color="primary">
+        <v-list-item router :to="{ path: '/author/' + userId + '/profile' }">
           <v-list-item-icon>
-            <v-icon>mdi-home</v-icon>
+            <v-icon>mdi-account</v-icon>
           </v-list-item-icon>
-          <v-list-item-title>Home</v-list-item-title>
+          <v-list-item-content>
+            <v-list-item-title>Your Profile</v-list-item-title>
+          </v-list-item-content>
         </v-list-item>
 
-        <v-list-item router to="/about">
-          <v-list-item-icon>
-            <v-icon>mdi-information</v-icon>
-          </v-list-item-icon>
-          <v-list-item-title>About</v-list-item-title>
+        <v-divider class></v-divider>
+
+        <v-list-item>
+          <v-list-item-content>
+            <v-list-item-title class="title">Blog Actions:</v-list-item-title>
+          </v-list-item-content>
         </v-list-item>
-        
+
+        <!-- <v-title class="black--text ml-5">Blog Actions:</v-title> -->
+
+        <v-list-item
+          v-for="(item, i) in blogActions"
+          :key="i"
+          router
+          :to="{ path: item.path }"
+          link
+        >
+          <v-list-item-icon>
+            <v-icon v-text="item.icon"></v-icon>
+          </v-list-item-icon>
+          <v-list-item-content>
+            <v-list-item-title v-text="item.text"></v-list-item-title>
+          </v-list-item-content>
+        </v-list-item>
       </v-list-item-group>
     </v-list>
+
+    <!-- <v-list dense>
+      <v-checkbox v-model="all" label="ALL" value="all" :disabled="true" hide-details></v-checkbox>
+      <v-divider></v-divider>
+      <v-checkbox dense v-model="selected" label="John" value="John" hide-details></v-checkbox>
+      <v-checkbox dense v-model="selected" label="Jacob" value="Jacob" hide-details></v-checkbox>
+    </v-list>-->
+    <!-- <v-col class="mt-5 ml-5 pb-0">
+      <v-title>Blog Actions:</v-title>
+    </v-col>-->
+    <!-- <v-divider></v-divider> -->
   </v-navigation-drawer>
 </template>
 
@@ -39,15 +64,41 @@ import { mapGetters } from "vuex";
 export default {
   data() {
     return {
+      // selected: [],
+      // all: ["all"]
       // drawer: false
+      // item: 1,
+      blogActions: [
+        {
+          text: "Create",
+          icon: "mdi-plus",
+          path: "/author/" + this.userId + "/createblog"
+        },
+        {
+          text: "Read",
+          icon: "mdi-file",
+          path: "/author/" + this.userId + "/readblog"
+        },
+        {
+          text: "Update",
+          icon: "mdi-update",
+          path: "/author/" + this.userId + "/updateblog"
+        },
+        {
+          text: "Delete",
+          icon: "mdi-delete",
+          path: "/author/" + this.userId + "/deleteblog"
+        }
+      ]
     };
   },
   computed: {
     ...mapGetters({
       //   { userVerified: "auth/userVerified",
       //     authenticated: "auth/authenticated",
-      // userid: "auth/userid",
-      navigationDrawer: "layoutelements/getNavigationDrawer"
+      userId: "auth/userId",
+      navigationDrawer: "layoutelements/getNavigationDrawer",
+      categories: "categories/categories"
     })
     // navigationDrawerModel: {
     //   get() {

@@ -1,14 +1,14 @@
 <template>
   <v-app-bar app clipped-left color="primary" dark>
     <!-- Left: NavigationDrawer toggle icon & Logo with Home link -->
-    <v-app-bar-nav-icon @click="navigationDrawer"></v-app-bar-nav-icon>
+    <v-app-bar-nav-icon v-show="true" @click="navigationDrawer"></v-app-bar-nav-icon>
     <router-link to="/" class="d-flex align-center">
       <v-img src="/storage/logo_inverted.png" height="35" contain width="55"></v-img>
     </router-link>
 
     <!-- Center: App Title -->
     <v-spacer></v-spacer>
-    <v-toolbar-title to="/" class="ml-4 white--text" v-text="spaTitle"></v-toolbar-title>
+    <v-toolbar-title class="ml-4 white--text" v-text="spaTitle"></v-toolbar-title>
 
     <!-- Right: Login- register- & usericons/menus -->
     <v-spacer></v-spacer>
@@ -28,7 +28,7 @@ export default {
     spaTitle: SPA_TITLE
   }),
   methods: {
-    ...mapActions({ navigationDrawer: "layoutelements/setNavigationDrawer" })
+    ...mapActions({ navigationDrawer: "layoutelements/switchNavigationDrawer" })
   }
 };
 </script>
