@@ -8,7 +8,7 @@
       <v-divider></v-divider>
 
       <v-list-item-group color="primary">
-        <v-list-item router :to="{ path: '/author/' + userId + '/profile' }">
+        <v-list-item :to="{ path: '/author/' + userId + '/profile' }" exact>
           <v-list-item-icon>
             <v-icon>mdi-account</v-icon>
           </v-list-item-icon>
@@ -19,11 +19,12 @@
 
         <v-divider class></v-divider>
 
-        <v-list-item>
+        <v-subheader class="mt-7">Blog Actions:</v-subheader>
+        <!-- <v-list-item>
           <v-list-item-content>
-            <v-list-item-title class="title">Blog Actions:</v-list-item-title>
+            <v-list-item-title class="mt-8">Blog Actions:</v-list-item-title>
           </v-list-item-content>
-        </v-list-item>
+        </v-list-item> -->
 
         <!-- <v-title class="black--text ml-5">Blog Actions:</v-title> -->
 
@@ -31,7 +32,7 @@
           v-for="(item, i) in blogActions"
           :key="i"
           router
-          :to="{ path: item.path }"
+          :to="{ path: '/author/' + userId + item.path }"
           link
         >
           <v-list-item-icon>
@@ -72,7 +73,7 @@ export default {
         {
           text: "Create",
           icon: "mdi-plus",
-          path: "/author/" + this.userId + "/createblog"
+          path: "/createblog"
         },
         {
           text: "Read",

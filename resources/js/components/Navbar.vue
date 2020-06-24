@@ -32,7 +32,7 @@
         <v-divider></v-divider>
 
         <v-list-item-group class="mt-2" color="primary">
-          <v-list-item router to="/">
+          <v-list-item to="/" exact>
             <v-list-item-icon>
               <v-icon>mdi-home</v-icon>
             </v-list-item-icon>

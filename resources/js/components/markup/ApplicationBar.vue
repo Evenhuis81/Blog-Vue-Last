@@ -2,7 +2,7 @@
   <v-app-bar app clipped-left color="primary" dark>
     <!-- Left: NavigationDrawer toggle icon & Logo with Home link -->
     <v-app-bar-nav-icon v-show="true" @click="navigationDrawer"></v-app-bar-nav-icon>
-    <router-link to="/" class="d-flex align-center">
+    <router-link :to="{ path: '/' }" exact class="d-flex align-center">
       <v-img src="/storage/logo_inverted.png" height="35" contain width="55"></v-img>
     </router-link>
 

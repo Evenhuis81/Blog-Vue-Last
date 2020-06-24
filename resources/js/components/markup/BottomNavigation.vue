@@ -1,9 +1,15 @@
 <template>
-  <v-bottom-navigation app color="primary" :input-value="showNav">
-    <v-btn v-for="(item, index) in items" :key="index" router :to="{ path: item.path }">
+  <v-bottom-navigation app color="primary">
+    <!-- <v-btn v-for="(item, index) in items" :key="index" :to="{ name: item.pathname }" exact>
       <span>{{ item.name }}</span>
       <v-icon>{{ item.icon }}</v-icon>
+    </v-btn> -->
+
+    <v-btn to="/" exact>
+      <span>Home</span>
+      <v-icon>mdi-home</v-icon>
     </v-btn>
+
   </v-bottom-navigation>
 </template>
 
@@ -13,15 +19,15 @@ export default {
     return {
       showNav: false,
       items: [
-        { name: "Home", path: "/", icon: "mdi-home" },
-        { name: "About", path: "/about", icon: "mdi-information" }
+        { name: "Home", pathname: "index", icon: "mdi-home" },
+        { name: "About", pathname: "about", icon: "mdi-information" }
       ]
     };
   },
   mounted() {
     setTimeout(() => {
       this.showNav = true;
-    }, 500);
+    }, 1000);
   }
 };
 </script>

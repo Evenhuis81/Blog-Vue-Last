@@ -13,15 +13,7 @@ export default [
         meta: { requiresAuth: true, scopes: ['author_access'] },
         beforeEnter: (to, from, next) => {
             if (to.params.id == store.getters['auth/userId']) {
-                // console.log(to.meta.createButton)
-                // if (to.meta.createButton) {
-                //     store.dispatch('setDashboard', false)
                 next()
-                // } else {
-                //     console.log('settrue')
-                //     store.dispatch('setDashboard', true)
-                //     next()
-                // }
             } else {
                 next({ name: 'pagenotfound' })
             }
