@@ -14,7 +14,7 @@ Route::group(['prefix' => 'auth', 'middleware' => 'throttle:30,5'], function () 
     });
 });
 
-Route::get('blogs', 'BlogController@index');
+Route::resource('blogs', 'BlogController');
 Route::resource('categories', 'CategoryController');
 
 Route::post('loginpg', 'AuthController@loginpg')->middleware('throttle:30,5');

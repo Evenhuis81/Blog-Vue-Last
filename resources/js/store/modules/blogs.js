@@ -7,16 +7,19 @@ export default {
         set_blogs(state, blogs) {
             state.blogs = blogs;
         },
+        create_blog(state, blog) {
+            //
+        }
     },
     actions: {
-        // createBlog({ commit }, blog) {
-        //     this.$http().post('/api/blogs', blog)
-        //         .then(res => {
-        //             commit('CREATE_BLOG', res.data)
-        //         }).catch(err => {
-        //             console.log(err)
-        //         })
-        // },
+        createBlog({ commit }, blog) {
+            return this._vm.$http.post('/api/blogs/create', blog)
+                .then(res => {
+                    commit('create_blog', res.data)
+                }).catch(err => {
+                    throw err
+                })
+        },
         getBlogs({ commit }) {
             return this._vm.$http.get('/api/blogs')
                 .then(res => {

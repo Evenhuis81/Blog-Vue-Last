@@ -1,7 +1,7 @@
 <template>
   <v-container>
     <div>
-      <h2>logged in as: {{ userName }}</h2>
+      <h2>Hello {{ userName }}</h2>
     </div>
     <router-view></router-view>
   </v-container>
@@ -19,13 +19,21 @@ export default {
     };
   },
   computed: {
-    ...mapGetters({ userName: "auth/userName", dashboard: "dashboard" })
+    ...mapGetters({
+      userName: "auth/userName"
+      // dashboard: "dashboard"
+    })
   },
   methods: {
-    ...mapActions(["setDashboard"]),
-    createBlog() {
-      this.setDashboard(false);
-      this.$router.push({ path: `/author/${this.id}/createblog` });
+    // ...mapActions(["setDashboard"]),
+    // createBlog() {
+    //   this.setDashboard(false);
+    //   this.$router.push({ path: `/author/${this.id}/createblog` });
+    // }
+  },
+  created() {
+    if (this.$route.query.new_blog) {
+      // this.just_registered = true;
     }
   }
 };

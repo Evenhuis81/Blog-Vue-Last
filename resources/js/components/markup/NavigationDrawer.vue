@@ -1,5 +1,5 @@
 <template>
-  <v-navigation-drawer app clipped :value="navigationDrawer">
+  <v-navigation-drawer app clipped :value="navigationDrawer" v-if="authenticated">
     <v-col class="mt-5" align="center">
       <img src="/storage/navdrawerlogo_1833982-200.png" height="50" alt="avatar" />
     </v-col>
@@ -24,7 +24,7 @@
           <v-list-item-content>
             <v-list-item-title class="mt-8">Blog Actions:</v-list-item-title>
           </v-list-item-content>
-        </v-list-item> -->
+        </v-list-item>-->
 
         <!-- <v-title class="black--text ml-5">Blog Actions:</v-title> -->
 
@@ -32,7 +32,7 @@
           v-for="(item, i) in blogActions"
           :key="i"
           router
-          :to="{ path: '/author/' + userId + item.path }"
+          :to="{ name: item.path, params: { id: userId } }"
           link
         >
           <v-list-item-icon>
@@ -73,22 +73,22 @@ export default {
         {
           text: "Create",
           icon: "mdi-plus",
-          path: "/createblog"
+          path: "createblog"
         },
         {
           text: "Read",
           icon: "mdi-file",
-          path: "/author/" + this.userId + "/readblog"
+          path: "readblogindex"
         },
         {
           text: "Update",
           icon: "mdi-update",
-          path: "/author/" + this.userId + "/updateblog"
+          path: "editblogindex"
         },
         {
           text: "Delete",
           icon: "mdi-delete",
-          path: "/author/" + this.userId + "/deleteblog"
+          path: "deleteblogindex"
         }
       ]
     };
@@ -96,7 +96,7 @@ export default {
   computed: {
     ...mapGetters({
       //   { userVerified: "auth/userVerified",
-      //     authenticated: "auth/authenticated",
+      authenticated: "auth/authenticated",
       userId: "auth/userId",
       navigationDrawer: "layoutelements/getNavigationDrawer",
       categories: "categories/categories"

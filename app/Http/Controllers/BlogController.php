@@ -8,6 +8,16 @@ use Illuminate\Http\Request;
 class BlogController extends Controller
 {
     /**
+     * Instantiate a new controller instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        $this->middleware('auth:api')->except('index');
+    }
+
+    /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
@@ -26,7 +36,7 @@ class BlogController extends Controller
      */
     public function create()
     {
-        //
+        dd(request()->all());
     }
 
     /**
