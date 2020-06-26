@@ -13,7 +13,7 @@ export default {
     },
     actions: {
         createBlog({ commit }, blog) {
-            return this._vm.$http.post('/api/blogs/create', blog)
+            return this._vm.$http.post('/api/blogs', blog)
                 .then(res => {
                     commit('create_blog', res.data)
                 }).catch(err => {

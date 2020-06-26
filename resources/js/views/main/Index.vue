@@ -39,12 +39,6 @@
 import { mapGetters } from "vuex";
 
 export default {
-  data() {
-    return {
-      // page: 1,
-      // perPage: 8
-    };
-  },
   computed: {
     ...mapGetters({ blogs: "blogs/blogs" })
   },

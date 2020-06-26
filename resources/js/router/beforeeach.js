@@ -18,11 +18,9 @@ export default async function (to, from, next) {
   }
   store.dispatch('setContentLoading', false)
 
-  const role = store.getters['auth/role']
   const auth = store.getters['auth/authenticated']
+  const role = store.getters['auth/userRole']
 
-  // wrapper for admin access
-  // if (role !== 'admin') {
     if (to.matched.some(record => record.meta.requiresAuth)) {
       if (auth) {
         const scopes = to.meta.scopes || []
@@ -42,6 +40,5 @@ export default async function (to, from, next) {
       store.dispatch('snackbar/setSnackbar','You are already registered and logged in!')
       return next({ name: "redirect" })
     }
-  // }
   next()
 };

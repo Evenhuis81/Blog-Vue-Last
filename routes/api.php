@@ -1,24 +1,11 @@
 <?php
 
-use Illuminate\Http\Request;
-
-Route::group(['prefix' => 'auth', 'middleware' => 'throttle:30,5'], function () {
-    Route::group(['middleware' => 'guest'], function () {
+Route::group(['prefix' => 'auth'], function () {
     Route::post('login', 'AuthController@login');
     Route::post('register', 'AuthController@register');
-    });
-    Route::group(['middleware' => 'auth:api'], function () {
-        Route::get('logout', 'AuthController@logout');
-        // Dont really want to throttle details, but then more complex/cluttered grouping
-        Route::get('details', 'AuthController@details');
-    });
+    Route::get('logout', 'AuthController@logout');
+    Route::get('details', 'AuthController@details');
 });
 
 Route::resource('blogs', 'BlogController');
 Route::resource('categories', 'CategoryController');
-
-Route::post('loginpg', 'AuthController@loginpg')->middleware('throttle:30,5');
-
-Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
-});

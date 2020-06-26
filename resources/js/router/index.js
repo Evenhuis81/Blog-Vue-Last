@@ -2,7 +2,7 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 import MainRoutes from './mainroutes.js'
 import AuthRoutes from "./authroutes.js"
-import UserRoutes from "./author.js"
+import UserRoutes from "./userroutes.js"
 import BlogRoutes from "./blogroutes.js"
 import BeforeEach from './beforeeach.js'
 

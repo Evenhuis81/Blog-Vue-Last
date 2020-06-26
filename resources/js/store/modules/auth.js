@@ -23,10 +23,6 @@ export default {
         register({ }, credentials) {
             return this._vm.$http.post("/api/auth/register", credentials)
         },
-        loginPG({ commit }, credentials) {
-            //
-        },
-
         login({ commit }, credentials) {
             return this._vm.$http.post("/api/auth/login", credentials)
                 .then(response => {
@@ -58,7 +54,7 @@ export default {
                 // use handler (internal error handler + log)
             }).then(() => {
                 // this always runs and not in 1st then and catch, cause no matter the outcome, user must log out
-                // in this case, the token should be revoked in another matter, if tempered with, can't revoke from localstorage
+                // in this case, the last none revoked token from user should be revoked in another matter, if tempered with, can't revoke from localstorage
                 commit('remove_token');
                 commit('set_user', null);
             })
@@ -67,8 +63,8 @@ export default {
     getters: {
         unverifiedToken: state => (state.token && !state.user) ? true : false,
         authenticated: state => (state.token && state.user) ? true : false,
-        role: state => state.user ? state.user.role : null,
         userId: state => state.user ? state.user.id : null,
+        userRole: state => state.user ? state.user.role : null,
         userName: state => state.user ? state.user.name : null
     }
 }

@@ -6,7 +6,7 @@
     <v-form ref="form" v-model="valid" lazy-validation @submit.prevent="submitCreateBlog">
       <v-text-field
         v-model="form.title"
-        :rules="[v => !!v || 'A title is required']"
+        :rules="rules.title"
         label="Title"
         required
       ></v-text-field>
@@ -51,7 +51,6 @@ import { mapGetters } from "vuex";
 import { mapActions } from "vuex";
 
 export default {
-  props: ["id"],
   data: () => ({
     valid: true,
     errors: {
@@ -62,12 +61,9 @@ export default {
       description: "",
       category: null,
       premium: false
-    }
-    // title: "",
-    // nameRules: [
-    //   v => !!v || "Name is required",
-    //   v => (v && v.length <= 10) || "Name must be less than 10 characters"
-    // ],
+    },
+    rules: { 
+      title: [],
     // description: "",
     // emailRules: [
     //   v => !!v || "E-mail is required",
@@ -76,6 +72,7 @@ export default {
     // category: null
     // items: ["Item 1", "Item 2", "Item 3", "Item 4"],
     // checkbox: false
+    },
   }),
   computed: {
     ...mapGetters({
@@ -88,14 +85,17 @@ export default {
     }
   },
   methods: {
-    ...mapActions(
-      "blogs",
-      {
-        createBlog: "createBlog"
+    ...mapActions({
+        createBlog: "blogs/createBlog",
+        setButtonLoading: "setButtonLoading"
       },
-      ["setButtonLoading"]
     ),
     submitCreateBlog() {
+      this.errors.submitForm = ''
+      this.rules.title = [
+        v => !!v || "A title is required",
+        v => (v && v.length >= 5) || "Title must be at least 5 characters"
+      ]
       if (this.$refs.form.validate()) {
         this.setButtonLoading();
         this.createBlog(this.form)
@@ -122,15 +122,6 @@ export default {
         this.errors.submitForm = [["Something went wrong with validating."]];
       }
     }
-    // validate() {
-    //   this.$refs.form.validate();
-    // }
-    // reset() {
-    //   this.$refs.form.reset();
-    // },
-    // resetValidation() {
-    //   this.$refs.form.resetValidation();
-    // }
   }
 };
 </script>

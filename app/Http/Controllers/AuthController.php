@@ -12,6 +12,17 @@ use App\Http\Requests\Auth\RegisterUser;
 
 class AuthController extends Controller
 {
+    /**
+     * Instantiate a new controller instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        $this->middleware('auth:api')->except(['login', 'register']);
+        $this->middleware('throttle:30,5')->except(['details', 'logout']);
+    }
+
     public function register(RegisterUser $request)
     {
         $validated = $request->validated();

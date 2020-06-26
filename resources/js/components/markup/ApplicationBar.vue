@@ -11,14 +11,13 @@
     <!-- Right: Login- register- & usericons/menus -->
     <v-spacer></v-spacer>
     <user-navigation></user-navigation>
-    <v-progress-linear indeterminate :active="true" absolute bottom></v-progress-linear>
   </v-app-bar>
 </template>
 
 <script>
+import UserNavigation from "./UserNavigation.vue";
 import { mapActions } from "vuex";
 import { mapGetters } from "vuex";
-import UserNavigation from "../user/UserNavigation.vue";
 import { SPA_TITLE } from "../../constants";
 
 export default {
@@ -28,7 +27,6 @@ export default {
   }),
   computed: {
     ...mapGetters({
-      // appBarNavIcon: "layoutelements/getAppBarNavIcon",
       authenticated: "auth/authenticated"
     })
   },

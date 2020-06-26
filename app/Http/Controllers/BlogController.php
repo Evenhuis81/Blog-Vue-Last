@@ -25,7 +25,6 @@ class BlogController extends Controller
     public function index()
     {
         $blogs = Blog::orderBy('created_at', 'DESC')->with('owner')->with('category')->get();
-        // dd($blogs);
         return response()->json($blogs);
     }
 
@@ -36,7 +35,7 @@ class BlogController extends Controller
      */
     public function create()
     {
-        dd(request()->all());
+        //
     }
 
     /**
@@ -47,7 +46,7 @@ class BlogController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        dd(request()->all());
     }
 
     /**

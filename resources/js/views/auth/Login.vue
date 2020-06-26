@@ -106,28 +106,21 @@ export default {
     valid: true
   }),
   computed: {
-    ...mapGetters({ buttonLoading: "buttonLoading", role: "auth/role", userId: "auth/userId" })
+    ...mapGetters(["buttonLoading"])
   },
   methods: {
-    ...mapActions("auth", {
-      loginPG: "loginPG",
-      login: "login",
+    ...mapActions({
+      login: "auth/login",
+      setSnackbar: "snackbar/setSnackbar",
+      setButtonLoading: "setButtonLoading"
     }),
-    ...mapActions({ setSnackbar: "snackbar/setSnackbar",
-    }),
-    ...mapActions(['setButtonLoading']),
     submitLogin() {
       this.errors.loginForm = "";
       if (this.$refs.form.validate()) {
         this.setButtonLoading();
         this.login(this.form)
           .then(role => {
-            if (role === 'admin') {
-                this.$router.push({ name: role + "dashboard" });
-              } else {
-                // console.log(this.$router)
-                this.$router.push({ name: role + "dashboard", params: { id: this.userId } });
-              }
+            this.$router.push({ name: "dashboard" });
             this.setSnackbar('You are now logged in');
           })
           .catch(error => {
