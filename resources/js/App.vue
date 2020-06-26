@@ -1,5 +1,5 @@
 <template>
-  <!-- Mount point Vuetify Components -->
+  <!-- Mount Point Vuetify Components -->
   <v-app>
     <!-- Application Markup -->
     <layout />
@@ -8,10 +8,13 @@
     <v-content class="grey lighten-5 ma-2">
       <!-- On Screen Popups -->
       <dialogs-snackbars />
-      <!-- Back Button / General Navigation / Search -->
+
+      <!-- OPT: Back Button / General Navigation / Search -->
       <!-- <nav-search-bar /> -->
-      <!-- Content Loading Line On Top of Page -->
+
+      <!-- Content Loading Indicator On Top Of Page -->
       <v-progress-linear indeterminate :active="this.$store.state.contentLoading" absolute top></v-progress-linear>
+
       <!-- Routes -->
       <router-view />
     </v-content>
@@ -21,7 +24,7 @@
 <script>
 import Layout from "./components/markup/Layout";
 import DialogsSnackbars from "./components/DialogsSnackbars";
-import NavSearchBar from "./components/NavSearchBar";
+// import NavSearchBar from "./components/NavSearchBar";
 
 export default {
   components: { Layout, DialogsSnackbars }

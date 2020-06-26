@@ -47,33 +47,14 @@ export default {
   },
   computed: {
     ...mapGetters({ blogs: "blogs/blogs" })
-    // categories: "categories/categories"}),
-    // visibleBlogs() {
-    //   if (this.page * this.perPage > this.blogs.length) {
-    //     return this.blogs.slice(
-    //       (this.page - 1) * this.perPage,
-    //       this.blogs.length
-    //     );
-    //   }
-    //   return this.blogs.slice(
-    //     (this.page - 1) * this.perPage,
-    //     this.page * this.perPage
-    //   );
-    // }
   },
   methods: {
     randomnr() {
       return Math.floor(Math.random() * 255) + 1;
     },
-    onScroll() {
-      this.offsetTop = window.pageYOffset || document.documentElement.scrollTop;
-    },
     blogCreatedFromNow(date) {
       return this.$moment(date).fromNow();
     }
-    // currentBlog(row, col) {
-    //   return this.visibleBlogs[(row - 1) * 2 + (col - 1)];
-    // }
   }
 };
 </script>
