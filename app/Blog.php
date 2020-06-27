@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Blog extends Model
 {
     protected $fillable = [
-        'title', 'description', 'owner_id', 'category_id'
+        'title', 'description', 'owner_id', 'category_id', 'premium'
     ];
 
     // 2 times a One to Many relation (inverse)

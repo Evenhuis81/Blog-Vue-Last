@@ -1,10 +1,12 @@
 <template>
-  <div>
-    <v-row justify="center">
-      <v-card-title class="headline">Create New Blog</v-card-title>
-    </v-row>
+  <v-container>
+    <!-- <v-row justify="center"> -->
+      <h2>Create New Blog</h2>
+    <!-- </v-row> -->
     <v-form ref="form" v-model="valid" lazy-validation @submit.prevent="submitCreateBlog">
       <v-text-field
+        ref="title"
+        class="mb-4 mt-4"
         v-model="form.title"
         :rules="rules.title"
         label="Title"
@@ -13,21 +15,23 @@
 
       <v-textarea
         v-model="form.description"
-        :rules="[v => !!v || 'A description is required']"
+        :rules="rules.description"
         label="Description"
         auto-grow
+        rows="1"
+        outlined
         required
       ></v-textarea>
 
       <v-select
-        v-model="form.category"
-        :items="categories"
-        :rules="[v => !!v || 'Category is required']"
+        v-model="tempCategoryName"
+        :items="categoryNames"
+        :rules="rules.category"
         label="Category"
         required
       ></v-select>
 
-      <v-checkbox v-model="form.premium" label="Premium Content?"></v-checkbox>
+      <v-checkbox class="mb-4" v-model="form.premium" label="Premium Content?"></v-checkbox>
 
       <v-btn
         :disabled="!valid"
@@ -39,11 +43,8 @@
 
       <p v-for="(error, index) in errors.submitForm" :key="index" class="red--text">{{ error[0] }}</p>
 
-      <!-- <v-btn color="error" class="mr-4" @click="reset">Reset Form</v-btn> -->
-
-      <!-- <v-btn color="warning" @click="resetValidation">Reset Validation</v-btn> -->
     </v-form>
-  </div>
+  </v-container>
 </template>
 
 <script>
@@ -56,39 +57,32 @@ export default {
     errors: {
       submitForm: ""
     },
+    tempCategoryName: "",
     form: {
       title: "",
       description: "",
-      category: null,
+      category_id: null,
       premium: false
     },
     rules: { 
       title: [],
-    // description: "",
-    // emailRules: [
-    //   v => !!v || "E-mail is required",
-    //   v => /.+@.+\..+/.test(v) || "E-mail must be valid"
-    // ],
-    // category: null
-    // items: ["Item 1", "Item 2", "Item 3", "Item 4"],
-    // checkbox: false
+      description: [],
+      category: []
     },
   }),
   computed: {
     ...mapGetters({
-      getCategories: "categories/categories",
+      categoryNames: "categories/categoryNames",
       buttonLoading: "buttonLoading",
       role: "auth/role"
     }),
-    categories() {
-      return this.getCategories.map(cat => cat.name);
-    }
   },
   methods: {
     ...mapActions({
-        createBlog: "blogs/createBlog",
-        setButtonLoading: "setButtonLoading"
-      },
+      categoryId: "categories/categoryId",
+      createBlog: "blogs/createBlog",
+      setButtonLoading: "setButtonLoading"
+    },
     ),
     submitCreateBlog() {
       this.errors.submitForm = ''
@@ -96,8 +90,17 @@ export default {
         v => !!v || "A title is required",
         v => (v && v.length >= 5) || "Title must be at least 5 characters"
       ]
+      this.rules.description = [
+        v => !!v || "A description is required",
+        v => (v && v.length >= 10) || "Description must be at least 10 characters"
+      ]
+      this.rules.category = [
+        v => !!v || "A category is required",
+      ]
       if (this.$refs.form.validate()) {
         this.setButtonLoading();
+        // this.form.category = this.categoryId(this.tempCategoryName)
+        this.form.category_id = this.categoryNames.indexOf(this.tempCategoryName)+1
         this.createBlog(this.form)
           .then(() => {
             // this.$router.push({
@@ -106,22 +109,24 @@ export default {
             // });
           })
           .catch(error => {
-            // if (error.response.status === 429) {
-            //   this.errors.registerForm = [[error.response.statusText]];
-            // } else if (error.response.status === 403) {
-            //   this.setSnackbar(error.response.data.message);
-            //   this.$router.push({ name: this.role + "dashboard" });
-            // } else {
-            //   this.errors.registerForm = error.response.data.errors;
-            // }
+            if (error.response.status === 429) {
+              this.errors.registerForm = [[error.response.statusText]];
+            } else if (error.response.status === 403) {
+              this.setSnackbar(error.response.data.message);
+              this.$router.push({ name: this.role + "dashboard" });
+            } else {
+              this.errors.registerForm = error.response.data.errors;
+            }
           })
           .finally(() => {
-            this.setButtonLoading();
+            this.setButtonLoading()
           });
-      } else {
-        this.errors.submitForm = [["Something went wrong with validating."]];
       }
     }
+  },
+  mounted() {
+    console.log('e')
+    this.$refs.title.focus()
   }
 };
 </script>

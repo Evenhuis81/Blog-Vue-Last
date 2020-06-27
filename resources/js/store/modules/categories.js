@@ -19,21 +19,8 @@ export default {
         },
     },
     getters: {
-        categories: state => {
-            return state.categories
+        categoryNames: state => {
+            return state.categories.map(cat => cat.name);
         },
-        fiveRandomCategories: state => {
-            let newArr = [];
-            let copyArr = [...state.categories]
-            if (!state.categories.length) {
-                return newArr;
-            }
-            for (let i = 0; i < 5; i++) {
-                let j = Math.floor((Math.random() * (state.categories.length - i)));
-                newArr.push(copyArr[j]);
-                copyArr[j] = copyArr[state.categories.length - i - 1]
-            }
-            return newArr;
-        }
     }
 }

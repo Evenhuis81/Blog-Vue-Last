@@ -21,6 +21,7 @@ $factory->define(Blog::class, function (Faker $faker) use ($autoIncrement) {
         'created_at' => $faker->dateTimeBetween($startDate = '-5 years', $endDate = 'now', $timezone = null),
         // make non-hardcoded, random ...
         'category_id' => rand(1, 10),
+        'premium' => $autoIncrement->current() % 4 === 0 ? true : false
         // updated_at => append in BlogSeeder, created_at + random time, for some of them ....
         // 'image' => $faker->image('c:\laragon\www\blog-vue-last\public\storage\blogimages',640,480, null, false),
     ];

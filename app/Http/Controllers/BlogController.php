@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Blog;
 use Illuminate\Http\Request;
+use App\Http\Requests\Blog\CreateBlog;
 
 class BlogController extends Controller
 {
@@ -44,9 +45,11 @@ class BlogController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(CreateBlog $request)
     {
-        dd(request()->all());
+        $validated = $request->all();
+        $validated['owner_id'] = auth()->user()->id;
+        Blog::create($validated);
     }
 
     /**
