@@ -49,7 +49,11 @@ class BlogController extends Controller
     {
         $validated = $request->all();
         $validated['owner_id'] = auth()->user()->id;
-        Blog::create($validated);
+        if ($blog = Blog::create($validated)) {
+            return response()->json($blog, 201);
+        } else {
+            return response()->json(['errors' => ['server' => ['Error creating Blog']]], 500);
+        }
     }
 
     /**

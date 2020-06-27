@@ -48,8 +48,8 @@
 </template>
 
 <script>
-import { mapGetters } from "vuex";
-import { mapActions } from "vuex";
+import { mapGetters } from "vuex"
+import { mapActions } from "vuex"
 
 export default {
   data: () => ({
@@ -74,14 +74,14 @@ export default {
     ...mapGetters({
       categoryNames: "categories/categoryNames",
       buttonLoading: "buttonLoading",
-      role: "auth/role"
     }),
   },
   methods: {
     ...mapActions({
       categoryId: "categories/categoryId",
       createBlog: "blogs/createBlog",
-      setButtonLoading: "setButtonLoading"
+      setButtonLoading: "setButtonLoading",
+      setSnackbar: "snackbar/setSnackbar"
     },
     ),
     submitCreateBlog() {
@@ -98,24 +98,21 @@ export default {
         v => !!v || "A category is required",
       ]
       if (this.$refs.form.validate()) {
-        this.setButtonLoading();
+        this.setButtonLoading()
         // this.form.category = this.categoryId(this.tempCategoryName)
         this.form.category_id = this.categoryNames.indexOf(this.tempCategoryName)+1
         this.createBlog(this.form)
-          .then(() => {
-            // this.$router.push({
-            // name: "",
-            // query: { just_registered: true }
-            // });
+          .then(response => {
+            this.$router.push({ name: "dashboard"})
+            this.setSnackbar("You have successfully created " + this.form.title)
           })
           .catch(error => {
             if (error.response.status === 429) {
-              this.errors.registerForm = [[error.response.statusText]];
+              this.errors.submitForm = [[error.response.statusText]]
             } else if (error.response.status === 403) {
-              this.setSnackbar(error.response.data.message);
-              this.$router.push({ name: this.role + "dashboard" });
+              this.setSnackbar(error.response.data.message)
             } else {
-              this.errors.registerForm = error.response.data.errors;
+              this.errors.submitForm = error.response.data.errors
             }
           })
           .finally(() => {
@@ -125,9 +122,7 @@ export default {
     }
   },
   mounted() {
-    console.log('e')
     this.$refs.title.focus()
   }
 };
 </script>
-
