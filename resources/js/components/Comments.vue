@@ -24,11 +24,11 @@
             <p v-for="(error, index) in errors" :key="index" class="red--text">{{ error[0] }}</p>
         </v-row>
         <v-card class="mx-auto" max-width="800">
-            <!-- <v-card-title>Comments</v-card-title>
-            <v-card-subtitle>Subtitle</v-card-subtitle>
-            <v-card-text>Text</v-card-text>
-            <v-card-actions>Actions</v-card-actions> -->
-            <v-card flat v-for="(item,index) in blogs[$route.params.id].comments" :key="index">
+            <v-system-bar color="blue lighten-2" dark>
+                <v-spacer></v-spacer>
+                    <v-icon @click="confirmDelete">mdi-close</v-icon>
+            </v-system-bar>
+            <v-card flat v-for="(item,index) in blog($route.params.id).comments" :key="index">
                 <v-card-subtitle class="pt-3 pb-1">
                     <span class="blue--text">{{ item.owner_id }}</span>
                     <span class="ml-3">{{ item.created_at }}</span>
@@ -57,22 +57,33 @@ export default {
         ...mapGetters({
             authenticated: 'auth/authenticated',
             userId: 'auth/userId',
-            blogs: 'blogs/blogs',
+            // blogs: 'blogs/blogs',
+            blog: 'blogs/blog',
             buttonLoading: 'buttonLoading'
          })
     },
     methods: {
         ...mapActions({
             createComment: "comments/createComment",
+            deleteComment: "comments/deleteComment",
             setButtonLoading: "setButtonLoading",
             setSnackbar: "snackbar/setSnackbar"
         }),
+        confirmDelete() {
+            const answer = window.confirm('Do you really want to leave? you have unsaved changes!')
+            if (answer) {
+                this.deleteComment()
+            } else {
+                console.log('no')
+            }
+        },
         submitComment() {
             this.setButtonLoading()
             this.form.blog_id = parseInt(this.$route.params.id)
             this.form.owner_id = this.userId
             this.createComment(this.form)
             .then(response => {
+                this.form.description = ''
                 this.setSnackbar("You have successfully created a comment")
             })
             .catch(error => {

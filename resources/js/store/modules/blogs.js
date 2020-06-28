@@ -40,7 +40,10 @@ export default {
         },
         comments: state => {
             return state.blogs.map(cat => cat.name);
-        }
+        },
+        blog: (state) => (id) => {
+            return state.blogs.find(blog => blog.id == id)
+          }
         // getBlog: state => {
         //     return state.blog;
         // },

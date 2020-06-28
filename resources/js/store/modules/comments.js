@@ -18,6 +18,15 @@ export default {
                     throw err
                 })
         },
+        deleteComment({ dispatch }, id) {
+            return this._vm.$http.delete('/api/comments/' + id)
+                .then(res => {
+                    dispatch('blogs/getBlogs', {}, {root: true})
+                    return
+                }).catch(err => {
+                    throw err
+                })
+        },
     },
     getters: {
         // categoryNames: state => {
