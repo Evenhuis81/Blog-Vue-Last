@@ -1,11 +1,11 @@
 import Show from '../views/blog/Show.vue'
 import CreateBlog from '../views/blog/Create.vue'
+import Comments from '../components/Comments.vue'
 import store from '../store'
 
 export default [
     {    
         path: '/blog/:id',
-        name: 'blog',
         component: Show,
         props: true,
         beforeEnter: (to, from, next) => {
@@ -14,7 +14,14 @@ export default [
             } else {
                 next({ name: 'pagenotfound' })
             }
-        }
+        },
+        children: [
+            {
+                path: '',
+                name: 'blog',
+                component: Comments
+            }
+        ]
     },
     {
         path: '/createblog',

@@ -39,10 +39,15 @@ class User extends Authenticatable implements JWTSubject
         'email_verified_at' => 'datetime',
     ];
 
-    // One to Many relation
+    // One to Many relation x2
     public function blogs()
     {
         return $this->hasMany('App/Blog');
+    }
+
+    public function comments()
+    {
+        return $this->hasMany('App\Comment');
     }
     /**
      * Get the identifier that will be stored in the subject claim of the JWT.

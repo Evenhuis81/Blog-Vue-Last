@@ -2,26 +2,20 @@ export default {
     namespaced: true,
     state: {
         blogs: [],
-        blog: []
+        // blog: []
     },
     mutations: {
         set_blogs(state, blogs) {
             state.blogs = blogs;
         },
-        push_blog(state, blog) {
-            // console.log(blog)
-            // blog.map(b => state.blogs.push(b))
-            state.blog = blog
-        }
     },
     actions: {
-        createBlog({ commit }, blog) {
+        createBlog({ dispatch }, blog) {
             return this._vm.$http.post('/api/blogs', blog)
                 .then(res => {
-                    console.log('a')
-                    commit('push_blog', res.data)
-                    
-                    return res.data
+                    // dispatch('push_blog', res.data)
+                    dispatch('getBlogs')
+                    return
                 }).catch(err => {
                     throw err
                 })
@@ -34,11 +28,19 @@ export default {
                     throw err
                 })
         },
+        push_blog(state, blog) {
+            console.log(blog)
+            // await blog.map(b => state.blogs.push(b))
+            // state.blog = blog
+        }
     },
     getters: {
         blogs: state => {
             return state.blogs
         },
+        comments: state => {
+            return state.blogs.map(cat => cat.name);
+        }
         // getBlog: state => {
         //     return state.blog;
         // },

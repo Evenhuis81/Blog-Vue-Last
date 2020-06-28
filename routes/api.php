@@ -9,3 +9,4 @@ Route::group(['prefix' => 'auth'], function () {
 
 Route::resource('blogs', 'BlogController');
 Route::resource('categories', 'CategoryController');
+Route::resource('comments', 'CommentController');

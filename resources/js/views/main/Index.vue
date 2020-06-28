@@ -1,8 +1,8 @@
 <template>
   <v-container v-if="blogs.length">
     <v-card outlined class="mb-5" v-for="blog in blogs" :key="blog.id">
-      <v-card-text class="pa-0">
-        <p class="display-1 text--primary text-center my-8">{{ blog.title }}</p>
+      <v-card-text class="display-1 text--primary text-center my-8">
+        {{ blog.title }}
         <p class="text-center">
           {{ blogCreatedFromNow(blog.created_at) }} in
           <a class="text-decoration-underline">{{ blog.category.name }}</a>

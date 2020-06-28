@@ -1,17 +1,15 @@
-// import users from "./modules/users.js"
 import auth from "./modules/auth.js"
 import blogs from "./modules/blogs.js"
 import categories from "./modules/categories.js"
-// import routing from "./modules/routing.js"
+import comments from "./modules/comments.js"
 import layoutelements from "./modules/layoutelements.js"
 import snackbar from "./modules/snackbar.js"
 
 let modules = {
-    // users,
     auth,
     blogs,
     categories,
-    // routing,
+    comments,
     layoutelements,
     snackbar
 }
