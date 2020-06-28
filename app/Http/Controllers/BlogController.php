@@ -101,6 +101,11 @@ class BlogController extends Controller
      */
     public function destroy(Blog $blog)
     {
-        //
+        try {
+            Blog::destroy($blog->id);
+        } catch (\Throwable $th) {
+            return response()->json($th);
+        }
+        
     }
 }

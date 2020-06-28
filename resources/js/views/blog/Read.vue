@@ -5,33 +5,61 @@
             <v-card
                 v-for="(item, index) in authorBlogs"
                 :key="index"
-                class="mx-auto my-2"
+                class="mx-auto pb-3 my-10"
                 max-width="900"
                 >
+                <v-hover v-slot:default="{ hover }">
+                    <v-system-bar :window="hover ? true : false" height="30" color="#BBDEFB">
+                        <!-- <a @click="setCategories(item.id)"> -->
+                        <v-icon @click="blogCategories(item.id)">mdi-circle-edit-outline</v-icon>
+                        <span>Categories</span>
+                        <!-- </a> -->
+                        <v-spacer></v-spacer>
+                        <v-icon @click="blogEdit(item.id)">mdi-square-edit-outline</v-icon>
+                        <span>Edit Blog</span>
+                        <v-spacer></v-spacer>
+                        <span class="mr-2">Delete Blog</span>
+                        <v-icon @click="blogDelete(item.id)">mdi-close-box-outline</v-icon>
+                    </v-system-bar>
+                </v-hover>
                 <v-card-title>{{ item.title }}</v-card-title>
                 <v-card-subtitle>{{ item.created_at }}</v-card-subtitle>
-                <v-card-subtitle>{{ item.category.name }}</v-card-subtitle>
-                <v-card-text class="overflow-y-auto" style="max-height: 132px">{{ item.description }}</v-card-text>
-                <!-- <v-card-subtitle class="pt-3 pb-1"> -->
-                    <!-- <span class="blue--text"></span> -->
-                    <!-- <span class="ml-3">{{ item.created_at }}</span> -->
-                <!-- </v-card-subtitle> -->
-                <!-- <v-card-text class="overflow-y-auto ml-2" style="max-height: 66px">{{ item.description }}</v-card-text> -->
-                <v-divider></v-divider>
+                <v-card-subtitle class="pt-0">{{ item.category.name }}</v-card-subtitle>
+                <v-card-text class="overflow-y-auto" style="max-height: 99px">{{ item.description }}</v-card-text>
             </v-card>
         </div>
     </v-container>
 </template>
 
 <script>
-import { mapGetters } from "vuex"
+import { mapGetters, mapActions } from "vuex"
 
 export default {
     data: () => ({
-        //
+        window: false,
+        height: 30
     }),
     computed: {
         ...mapGetters({ authorBlogs: "blogs/authorBlogs" })
+    },
+    methods: {
+        ...mapActions({ deleteBlog: "blogs/deleteBlog" }),
+        blogEdit(blogId) {
+            console.log('i')
+            this.$router.push({ name: 'editblog', params: { id: blogId } })
+        },
+        blogCategories(blogId) {
+            //
+        },
+        blogDelete(blogId) {
+            const answer = window.confirm('Do you really want to delete this blog?')
+            if (answer) {
+                // need to set some sort of load thing here
+                this.deleteBlog(blogId).then({
+                    //
+                })
+            }
+        }
     }
 }
 </script>

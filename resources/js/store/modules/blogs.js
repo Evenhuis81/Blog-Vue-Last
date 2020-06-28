@@ -28,11 +28,20 @@ export default {
                     throw err
                 })
         },
-        push_blog(state, blog) {
-            console.log(blog)
+        deleteBlog({ dispatch }, blogId) {
+            return this._vm.$http.delete('/api/blogs/' + blogId)
+            .then(res => {
+                dispatch('blogs/getBlogs', {}, {root: true})
+                return
+            }).catch(err => {
+                throw err
+            })
+        }
+        // push_blog(state, blog) {
+        //     console.log(blog)
             // await blog.map(b => state.blogs.push(b))
             // state.blog = blog
-        }
+        // }
     },
     getters: {
         blogs: state => {
