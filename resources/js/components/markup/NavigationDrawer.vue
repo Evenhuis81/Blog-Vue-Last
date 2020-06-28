@@ -43,6 +43,7 @@ export default {
     return {
       blogActions: [
         { text: "Create", icon: "mdi-plus", route: "createblog" },
+        { text: "Read", icon: "mdi-file", route: "readblog" }
       ]
     };
   },

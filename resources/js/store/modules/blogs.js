@@ -38,14 +38,15 @@ export default {
         blogs: state => {
             return state.blogs
         },
-        comments: state => {
-            return state.blogs.map(cat => cat.name);
-        },
+        // comments: state => {
+        //     return state.blogs.map(cat => cat.name);
+        // },
         blog: (state) => (id) => {
             return state.blogs.find(blog => blog.id == id)
-          }
-        // getBlog: state => {
-        //     return state.blog;
-        // },
+          },
+        authorBlogs: (state, getters, rootState, rootGetters) => {
+            return state.blogs.filter(blog => blog.owner_id == rootGetters["auth/userId"])
+            // console.log(rootGetters['auth/userId'])
+        }
     }
 }

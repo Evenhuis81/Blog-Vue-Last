@@ -23,20 +23,28 @@
             <p v-else>Log in to write a comment</p>
             <p v-for="(error, index) in errors" :key="index" class="red--text">{{ error[0] }}</p>
         </v-row>
-        <v-card class="mx-auto" max-width="800">
-            <v-system-bar color="blue lighten-2" dark>
-                <v-spacer></v-spacer>
-                    <v-icon @click="confirmDelete">mdi-close</v-icon>
-            </v-system-bar>
-            <v-card flat v-for="(item,index) in blog($route.params.id).comments" :key="index">
-                <v-card-subtitle class="pt-3 pb-1">
-                    <span class="blue--text">{{ item.owner_id }}</span>
-                    <span class="ml-3">{{ item.created_at }}</span>
-                </v-card-subtitle>
-                <v-card-text class="overflow-y-auto ml-2" style="max-height: 66px">{{ item.description }}</v-card-text>
-                <v-divider></v-divider>
-            </v-card>
-        </v-card>
+        <!-- <v-card class="mx-auto" max-width="800"> -->
+            <!-- <div  class="mt-3"> -->
+                <v-card
+                    v-for="(item, index) in blog($route.params.id).comments"
+                    :key="index"
+                    flat
+                    class="mx-auto my-2"
+                    max-width="800"
+                    >
+                    <v-system-bar v-if="item.owner_id == userId" color="blue lighten-2" dark>
+                        <v-spacer></v-spacer>
+                        <v-icon @click="confirmDelete(item.id)">mdi-close</v-icon>
+                    </v-system-bar>
+                    <v-card-subtitle class="pt-3 pb-1">
+                        <span class="blue--text">{{ item.owner_id }}</span>
+                        <span class="ml-3">{{ item.created_at }}</span>
+                    </v-card-subtitle>
+                    <v-card-text class="overflow-y-auto ml-2" style="max-height: 66px">{{ item.description }}</v-card-text>
+                    <v-divider></v-divider>
+                </v-card>
+            <!-- </div> -->
+        <!-- </v-card> -->
     </div>
 </template>
 
@@ -45,6 +53,7 @@ import { mapGetters } from "vuex"
 import { mapActions } from "vuex"
 
 export default {
+    props: ['id'],
     data: () => ({
         form: {
             description: '',
@@ -57,7 +66,6 @@ export default {
         ...mapGetters({
             authenticated: 'auth/authenticated',
             userId: 'auth/userId',
-            // blogs: 'blogs/blogs',
             blog: 'blogs/blog',
             buttonLoading: 'buttonLoading'
          })
@@ -69,12 +77,11 @@ export default {
             setButtonLoading: "setButtonLoading",
             setSnackbar: "snackbar/setSnackbar"
         }),
-        confirmDelete() {
-            const answer = window.confirm('Do you really want to leave? you have unsaved changes!')
+        confirmDelete(commentId) {
+            const answer = window.confirm('Do you really want to delete this comment?')
             if (answer) {
-                this.deleteComment()
-            } else {
-                console.log('no')
+                // need to set some sort of load thing here
+                this.deleteComment(commentId)
             }
         },
         submitComment() {

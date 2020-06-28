@@ -1,6 +1,7 @@
 import Show from '../views/blog/Show.vue'
-import CreateBlog from '../views/blog/Create.vue'
 import Comments from '../components/Comments.vue'
+import CreateBlog from '../views/blog/Create.vue'
+import ReadBlog from '../views/blog/Read.vue'
 import store from '../store'
 
 export default [
@@ -27,6 +28,12 @@ export default [
         path: '/createblog',
         name: 'createblog',
         component: CreateBlog,
+        meta: { requiresAuth: true, scopes: ['author_access'] },
+    },
+    {
+        path: '/readblog',
+        name: 'readblog',
+        component: ReadBlog,
         meta: { requiresAuth: true, scopes: ['author_access'] },
     },
 ]

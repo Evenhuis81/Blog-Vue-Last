@@ -4,9 +4,7 @@ export default {
         comments: [],
     },
     mutations: {
-        // get_categories(state, categories) {
-        //     return state.categories = categories
-        // }
+        //
     },
     actions: {
         createComment({ dispatch }, comment) {
@@ -18,8 +16,8 @@ export default {
                     throw err
                 })
         },
-        deleteComment({ dispatch }, id) {
-            return this._vm.$http.delete('/api/comments/' + id)
+        deleteComment({ dispatch }, commentId) {
+            return this._vm.$http.delete('/api/comments/' + commentId)
                 .then(res => {
                     dispatch('blogs/getBlogs', {}, {root: true})
                     return
@@ -29,8 +27,6 @@ export default {
         },
     },
     getters: {
-        // categoryNames: state => {
-        //     return state.categories.map(cat => cat.name);
-        // },
+        //
     }
 }
