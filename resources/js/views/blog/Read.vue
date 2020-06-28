@@ -5,7 +5,7 @@
             <v-card
                 v-for="(item, index) in authorBlogs"
                 :key="index"
-                class="mx-auto pb-3 my-10"
+                class="mx-auto pb-0 my-10"
                 max-width="900"
                 >
                 <v-hover v-slot:default="{ hover }">
@@ -25,7 +25,10 @@
                 <v-card-title>{{ item.title }}</v-card-title>
                 <v-card-subtitle>{{ item.created_at }}</v-card-subtitle>
                 <v-card-subtitle class="pt-0">{{ item.category.name }}</v-card-subtitle>
-                <v-card-text class="overflow-y-auto" style="max-height: 99px">{{ item.description }}</v-card-text>
+                <v-card-text class="overflow-y-auto" style="max-height: 44px">{{ item.description }}</v-card-text>
+                <v-card-actions>
+                    <v-btn @click="$router.push({ name: 'blog', params: { id: item.id } })" class="ml-auto" text outlined>Show Blog</v-btn>
+                </v-card-actions>
             </v-card>
         </div>
     </v-container>
@@ -37,7 +40,8 @@ import { mapGetters, mapActions } from "vuex"
 export default {
     data: () => ({
         window: false,
-        height: 30
+        height: 30,
+        hidden: false
     }),
     computed: {
         ...mapGetters({ authorBlogs: "blogs/authorBlogs" })
@@ -45,7 +49,6 @@ export default {
     methods: {
         ...mapActions({ deleteBlog: "blogs/deleteBlog" }),
         blogEdit(blogId) {
-            console.log('i')
             this.$router.push({ name: 'editblog', params: { id: blogId } })
         },
         blogCategories(blogId) {

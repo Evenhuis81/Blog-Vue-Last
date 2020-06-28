@@ -1,5 +1,5 @@
 <template>
-    <div>{{ blog(id).title }}</div>
+    <div>{{ blog.title }}</div>
 </template>
 
 <script>
@@ -11,7 +11,10 @@ export default {
         //
     }),
     computed: {
-        ...mapGetters({ blog: "blogs/blog" })
-    }
+        ...mapGetters({ getBlog: "blogs/blog" }),
+        blog() {
+            return this.getBlog(this.id)
+        }
+    },
 }
 </script>

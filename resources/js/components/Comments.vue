@@ -81,7 +81,9 @@ export default {
             const answer = window.confirm('Do you really want to delete this comment?')
             if (answer) {
                 // need to set some sort of load thing here
-                this.deleteComment(commentId)
+                this.deleteComment(commentId).then(() => {
+                    this.setSnackbar('Comment Deleted!')
+                })
             }
         },
         submitComment() {

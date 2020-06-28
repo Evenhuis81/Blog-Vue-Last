@@ -44,7 +44,16 @@ export default [
         meta: { requiresAuth: true, scopes: ['author_access'] },
         props: true,
         beforeEnter: (to, from, next) => {
-            next()
-        }
+            if (store.getters['blogs/blogs'].map(x => x.id).includes(parseInt(to.params.id))) {
+                if (store.getters['auth/userId'] == store.getters['blogs/blog'](to.params.id).owner_id) {
+                    next()
+                } else {
+                    store.dispatch('snackbar/setSnackbar','You are not authenticated for this route!')
+                    return next({ name: "redirect" })
+                }
+            } else {
+                next({ name: 'pagenotfound' })
+            }
+        },
     },
 ]
