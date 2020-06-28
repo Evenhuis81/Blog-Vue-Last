@@ -37,19 +37,11 @@ export default {
                 throw err
             })
         }
-        // push_blog(state, blog) {
-        //     console.log(blog)
-            // await blog.map(b => state.blogs.push(b))
-            // state.blog = blog
-        // }
     },
     getters: {
         blogs: state => {
             return state.blogs
         },
-        // comments: state => {
-        //     return state.blogs.map(cat => cat.name);
-        // },
         blog: (state) => (id) => {
             return state.blogs.find(blog => blog.id == id)
           },

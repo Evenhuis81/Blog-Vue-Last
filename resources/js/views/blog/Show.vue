@@ -15,8 +15,6 @@
           <v-icon color="primary" size="18">mdi-grease-pencil</v-icon>
         </v-btn>  
       </v-card-subtitle>
-      
-      <!-- <v-card-subtitle class="pb-2">{{ $route.params.id }}</v-card-subtitle> -->
 
       <v-card-text class="text--primary">
         <div class>by {{ blog.owner.name }}</div>
@@ -26,7 +24,7 @@
 
       <v-card-actions v-if="userId == blog.owner_id">
         <v-btn color="primary" text>Edit</v-btn>
-        <v-btn text outlined class="ml-auto">Delete</v-btn>
+        <v-btn :loading="buttonLoading" @click="blogDelete(blog.id)" text outlined class="ml-auto">Delete</v-btn>
       </v-card-actions>
     </v-card>
     <router-view></router-view>
@@ -34,7 +32,7 @@
 </template>
 
 <script>
-import { mapGetters } from "vuex";
+import { mapGetters, mapActions } from "vuex";
 
 export default {
   props: ["id"],
@@ -42,7 +40,8 @@ export default {
     ...mapGetters({
       blogs: "blogs/blogs",
       getBlog: "blogs/blog",
-      userId: 'auth/userId'
+      userId: 'auth/userId',
+      buttonLoading: 'buttonLoading'
       }),
     blog() {
       return this.getBlog(this.id)
@@ -53,6 +52,28 @@ export default {
         under += "--";
       }
       return under;
+    }
+  },
+  methods: {
+    ...mapActions({
+      deleteBlog: 'blogs/deleteBlog',
+      setButtonLoading: "setButtonLoading",
+      setSnackbar: "snackbar/setSnackbar"
+    }),
+    blogDelete(blogId) {
+      const answer = window.confirm('Do you really want to delete this blog?')
+      if (answer) {
+        this.setButtonLoading
+        // need to set some sort of load thing here
+        this.deleteBlog(blogId).then(() => {
+          this.$router.push({ name: 'readblog' })
+          this.setSnackbar('Blog Deleted!')
+        }).catch(err => {
+          console.log(err)
+        }).finally(() => {
+          this.setButtonLoading()
+        })
+      }
     }
   }
 };
