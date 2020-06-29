@@ -18,19 +18,19 @@
         </v-list-item>
         <v-divider></v-divider>
 
-        <div v-if="userRole === 'author'">
-          <v-subheader class="mt-7">Blog Actions:</v-subheader>
-          <v-list-item v-for="(blogItem, i) in blogActions" :key="i" :to="{ name: blogItem.route }">
+        <div v-if="userRole === 'author'" class="mt-6">
+          <!-- <v-subheader class="mt-7">Blog Actions:</v-subheader> -->
+          <v-list-item v-for="(item, i) in actions" :key="i" :to="{ name: item.route }">
             <v-list-item-icon>
-              <v-icon v-text="blogItem.icon"></v-icon>
+              <v-icon v-text="item.icon"></v-icon>
             </v-list-item-icon>
             <v-list-item-content>
-              <v-list-item-title v-text="blogItem.text"></v-list-item-title>
+              <v-list-item-title v-text="item.text"></v-list-item-title>
             </v-list-item-content>
           </v-list-item>
 
-          <v-subheader class="mt-7">Category Actions:</v-subheader>
-          <v-list-item
+          <!-- <v-subheader class="mt-7">Category Actions:</v-subheader> -->
+          <!-- <v-list-item
             v-for="(catItem, index) in categoryActions"
             :key="'A' + index"
             :to="{ name: catItem.route }"
@@ -41,7 +41,7 @@
             <v-list-item-content>
               <v-list-item-title v-text="catItem.text"></v-list-item-title>
             </v-list-item-content>
-          </v-list-item>
+          </v-list-item> -->
         </div>
       </v-list-item-group>
     </v-list>
@@ -54,13 +54,11 @@ import { mapGetters } from "vuex";
 export default {
   data() {
     return {
-      blogActions: [
-        { text: "Create", icon: "mdi-plus", route: "createblog" },
-        { text: "Read", icon: "mdi-file", route: "readblog" }
-      ],
-      categoryActions: [
-        { text: "Create", icon: "mdi-plus", route: "createcategory" },
-        { text: "Read", icon: "mdi-file", route: "readcategory" }
+      actions: [
+        { text: "My Blogs", icon: "mdi-folder-multiple-outline", route: "myblogs" },
+        // { text: "Create New Blog", icon: "mdi-plus", route: "createblog" },
+        { text: "Manage Categories", icon: "mdi-dresser", route: "categories" },
+        // { text: "Create New Category", icon: "mdi-plus", route: "createcategory" },
       ]
     };
   },

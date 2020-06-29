@@ -1,3 +1,6 @@
 <template>
-  <div>Index Category</div>
+  <div>
+    <p>Category</p>
+    <router-view></router-view>
+  </div>
 </template>

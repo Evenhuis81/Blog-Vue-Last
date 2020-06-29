@@ -32,8 +32,8 @@ export default [
         meta: { requiresAuth: true, scopes: ['author_access'] },
     },
     {
-        path: '/readblog',
-        name: 'readblog',
+        path: '/myblogs',
+        name: 'myblogs',
         component: ReadBlog,
         meta: { requiresAuth: true, scopes: ['author_access'] },
     },

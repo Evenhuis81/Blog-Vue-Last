@@ -14,8 +14,8 @@ export default [
                 meta: { requiresAuth: true, scopes: ['author_access'] }
             },
             {
-                path: 'read',
-                name: 'readcategory',
+                path: '/categories',
+                name: 'categories',
                 component: Read,
                 meta: { requiresAuth: true, scopes: ['author_access'] }
             }
