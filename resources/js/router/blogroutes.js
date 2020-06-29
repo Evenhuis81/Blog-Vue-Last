@@ -6,7 +6,7 @@ import EditBlog from '../views/blog/Edit.vue'
 import store from '../store'
 
 export default [
-    {    
+    {
         path: '/blog/:id',
         component: Show,
         props: true,
@@ -48,7 +48,7 @@ export default [
                 if (store.getters['auth/userId'] == store.getters['blogs/blog'](to.params.id).owner_id) {
                     next()
                 } else {
-                    store.dispatch('snackbar/setSnackbar','You are not authenticated for this route!')
+                    store.dispatch('snackbar/setSnackbar', 'You are not authenticated for this route!')
                     return next({ name: "redirect" })
                 }
             } else {

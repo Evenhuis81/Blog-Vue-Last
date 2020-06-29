@@ -22,5 +22,8 @@ export default {
         categoryNames: state => {
             return state.categories.map(cat => cat.name);
         },
+        categories: state => {
+            return state.categories
+        }
     }
 }

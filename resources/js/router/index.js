@@ -4,6 +4,7 @@ import MainRoutes from './mainroutes.js'
 import AuthRoutes from "./authroutes.js"
 import UserRoutes from "./userroutes.js"
 import BlogRoutes from "./blogroutes.js"
+import CategoryRoutes from "./categoryroutes.js"
 import BeforeEach from './beforeeach.js'
 
 Vue.use(VueRouter)
@@ -15,7 +16,8 @@ const router = new VueRouter({
     ...MainRoutes,
     ...AuthRoutes,
     ...UserRoutes,
-    ...BlogRoutes
+    ...BlogRoutes,
+    ...CategoryRoutes
   ]
 })
 

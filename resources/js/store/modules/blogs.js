@@ -28,14 +28,23 @@ export default {
                     throw err
                 })
         },
+        editBlog({ dispatch }, payload) {
+            return this._vm.$http.patch('/api/blogs/' + payload.id, payload.form)
+                .then(res => {
+                    dispatch('blogs/getBlogs', {}, { root: true })
+                    return
+                }).catch(err => {
+                    throw err
+                })
+        },
         deleteBlog({ dispatch }, blogId) {
             return this._vm.$http.delete('/api/blogs/' + blogId)
-            .then(res => {
-                dispatch('blogs/getBlogs', {}, {root: true})
-                return
-            }).catch(err => {
-                throw err
-            })
+                .then(res => {
+                    dispatch('blogs/getBlogs', {}, { root: true })
+                    return
+                }).catch(err => {
+                    throw err
+                })
         }
     },
     getters: {
@@ -44,10 +53,20 @@ export default {
         },
         blog: (state) => (id) => {
             return state.blogs.find(blog => blog.id == id)
-          },
+        },
         authorBlogs: (state, getters, rootState, rootGetters) => {
             return state.blogs.filter(blog => blog.owner_id == rootGetters["auth/userId"])
-            // console.log(rootGetters['auth/userId'])
+        },
+        editFormData: (state, getters) => (id) => {
+            // let blog = getters.blog.state.blogs.find(blog => blog.id == id)
+            let blog = getters.blog(id)
+            let formData = {
+                'title': blog.title,
+                'description': blog.description,
+                'category_id': blog.category_id,
+                'premium': !!blog.premium
+            }
+            return formData
         }
     }
 }

@@ -1,7 +1,6 @@
 <template>
   <v-container>
     <!-- <v-row justify="center"> -->
-      <h2>Create New Blog</h2>
     <!-- </v-row> -->
     <v-form ref="form" v-model="valid" lazy-validation @submit.prevent="submitCreateBlog">
       <v-text-field
@@ -42,14 +41,13 @@
       >Save Blog</v-btn>
 
       <p v-for="(error, index) in errors.submitForm" :key="index" class="red--text">{{ error[0] }}</p>
-
     </v-form>
   </v-container>
 </template>
 
 <script>
-import { mapGetters } from "vuex"
-import { mapActions } from "vuex"
+import { mapGetters } from "vuex";
+import { mapActions } from "vuex";
 
 export default {
   data: () => ({
@@ -64,17 +62,17 @@ export default {
       category_id: null,
       premium: false
     },
-    rules: { 
+    rules: {
       title: [],
       description: [],
       category: []
-    },
+    }
   }),
   computed: {
     ...mapGetters({
       categoryNames: "categories/categoryNames",
-      buttonLoading: "buttonLoading",
-    }),
+      buttonLoading: "buttonLoading"
+    })
   },
   methods: {
     ...mapActions({
@@ -82,47 +80,48 @@ export default {
       createBlog: "blogs/createBlog",
       setButtonLoading: "setButtonLoading",
       setSnackbar: "snackbar/setSnackbar"
-    },
-    ),
+    }),
     submitCreateBlog() {
-      this.errors.submitForm = ''
+      this.errors.submitForm = "";
       this.rules.title = [
         v => !!v || "A title is required",
         v => (v && v.length >= 5) || "Title must be at least 5 characters"
-      ]
+      ];
       this.rules.description = [
         v => !!v || "A description is required",
-        v => (v && v.length >= 10) || "Description must be at least 10 characters"
-      ]
-      this.rules.category = [
-        v => !!v || "A category is required",
-      ]
+        v =>
+          (v && v.length >= 10) || "Description must be at least 10 characters"
+      ];
+      this.rules.category = [v => !!v || "A category is required"];
       if (this.$refs.form.validate()) {
-        this.setButtonLoading()
+        this.setButtonLoading();
         // this.form.category = this.categoryId(this.tempCategoryName)
-        this.form.category_id = this.categoryNames.indexOf(this.tempCategoryName)+1
+        this.form.category_id =
+          this.categoryNames.indexOf(this.tempCategoryName) + 1;
         this.createBlog(this.form)
           .then(response => {
-            this.$router.push({ name: "dashboard"})
-            this.setSnackbar("You have successfully created " + this.form.title)
+            this.$router.push({ name: "dashboard" });
+            this.setSnackbar(
+              "You have successfully created " + this.form.title
+            );
           })
           .catch(error => {
             if (error.response.status === 429) {
-              this.errors.submitForm = [[error.response.statusText]]
+              this.errors.submitForm = [[error.response.statusText]];
             } else if (error.response.status === 403) {
-              this.setSnackbar(error.response.data.message)
+              this.setSnackbar(error.response.data.message);
             } else {
-              this.errors.submitForm = error.response.data.errors
+              this.errors.submitForm = error.response.data.errors;
             }
           })
           .finally(() => {
-            this.setButtonLoading()
+            this.setButtonLoading();
           });
       }
     }
   },
   mounted() {
-    this.$refs.title.focus()
+    this.$refs.title.focus();
   }
 };
 </script>

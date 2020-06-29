@@ -28,7 +28,7 @@ class BlogController extends Controller
         // $blogs = Blog::find(1)->comments;
         $blogs = Blog::with('comments', 'owner', 'category')->get();
         // dd($blog);
-        // $blogs = Blog::orderBy('created_at', 'DESC')->withAll()->get();
+        // $blogs = Blog::orderBy('created_at', 'DESC')->with()->get();
         return response()->json($blogs);
     }
 
@@ -90,7 +90,18 @@ class BlogController extends Controller
      */
     public function update(Request $request, Blog $blog)
     {
-        //
+        $validated = $request->validate([
+            'title' => ['required', 'string', 'min:5'],
+            'description' => ['required', 'string', 'min:10'],
+            'category_id' => ['required', 'numeric'],
+            'premium' => ['required', 'boolean']
+        ]);
+        // $blog->categories()->sync(request('categories'));        
+        if ($blog->update($validated)) {
+            return response()->json('Blog Successfully Updated', 200);
+        } else {
+            return response()->json(['errors' => ['server' => ['Error Updating Blog']]], 500);
+        }
     }
 
     /**
