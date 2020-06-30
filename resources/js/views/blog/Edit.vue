@@ -21,7 +21,7 @@
         required
       ></v-textarea>
 
-      <v-chip-group v-model="form.category_ids" column multiple>
+      <v-chip-group v-model="form.category_ids" column multiple active-class="blue--text text--accent-4">
         <v-chip
           v-for="(category, index) in categories"
           :key="index"
@@ -29,38 +29,7 @@
           filter
           outlined
         >{{ category.name }}</v-chip>
-        <!-- <v-chip filter outlined>Elevator</v-chip>
-        <v-chip filter outlined>Washer / Dryer</v-chip>
-        <v-chip filter outlined>Fireplace</v-chip>
-        <v-chip filter outlined>Wheelchair access</v-chip>
-        <v-chip filter outlined>Dogs ok</v-chip>
-        <v-chip filter outlined>Cats ok</v-chip>-->
       </v-chip-group>
-      <!-- <v-combobox
-        v-model="categoryChips"
-        :items="categoryNames"
-        chips
-        label="Categories"
-        multiple
-        prepend-icon="mdi-filter-variant"
-        solo
-      >
-        <template v-slot:selection="{ attrs, item, select, selected }">
-          <v-chip
-            v-bind="attrs"
-            :input-value="selected"
-            close
-            @click="select"
-            @click:close="remove(item)"
-            solo
-          >
-            {{ item }}&nbsp;
-            <span>(interest)</span>
-          </v-chip>
-        </template>
-      </v-combobox>-->
-
-      <!-- <v-select v-model="tempCategoryName" :items="categoryNames" label="Category" required></v-select> -->
 
       <v-checkbox class="mb-4" v-model="form.premium" label="Premium Content?"></v-checkbox>
 
@@ -72,7 +41,7 @@
         type="submit"
       >Save Blog</v-btn>
 
-      <p v-for="(error, index) in errors.submitForm" :key="index" class="red--text">{{ error[0] }}</p>
+      <p v-for="(error, index) in errors.submitForm" :key="index" class="red--text mt-2">{{ error[0] }}</p>
     </v-form>
   </v-container>
 </template>
@@ -84,10 +53,6 @@ import { mapActions } from "vuex";
 export default {
   props: ["id"],
   data: () => ({
-    categoryChips: ["linkbuilding"],
-    // items: ["Streaming", "Eating"],
-    blogCats: [],
-
     valid: true,
     form: {
       title: "",
@@ -99,7 +64,6 @@ export default {
       title: [],
       description: []
     },
-    // tempCategoryName: "",
     errors: {
       submitForm: ""
     }
@@ -108,7 +72,7 @@ export default {
     ...mapGetters({
       getBlog: "blogs/blog",
       blogCategories: "blogs/blogCategories",
-      blogCategoriesIds: "blogs/blogCategoriesIds",
+      // blogCategoriesIds: "blogs/blogCategoriesIds",
       categoryNames: "categories/categoryNames",
       categories: "categories/categories",
       buttonLoading: "buttonLoading",
@@ -124,12 +88,6 @@ export default {
       setSnackbar: "snackbar/setSnackbar",
       setButtonLoading: "setButtonLoading"
     }),
-
-    remove(item) {
-      this.categoryChips.splice(this.categoryChips.indexOf(item), 1);
-      this.categoryChips = [...this.categoryChips];
-    },
-
     submitEditBlog() {
       this.errors.submitForm = "";
       this.rules.title = [
@@ -142,19 +100,15 @@ export default {
           (v && v.length >= 10) || "Description must be at least 10 characters"
       ];
       if (this.$refs.form.validate()) {
-        this.setButtonLoading();
-        this.form.category_id = this.categories.find(
-          cat => cat.name === this.tempCategoryName
-        ).id;
         // check if input has changed
         if (
           JSON.stringify(this.form) ===
           JSON.stringify(this.editFormData(this.id))
         ) {
           this.errors.submitForm = [["You haven't changed anything!"]];
-          this.setButtonLoading();
           return;
         }
+        this.setButtonLoading();
         this.editBlog({ form: this.form, id: this.id })
           .then(response => {
             this.$router.push({ name: "blog", params: { id: this.id } });
@@ -177,7 +131,6 @@ export default {
   },
   created() {
     this.form = this.editFormData(this.id);
-    // this.blogCats = this.blogCategoriesIds(this.id);
   }
 };
 </script>

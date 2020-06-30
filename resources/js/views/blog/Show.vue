@@ -23,7 +23,7 @@
       </v-card-text>
 
       <v-card-actions v-if="userId == blog.owner_id">
-        <v-btn color="primary" text>Edit</v-btn>
+        <v-btn @click="$router.push({ name: 'editblog', params: { id: blog.id } })" color="primary" text>Edit</v-btn>
         <v-btn
           :loading="buttonLoading"
           @click="blogDelete(blog.id)"

@@ -92,11 +92,13 @@ class BlogController extends Controller
         $validated = $request->validate([
             'title' => ['required', 'string', 'min:5'],
             'description' => ['required', 'string', 'min:10'],
-            // 'category_id' => ['required', 'numeric'],
+            'category_ids' => ['array', 'min:1'],
             'premium' => ['required', 'boolean']
         ]);
-        // $blog->categories()->sync(request('categories'));        
-        if ($blog->update($validated)) {
+        $index_key = array_search("category_ids", array_keys($validated));
+        $categories = array_splice($validated, $index_key, 1);
+        // dd($categories);
+        if ($blog->update($validated) && $blog->categories()->sync($categories["category_ids"])) {
             return response()->json('Blog Successfully Updated', 200);
         } else {
             return response()->json(['errors' => ['server' => ['Error Updating Blog']]], 500);
