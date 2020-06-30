@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Blog extends Model
 {
-    protected $fillable = ['title', 'description', 'owner_id', 'category_id', 'premium'];
+    protected $fillable = ['title', 'description', 'owner_id', 'premium'];
 
     // One to Many relation (inverse) x2
     public function owner()
@@ -14,9 +14,9 @@ class Blog extends Model
         return $this->belongsTo('App\User');
     }
 
-    public function category()
+    public function categories()
     {
-        return $this->belongsTo('App\Category');
+        return $this->belongsToMany('App\Category');
     }
 
     public function comments()

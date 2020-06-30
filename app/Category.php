@@ -6,8 +6,10 @@ use Illuminate\Database\Eloquent\Model;
 
 class Category extends Model
 {
-    // One to Many relation
+    protected $fillable =['name'];
+
+    // Many to Many relation
     public function blogs() {
-        return $this->hasMany('App/Blog');
+        return $this->belongsToMany('App/Blog');
     }
 }

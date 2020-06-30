@@ -26,8 +26,7 @@ class BlogController extends Controller
     public function index()
     {
         // $blogs = Blog::find(1)->comments;
-        $blogs = Blog::with('comments', 'owner', 'category')->get();
-        // dd($blog);
+        $blogs = Blog::with('comments', 'owner', 'categories')->get();
         // $blogs = Blog::orderBy('created_at', 'DESC')->with()->get();
         return response()->json($blogs);
     }
@@ -93,7 +92,7 @@ class BlogController extends Controller
         $validated = $request->validate([
             'title' => ['required', 'string', 'min:5'],
             'description' => ['required', 'string', 'min:10'],
-            'category_id' => ['required', 'numeric'],
+            // 'category_id' => ['required', 'numeric'],
             'premium' => ['required', 'boolean']
         ]);
         // $blog->categories()->sync(request('categories'));        

@@ -16,9 +16,9 @@ class CreateCategoriesTable extends Migration
         Schema::create('categories', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->string('image_name');
+            // $table->string('image_name');
             $table->string('subheader');
-            $table->string('caroussel_color');
+            // $table->string('caroussel_color');
             $table->timestamps();
         });
     }

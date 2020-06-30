@@ -21,7 +21,46 @@
         required
       ></v-textarea>
 
-      <v-select v-model="tempCategoryName" :items="categoryNames" label="Category" required></v-select>
+      <v-chip-group v-model="form.category_ids" column multiple>
+        <v-chip
+          v-for="(category, index) in categories"
+          :key="index"
+          :value="category.id"
+          filter
+          outlined
+        >{{ category.name }}</v-chip>
+        <!-- <v-chip filter outlined>Elevator</v-chip>
+        <v-chip filter outlined>Washer / Dryer</v-chip>
+        <v-chip filter outlined>Fireplace</v-chip>
+        <v-chip filter outlined>Wheelchair access</v-chip>
+        <v-chip filter outlined>Dogs ok</v-chip>
+        <v-chip filter outlined>Cats ok</v-chip>-->
+      </v-chip-group>
+      <!-- <v-combobox
+        v-model="categoryChips"
+        :items="categoryNames"
+        chips
+        label="Categories"
+        multiple
+        prepend-icon="mdi-filter-variant"
+        solo
+      >
+        <template v-slot:selection="{ attrs, item, select, selected }">
+          <v-chip
+            v-bind="attrs"
+            :input-value="selected"
+            close
+            @click="select"
+            @click:close="remove(item)"
+            solo
+          >
+            {{ item }}&nbsp;
+            <span>(interest)</span>
+          </v-chip>
+        </template>
+      </v-combobox>-->
+
+      <!-- <v-select v-model="tempCategoryName" :items="categoryNames" label="Category" required></v-select> -->
 
       <v-checkbox class="mb-4" v-model="form.premium" label="Premium Content?"></v-checkbox>
 
@@ -45,18 +84,22 @@ import { mapActions } from "vuex";
 export default {
   props: ["id"],
   data: () => ({
+    categoryChips: ["linkbuilding"],
+    // items: ["Streaming", "Eating"],
+    blogCats: [],
+
     valid: true,
     form: {
       title: "",
       description: "",
-      category_id: null,
+      category_ids: null,
       premium: null
     },
     rules: {
       title: [],
       description: []
     },
-    tempCategoryName: "",
+    // tempCategoryName: "",
     errors: {
       submitForm: ""
     }
@@ -64,6 +107,8 @@ export default {
   computed: {
     ...mapGetters({
       getBlog: "blogs/blog",
+      blogCategories: "blogs/blogCategories",
+      blogCategoriesIds: "blogs/blogCategoriesIds",
       categoryNames: "categories/categoryNames",
       categories: "categories/categories",
       buttonLoading: "buttonLoading",
@@ -79,6 +124,12 @@ export default {
       setSnackbar: "snackbar/setSnackbar",
       setButtonLoading: "setButtonLoading"
     }),
+
+    remove(item) {
+      this.categoryChips.splice(this.categoryChips.indexOf(item), 1);
+      this.categoryChips = [...this.categoryChips];
+    },
+
     submitEditBlog() {
       this.errors.submitForm = "";
       this.rules.title = [
@@ -126,7 +177,7 @@ export default {
   },
   created() {
     this.form = this.editFormData(this.id);
-    this.tempCategoryName = this.getBlog(this.id).category.name;
+    // this.blogCats = this.blogCategoriesIds(this.id);
   }
 };
 </script>

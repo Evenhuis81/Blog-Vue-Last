@@ -63,10 +63,16 @@ export default {
             let formData = {
                 'title': blog.title,
                 'description': blog.description,
-                'category_id': blog.category_id,
+                'category_ids': getters.blogCategoryIds(id),
                 'premium': !!blog.premium
             }
             return formData
+        },
+        blogCategories: (state, getters) => id => {
+            return getters.blog(id).categories.map(cat => ' ' + cat.name)
+        },
+        blogCategoryIds: (state, getters) => id => {
+            return getters.blog(id).categories.map(cat => cat.id)
         }
     }
 }

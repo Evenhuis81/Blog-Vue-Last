@@ -5,7 +5,9 @@
         {{ blog.title }}
         <p class="text-center">
           {{ blogCreatedFromNow(blog.created_at) }} in
-          <a class="text-decoration-underline">{{ blog.category.name }}</a>
+          <a
+            class="text-decoration-underline"
+          >{{ blogCategories(blog.id).toString() }}</a>
         </p>
         <v-list-item three-line>
           <v-list-item-content>
@@ -40,7 +42,7 @@ import { mapGetters } from "vuex";
 
 export default {
   computed: {
-    ...mapGetters({ blogs: "blogs/blogs" })
+    ...mapGetters("blogs", ["blogs", "blogCategories"])
   },
   methods: {
     randomnr() {

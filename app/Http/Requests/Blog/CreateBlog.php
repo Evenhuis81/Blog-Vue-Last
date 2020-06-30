@@ -26,7 +26,7 @@ class CreateBlog extends FormRequest
         return [
             'title' => 'required|string|min:5',
             'description' => 'required|string|min:10',
-            'category_id' => 'required|numeric',
+            // 'category_id' => 'required|numeric',
             'premium' => 'required|boolean'
         ];
     }

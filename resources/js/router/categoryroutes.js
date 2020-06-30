@@ -6,19 +6,20 @@ export default [
     {
         path: '/categories',
         component: Index,
+        meta: { requiresAuth: true, scopes: ['author_access'] },
         children: [
             {
                 path: 'create',
                 name: 'createcategory',
                 component: Create,
-                meta: { requiresAuth: true, scopes: ['author_access'] }
+
             },
-            {
-                path: '/categories',
-                name: 'categories',
-                component: Read,
-                meta: { requiresAuth: true, scopes: ['author_access'] }
-            }
+            // {
+            //     path: '/categories',
+            //     name: 'categories',
+            //     component: Index,
+            //     meta: { requiresAuth: true, scopes: ['author_access'] }
+            // }
         ]
     }
 ]

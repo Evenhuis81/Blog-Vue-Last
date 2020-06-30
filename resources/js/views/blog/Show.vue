@@ -10,10 +10,10 @@
       </v-img>
 
       <v-card-subtitle class="pb-2">
-        {{ blog.category.name }}
-        <v-btn icon v-if="userId == blog.owner_id">
+        {{ blogCategories(blog.id).toString() }}
+        <v-btn icon v-if="userId == blog.owner_id" :to="{ path: '/categories' }">
           <v-icon color="primary" size="18">mdi-grease-pencil</v-icon>
-        </v-btn>  
+        </v-btn>
       </v-card-subtitle>
 
       <v-card-text class="text--primary">
@@ -24,7 +24,13 @@
 
       <v-card-actions v-if="userId == blog.owner_id">
         <v-btn color="primary" text>Edit</v-btn>
-        <v-btn :loading="buttonLoading" @click="blogDelete(blog.id)" text outlined class="ml-auto">Delete</v-btn>
+        <v-btn
+          :loading="buttonLoading"
+          @click="blogDelete(blog.id)"
+          text
+          outlined
+          class="ml-auto"
+        >Delete</v-btn>
       </v-card-actions>
     </v-card>
     <router-view></router-view>
@@ -40,11 +46,12 @@ export default {
     ...mapGetters({
       blogs: "blogs/blogs",
       getBlog: "blogs/blog",
-      userId: 'auth/userId',
-      buttonLoading: 'buttonLoading'
-      }),
+      blogCategories: "blogs/blogCategories",
+      userId: "auth/userId",
+      buttonLoading: "buttonLoading"
+    }),
     blog() {
-      return this.getBlog(this.id)
+      return this.getBlog(this.id);
     },
     underscore() {
       let under = "";
@@ -56,23 +63,26 @@ export default {
   },
   methods: {
     ...mapActions({
-      deleteBlog: 'blogs/deleteBlog',
+      deleteBlog: "blogs/deleteBlog",
       setButtonLoading: "setButtonLoading",
       setSnackbar: "snackbar/setSnackbar"
     }),
     blogDelete(blogId) {
-      const answer = window.confirm('Do you really want to delete this blog?')
+      const answer = window.confirm("Do you really want to delete this blog?");
       if (answer) {
-        this.setButtonLoading
+        this.setButtonLoading;
         // need to set some sort of load thing here
-        this.deleteBlog(blogId).then(() => {
-          this.$router.push({ name: 'readblog' })
-          this.setSnackbar('Blog Deleted!')
-        }).catch(err => {
-          console.log(err)
-        }).finally(() => {
-          this.setButtonLoading()
-        })
+        this.deleteBlog(blogId)
+          .then(() => {
+            this.$router.push({ name: "readblog" });
+            this.setSnackbar("Blog Deleted!");
+          })
+          .catch(err => {
+            console.log(err);
+          })
+          .finally(() => {
+            this.setButtonLoading();
+          });
       }
     }
   }

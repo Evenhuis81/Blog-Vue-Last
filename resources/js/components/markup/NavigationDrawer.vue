@@ -20,7 +20,7 @@
 
         <div v-if="userRole === 'author'" class="mt-6">
           <!-- <v-subheader class="mt-7">Blog Actions:</v-subheader> -->
-          <v-list-item v-for="(item, i) in actions" :key="i" :to="{ name: item.route }">
+          <v-list-item v-for="(item, i) in actions" :key="i" :to="item.route">
             <v-list-item-icon>
               <v-icon v-text="item.icon"></v-icon>
             </v-list-item-icon>
@@ -41,7 +41,7 @@
             <v-list-item-content>
               <v-list-item-title v-text="catItem.text"></v-list-item-title>
             </v-list-item-content>
-          </v-list-item> -->
+          </v-list-item>-->
         </div>
       </v-list-item-group>
     </v-list>
@@ -55,9 +55,17 @@ export default {
   data() {
     return {
       actions: [
-        { text: "My Blogs", icon: "mdi-folder-multiple-outline", route: "myblogs" },
+        {
+          text: "My Blogs",
+          icon: "mdi-folder-multiple-outline",
+          route: { name: "myblogs" }
+        },
         // { text: "Create New Blog", icon: "mdi-plus", route: "createblog" },
-        { text: "Manage Categories", icon: "mdi-dresser", route: "categories" },
+        {
+          text: "Manage Categories",
+          icon: "mdi-dresser",
+          route: { path: "/categories" }
+        }
         // { text: "Create New Category", icon: "mdi-plus", route: "createcategory" },
       ]
     };
