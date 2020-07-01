@@ -1,7 +1,7 @@
 import Show from '../views/blog/Show.vue'
 import Comments from '../components/Comments.vue'
 import CreateBlog from '../views/blog/Create.vue'
-import ReadBlog from '../views/blog/Read.vue'
+import IndexBlogs from '../views/blog/Index.vue'
 import EditBlog from '../views/blog/Edit.vue'
 import store from '../store'
 
@@ -34,7 +34,7 @@ export default [
     {
         path: '/myblogs',
         name: 'myblogs',
-        component: ReadBlog,
+        component: IndexBlogs,
         meta: { requiresAuth: true, scopes: ['author_access'] },
     },
     {
@@ -48,7 +48,7 @@ export default [
                 if (store.getters['auth/userId'] == store.getters['blogs/blog'](to.params.id).owner_id) {
                     next()
                 } else {
-                    store.dispatch('snackbar/setSnackbar', 'You are not authenticated for this route!')
+                    store.dispatch('snackbar/setSnackbar', 'You are not authorized for this route!')
                     return next({ name: "redirect" })
                 }
             } else {

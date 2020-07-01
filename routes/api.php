@@ -7,6 +7,6 @@ Route::group(['prefix' => 'auth'], function () {
     Route::get('details', 'AuthController@details');
 });
 
-Route::resource('blogs', 'BlogController');
-Route::resource('categories', 'CategoryController');
-Route::resource('comments', 'CommentController');
+Route::resource('blogs', 'BlogController', ['except'=> ['create', 'show', 'edit']]);
+Route::resource('categories', 'CategoryController', ['except'=> ['create', 'show', 'edit']]);
+Route::resource('comments', 'CommentController', ['except'=> ['create', 'show', 'edit']]);
