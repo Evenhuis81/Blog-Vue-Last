@@ -17,6 +17,15 @@ export default {
                     throw err
                 })
         },
+        createCategory({ dispatch }, category) {
+            return this._vm.$http.post('/api/categories', category)
+            .then(res => {
+                dispatch("categories/getCategories", {}, { root: true })
+                return
+            }).catch(err => {
+                throw err
+            })
+        }
     },
     getters: {
         categoryNames: state => {

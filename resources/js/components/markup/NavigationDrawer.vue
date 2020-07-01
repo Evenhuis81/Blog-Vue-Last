@@ -47,6 +47,11 @@ export default {
           route: { name: "myblogs" }
         },
         {
+          text: "Create New Blog",
+          icon: "mdi-plus",
+          route: { name: "createblog" }
+        },
+        {
           text: "Manage Categories",
           icon: "mdi-dresser",
           route: { path: "/categories" }

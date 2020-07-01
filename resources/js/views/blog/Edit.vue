@@ -3,7 +3,6 @@
     <h2>Edit Blog</h2>
     <v-form ref="form" v-model="valid" lazy-validation @submit.prevent="submitEditBlog">
       <v-text-field
-        ref="title"
         class="mb-4 mt-4"
         v-model="form.title"
         :rules="rules.title"

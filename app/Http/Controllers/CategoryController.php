@@ -36,7 +36,16 @@ class CategoryController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validated = $request->validate([
+            'name' => 'required|string',
+            'subheader' => 'required|string|min:8'
+        ]);
+        // $validated['owner_id'] = auth()->user()->id;
+        if ($comment = Category::create($validated)) {
+            return response()->json($comment, 201);
+        } else {
+            return response()->json(['errors' => ['server' => ['Error creating Comment']]], 500);
+        }
     }
 
     /**
