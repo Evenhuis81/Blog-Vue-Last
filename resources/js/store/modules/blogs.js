@@ -28,7 +28,7 @@ export default {
                     throw err
                 })
         },
-        editBlog({ dispatch }, payload) {
+        updateBlog({ dispatch }, payload) {
             return this._vm.$http.patch('/api/blogs/' + payload.id, payload.form)
                 .then(res => {
                     dispatch('blogs/getBlogs', {}, { root: true })

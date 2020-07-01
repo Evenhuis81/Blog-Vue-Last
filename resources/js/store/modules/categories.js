@@ -25,7 +25,26 @@ export default {
             }).catch(err => {
                 throw err
             })
-        }
+        },
+        updateCategory({ dispatch }, payload) {
+            return this._vm.$http.patch('/api/categories/' + payload.id, payload.form)
+                .then(res => {
+                    dispatch('blogs/getBlogs', {}, { root: true })
+                    return
+                }).catch(err => {
+                    throw err
+                })
+        },
+        deleteCategory({ dispatch }, id) {
+            return this._vm.$http.delete('/api/categories/' + id)
+                .then(res => {
+                    dispatch('blogs/getBlogs', {}, {root: true})
+                    dispatch('categories/getCategories', {}, {root: true})
+                    return
+                }).catch(err => {
+                    throw err
+                })
+        },
     },
     getters: {
         categoryNames: state => {

@@ -1,7 +1,7 @@
 <template>
   <v-container>
     <h2>Edit Blog</h2>
-    <v-form ref="form" v-model="valid" lazy-validation @submit.prevent="submitEditBlog">
+    <v-form ref="form" v-model="valid" lazy-validation @submit.prevent="submitUpdateBlog">
       <v-text-field
         class="mb-4 mt-4"
         v-model="form.title"
@@ -83,11 +83,11 @@ export default {
   },
   methods: {
     ...mapActions({
-      editBlog: "blogs/editBlog",
+      updateBlog: "blogs/updateBlog",
       setSnackbar: "snackbar/setSnackbar",
       setButtonLoading: "setButtonLoading"
     }),
-    submitEditBlog() {
+    submitUpdateBlog() {
       this.errors.submitForm = "";
       this.rules.title = [
         v => !!v || "A title is required",
@@ -108,7 +108,7 @@ export default {
           return;
         }
         this.setButtonLoading();
-        this.editBlog({ form: this.form, id: this.id })
+        this.updateBlog({ form: this.form, id: this.id })
           .then(response => {
             this.$router.push({ name: "blog", params: { id: this.id } });
             this.setSnackbar("You have successfully edited your blog");

@@ -90,6 +90,10 @@ class CategoryController extends Controller
      */
     public function destroy(Category $category)
     {
-        //
+        try {
+            Category::destroy($category->id);
+        } catch (\Throwable $th) {
+            return response()->json($th);
+        }
     }
 }
