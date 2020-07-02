@@ -48,7 +48,10 @@ export default [
                 if (store.getters['auth/userId'] == store.getters['blogs/blog'](to.params.id).owner_id) {
                     next()
                 } else {
-                    store.dispatch('snackbar/setSnackbar', 'You are not authorized for this route!')
+                    store.dispatch('snackbar/lunchRoom', {
+                        text: "You are not authorized for this route!",
+                        color: "error"
+                    })
                     return next({ name: "redirect" })
                 }
             } else {

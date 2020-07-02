@@ -23,7 +23,11 @@
       </v-card-text>
 
       <v-card-actions v-if="userId == blog.owner_id">
-        <v-btn @click="$router.push({ name: 'editblog', params: { id: blog.id } })" color="primary" text>Edit</v-btn>
+        <v-btn
+          @click="$router.push({ name: 'editblog', params: { id: blog.id } })"
+          color="primary"
+          text
+        >Edit</v-btn>
         <v-btn
           :loading="buttonLoading"
           @click="blogDelete(blog.id)"
@@ -65,7 +69,7 @@ export default {
     ...mapActions({
       deleteBlog: "blogs/deleteBlog",
       setButtonLoading: "setButtonLoading",
-      setSnackbar: "snackbar/setSnackbar"
+      lunchRoom: "snackbar/lunchRoom"
     }),
     blogDelete(blogId) {
       const answer = window.confirm("Do you really want to delete this blog?");
@@ -74,8 +78,11 @@ export default {
         // need to set some sort of load thing here
         this.deleteBlog(blogId)
           .then(() => {
-            this.$router.push({ name: "readblog" });
-            this.setSnackbar("Blog Deleted!");
+            this.$router.push({ name: "myblogs" });
+            this.lunchRoom({
+              text: "Blog Deleted!",
+              color: "error"
+            });
           })
           .catch(err => {
             console.log(err);

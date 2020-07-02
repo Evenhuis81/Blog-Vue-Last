@@ -6,7 +6,7 @@
     <!-- Main Content Area -->
     <v-content class="grey lighten-5 ma-2">
       <!-- On Screen Popups -->
-      <snackbars />
+      <snackbar></snackbar>
       <!-- Dialogs -->
       <dialogs />
       <!-- Content Loading Indicator On Top Of Page -->
@@ -18,11 +18,12 @@
 </template>
 
 <script>
-import Layout from "./components/markup/Layout"
-import Snackbars from "./components/Snackbars"
-import Dialogs from "./components/Dialogs"
+import Layout from "./components/markup/Layout";
+import Snackbar from "./components/Snackbar";
+import Dialogs from "./components/Dialogs";
 
 export default {
-  components: { Layout, Snackbars, Dialogs }
-}
+  components: { Layout, Dialogs, Snackbar }
+  // components: { Layout, Dialogs }
+};
 </script>

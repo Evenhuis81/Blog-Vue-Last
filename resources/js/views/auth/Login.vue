@@ -111,7 +111,7 @@ export default {
   methods: {
     ...mapActions({
       login: "auth/login",
-      setSnackbar: "snackbar/setSnackbar",
+      lunchRoom: "snackbar/lunchRoom",
       setButtonLoading: "setButtonLoading"
     }),
     submitLogin() {
@@ -121,9 +121,13 @@ export default {
         this.login(this.form)
           .then(role => {
             this.$router.push({ name: "dashboard" });
-            this.setSnackbar('You are now logged in');
+            this.lunchRoom({
+              text: "You are now logged in",
+              color: "info"
+            });
           })
           .catch(error => {
+            console.log("why");
             if (error.response.status === 429) {
               this.errors.loginForm = [
                 [
@@ -132,7 +136,10 @@ export default {
                 ]
               ];
             } else if (error.response.status === 403) {
-              this.setSnackbar(error.response.data.message);
+              this.lunchRoom({
+                text: error.response.data.message,
+                color: "error"
+              });
             } else {
               this.errors.loginForm = error.response.data.errors;
             }

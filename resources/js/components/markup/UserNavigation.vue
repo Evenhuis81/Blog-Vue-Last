@@ -24,13 +24,12 @@
 </template>
 
 <script>
-import { mapGetters } from "vuex"
-import { mapActions } from "vuex"
+import { mapGetters } from "vuex";
+import { mapActions } from "vuex";
 
 export default {
   data() {
-    return {
-    };
+    return {};
   },
   computed: {
     ...mapGetters("auth", ["authenticated", "unverifiedToken"])
@@ -38,19 +37,22 @@ export default {
   methods: {
     ...mapActions({
       logOut: "auth/logOut",
-      setSnackbar: "snackbar/setSnackbar"
+      lunchRoom: "snackbar/lunchRoom"
     }),
-  loggingOut() {
-    this.logOut()
-      .then(() => {
-        this.$router.push("/", () => {});
-        this.setSnackbar("You are now logged out")
-      })
-      .catch(err => console.log(err))
-      .finally(() => {
-        //
-      });
+    loggingOut() {
+      this.logOut()
+        .then(() => {
+          this.$router.push("/", () => {});
+          this.lunchRoom({
+            text: "You are now logged out",
+            color: "info"
+          });
+        })
+        .catch(err => console.log(err))
+        .finally(() => {
+          //
+        });
     }
-  },
+  }
 };
 </script>

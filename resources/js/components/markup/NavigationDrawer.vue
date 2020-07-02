@@ -7,29 +7,28 @@
     <v-list dense>
       <v-divider></v-divider>
 
-        <v-list-item color="primary" :to="{ name: 'dashboard' }">
-          <v-list-item-icon>
-            <v-icon>mdi-account</v-icon>
-          </v-list-item-icon>
-          <v-list-item-content>
-            <v-list-item-title>Dashboard</v-list-item-title>
-          </v-list-item-content>
-        </v-list-item>
-        <v-divider></v-divider>
+      <v-list-item color="primary" :to="{ name: 'dashboard' }">
+        <v-list-item-icon>
+          <v-icon>mdi-account</v-icon>
+        </v-list-item-icon>
+        <v-list-item-content>
+          <v-list-item-title>Dashboard</v-list-item-title>
+        </v-list-item-content>
+      </v-list-item>
+      <v-divider></v-divider>
 
-        <div v-if="userRole === 'author'" class="mt-6">
-          <v-list-item-group color="primary">
-            <v-list-item v-for="(item, i) in actions" :key="i" :to="item.route">
-              <v-list-item-icon>
-                <v-icon v-text="item.icon"></v-icon>
-              </v-list-item-icon>
-              <v-list-item-content>
-                <v-list-item-title v-text="item.text"></v-list-item-title>
-              </v-list-item-content>
-            </v-list-item>
-          </v-list-item-group>
-        </div>
-
+      <div v-if="userRole === 'author'" class="mt-6">
+        <v-list-item-group color="primary">
+          <v-list-item v-for="(item, i) in actions" :key="i" :to="item.route" exact>
+            <v-list-item-icon>
+              <v-icon v-text="item.icon"></v-icon>
+            </v-list-item-icon>
+            <v-list-item-content>
+              <v-list-item-title v-text="item.text"></v-list-item-title>
+            </v-list-item-content>
+          </v-list-item>
+        </v-list-item-group>
+      </div>
     </v-list>
   </v-navigation-drawer>
 </template>
@@ -55,12 +54,12 @@ export default {
           text: "Manage Categories",
           icon: "mdi-dresser",
           route: { path: "/categories" }
-        },
-        {
-          text: "Snackbar",
-          icon: "",
-          route: { path: "/snackbar" }
         }
+        // {
+        //   text: "Snackbar",
+        //   icon: "",
+        //   route: { path: "/snackbar" }
+        // }
       ]
     };
   },

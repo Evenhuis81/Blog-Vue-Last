@@ -16,8 +16,12 @@
         </v-list-item>
       </v-card-text>
       <v-card-actions class="justify-center">
-        <!-- <v-btn @click="blog.premium ? switchLoginDialog() : $router.push({ path: '/blog/' + blog.id })" text class="mb-5">READ MORE...</v-btn> -->
-        <v-btn @click.stop="gotoBlog(blog.premium)" text class="mb-5">READ MORE...</v-btn>
+        <v-btn
+          @click="blog.premium ? switchLoginDialog() : $router.push({ path: '/blog/' + blog.id })"
+          text
+          class="mb-5"
+        >READ MORE...</v-btn>
+        <!-- <v-btn @click.stop="gotoBlog(blog.premium, blog.id)" text class="mb-5">READ MORE...</v-btn> -->
       </v-card-actions>
       <v-card-actions class="px-8">
         <v-list-item-content>
@@ -36,18 +40,17 @@
 
         <v-list-item-action v-if="blog.premium">
           <!-- <v-btn icon> -->
-            <v-icon color="#FFD700">mdi-lumx</v-icon>
+          <v-icon color="#FFD700">mdi-lumx</v-icon>
           <!-- </v-btn> -->
         </v-list-item-action>
-
       </v-card-actions>
     </v-card>
   </v-container>
 </template>
 
 <script>
-import { mapGetters } from "vuex"
-import { mapActions } from "vuex"
+import { mapGetters } from "vuex";
+import { mapActions } from "vuex";
 
 export default {
   computed: {
@@ -57,16 +60,17 @@ export default {
   methods: {
     ...mapActions(["switchLoginDialog"]),
     randomnr() {
-      return Math.floor(Math.random() * 255) + 1
+      return Math.floor(Math.random() * 255) + 1;
     },
     blogCreatedFromNow(date) {
-      return this.$moment(date).fromNow()
+      return this.$moment(date).fromNow();
     },
-    gotoBlog(premium) {
-      this.authenticated ? console.log("yes") : console.log("no")
-      console.log(premium)
-      this.userPremium ? console.log("yes") : console.log("no")
+    gotoBlog(premium, id) {
+      this.authenticated ? console.log("yes") : console.log("no");
+      console.log(premium);
+      this.userPremium ? console.log("yes") : console.log("no");
+      this.$router.push({ path: "/blog/" + id });
     }
   }
-}
+};
 </script>

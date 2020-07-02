@@ -110,7 +110,7 @@ export default {
     ...mapActions({
       register: "auth/register",
       setButtonLoading: "setButtonLoading",
-      setSnackbar: "snackbar/setSnackbar",
+      lunchRoom: "snackbar/lunchRoom"
     }),
     submitRegisterForm() {
       this.errors.registerForm = "";
@@ -127,7 +127,10 @@ export default {
             if (error.response.status === 429) {
               this.errors.registerForm = [[error.response.statusText]];
             } else if (error.response.status === 403) {
-              this.setSnackbar(error.response.data.message);
+              this.lunchRoom({
+                text: error.response.data.message,
+                color: "error"
+              });
               this.$router.push({ name: this.role + "dashboard" });
             } else {
               this.errors.registerForm = error.response.data.errors;
@@ -153,6 +156,6 @@ export default {
   },
   mounted() {
     this.$refs.name.focus();
-  },
+  }
 };
 </script>

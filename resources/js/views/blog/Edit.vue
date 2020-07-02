@@ -20,7 +20,12 @@
         required
       ></v-textarea>
 
-      <v-chip-group v-model="form.category_ids" column multiple active-class="blue--text text--accent-4">
+      <v-chip-group
+        v-model="form.category_ids"
+        column
+        multiple
+        active-class="blue--text text--accent-4"
+      >
         <v-chip
           v-for="(category, index) in categories"
           :key="index"
@@ -40,7 +45,11 @@
         type="submit"
       >Save Blog</v-btn>
 
-      <p v-for="(error, index) in errors.submitForm" :key="index" class="red--text mt-2">{{ error[0] }}</p>
+      <p
+        v-for="(error, index) in errors.submitForm"
+        :key="index"
+        class="red--text mt-2"
+      >{{ error[0] }}</p>
     </v-form>
   </v-container>
 </template>
@@ -84,7 +93,7 @@ export default {
   methods: {
     ...mapActions({
       updateBlog: "blogs/updateBlog",
-      setSnackbar: "snackbar/setSnackbar",
+      lunchRoom: "snackbar/lunchRoom",
       setButtonLoading: "setButtonLoading"
     }),
     submitUpdateBlog() {
@@ -111,13 +120,19 @@ export default {
         this.updateBlog({ form: this.form, id: this.id })
           .then(response => {
             this.$router.push({ name: "blog", params: { id: this.id } });
-            this.setSnackbar("You have successfully edited your blog");
+            this.lunchRoom({
+              text: "You have successfully edited your blog",
+              color: "success"
+            });
           })
           .catch(error => {
             if (error.response.status === 429) {
               this.errors.submitForm = [[error.response.statusText]];
             } else if (error.response.status === 403) {
-              this.setSnackbar(error.response.data.message);
+              this.lunchRoom({
+                text: error.response.data.message,
+                color: "error"
+              });
             } else {
               this.errors.submitForm = error.response.data.errors;
             }

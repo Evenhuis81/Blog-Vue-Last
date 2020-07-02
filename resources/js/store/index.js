@@ -11,17 +11,12 @@ export default new Vuex.Store({
         contentLoading: false,
         // after register/login button pressed:
         buttonLoading: false,
-        // hide dashboard when childroute is active:
-        dashboard: true,
         // when unauthenticated trying to access premium content
         loginDialog: false
     },
     mutations: {
         set_content_loading(state, boolean) { state.contentLoading = boolean },
         set_button_loading(state) { state.buttonLoading = !state.buttonLoading },
-        set_dashboard(state, boolean) {
-            state.dashboard = boolean
-        },
         switch_login_dialog(state) {
             state.loginDialog = !state.loginDialog
         },
@@ -36,9 +31,6 @@ export default new Vuex.Store({
         setContentLoading(context, boolean) {
             context.commit("set_content_loading", boolean)
         },
-        setDashboard(context, boolean) {
-            context.commit('set_dashboard', boolean)
-        },
         switchLoginDialog(context) {
             context.commit("switch_login_dialog")
         },
@@ -49,9 +41,6 @@ export default new Vuex.Store({
     getters: {
         buttonLoading(state) {
             return state.buttonLoading
-        },
-        dashboard(state) {
-            return state.dashboard
         },
         loginDialog(state) {
             return state.loginDialog

@@ -52,15 +52,21 @@ export default {
     ...mapGetters("blogs", ["authorBlogs", "blogCategories"])
   },
   methods: {
-    ...mapActions({ deleteBlog: "blogs/deleteBlog" }),
+    ...mapActions({
+      deleteBlog: "blogs/deleteBlog",
+      lunchRoom: "snackbar/lunchRoom"
+    }),
     blogDelete(blogId) {
       const answer = window.confirm("Do you really want to delete this blog?");
       if (answer) {
         // need to set some sort of load thing here
         this.deleteBlog(blogId)
           .then(() => {
-            this.$router.push({ name: "readblog" });
-            this.setSnackbar("Blog Deleted!");
+            // this.$router.push({ name: "readblog" });
+            this.lunchRoom({
+              text: "Blog Deleted!",
+              color: "error"
+            });
           })
           .catch(err => {
             console.log(err);
