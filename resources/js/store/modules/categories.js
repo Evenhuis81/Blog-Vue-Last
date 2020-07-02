@@ -30,6 +30,7 @@ export default {
             return this._vm.$http.patch('/api/categories/' + payload.id, payload.form)
                 .then(res => {
                     dispatch('blogs/getBlogs', {}, { root: true })
+                    dispatch("categories/getCategories", {}, { root: true })
                     return
                 }).catch(err => {
                     throw err
@@ -47,11 +48,23 @@ export default {
         },
     },
     getters: {
+        category: (state) => (id) => {
+            return state.categories.find(category => category.id == id)
+        },
         categoryNames: state => {
             return state.categories.map(cat => cat.name);
         },
         categories: state => {
             return state.categories
+        },
+        editCategoryData: (state, getters) => (id) => {
+            // let blog = getters.blog.state.blogs.find(blog => blog.id == id)
+            let category = getters.category(id)
+            let formData = {
+                'name': category.name,
+                'subheader': category.subheader
+            }
+            return formData
         },
     }
 }

@@ -1,8 +1,43 @@
 <template>
+<div>
   <v-snackbar :value="snackbar" :timeout="2000" top>
     {{ snackText }}
     <v-btn color="blue" text @click="setSnackbar">X</v-btn>
   </v-snackbar>
+
+  <v-dialog
+    v-model="loginDialog"
+    max-width="290"
+  >
+    <v-card>
+      <v-card-title class="headline">Use Google's location service?</v-card-title>
+
+      <v-card-text>
+        Let Google help apps determine location. This means sending anonymous location data to Google, even when no apps are running.
+      </v-card-text>
+
+      <v-card-actions>
+        <v-spacer></v-spacer>
+
+        <v-btn
+          color="green darken-1"
+          text
+          @click="dialog = false"
+        >
+          Disagree
+        </v-btn>
+
+        <v-btn
+          color="green darken-1"
+          text
+          @click="dialog = false"
+        >
+          Agree
+        </v-btn>
+      </v-card-actions>
+    </v-card>
+  </v-dialog>
+</div>
 </template>
 
 <script>
@@ -13,13 +48,23 @@ export default {
   computed: {
     ...mapGetters({
       snackbar: "snackbar/snackbar",
-      snackText: "snackbar/snackText"
-    })
+      snackText: "snackbar/snackText",
+      getLoginDialog: "loginDialog"
+    }),
+    loginDialog: {
+      get() {
+        return this.getLoginDialog
+      },
+      set(value) {
+        this.setLoginDialog(value)
+      }
+    }
   },
   methods: {
     ...mapActions({
-      setSnackbar: "snackbar/setSnackbar"
+      setSnackbar: "snackbar/setSnackbar",
+      setLoginDialog: "setLoginDialog"
     })
-  }
+  },
 };
 </script>

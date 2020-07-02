@@ -10,10 +10,8 @@
       >
         <v-hover v-slot:default="{ hover }">
           <v-system-bar :window="hover ? true : false" height="30" color="#BBDEFB">
-            <!-- <a @click="setCategories(item.id)"> -->
             <v-icon @click="$router.push({ path: '/categories' })">mdi-circle-edit-outline</v-icon>
             <span>Categories</span>
-            <!-- </a> -->
             <v-spacer></v-spacer>
             <v-icon
               @click="$router.push({ name: 'editblog', params: { id: item.id } })"

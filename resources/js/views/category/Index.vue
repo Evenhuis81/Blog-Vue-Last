@@ -28,63 +28,49 @@
                     outlined
                     v-bind="attrs"
                     v-on="on"
+                    @click="fillForm(category.id)"
                   >
                   Edit
                   </v-btn>
                   <!-- <v-spacer></v-spacer> -->
-                  <v-btn @click="deleteCategory(category.id)" text outlined>Delete</v-btn>
+                  <v-btn @click="categoryDelete(category.id)" text outlined>Delete</v-btn>
             
                 </template>
                 <v-card>
                   <v-card-title>
-                    <span class="headline">User Profile</span>
+                    <span class="headline">Edit Category</span>
+                    <v-spacer></v-spacer>
+                    <v-icon @click="() => {
+                              form2.name = ''
+                              form2.subheader = ''
+                              dialog = false
+                    }">mdi-close</v-icon>
                   </v-card-title>
                   <v-card-text>
                     <v-container>
-                      <v-row>
-                        <v-col cols="12" sm="6" md="4">
-                          <v-text-field label="Legal first name*" required></v-text-field>
-                        </v-col>
-                        <v-col cols="12" sm="6" md="4">
-                          <v-text-field label="Legal middle name" hint="example of helper text only on focus"></v-text-field>
-                        </v-col>
-                        <v-col cols="12" sm="6" md="4">
-                          <v-text-field
-                            label="Legal last name*"
-                            hint="example of persistent helper text"
-                            persistent-hint
-                            required
-                          ></v-text-field>
-                        </v-col>
-                        <v-col cols="12">
-                          <v-text-field label="Email*" required></v-text-field>
-                        </v-col>
-                        <v-col cols="12">
-                          <v-text-field label="Password*" type="password" required></v-text-field>
-                        </v-col>
-                        <v-col cols="12" sm="6">
-                          <v-select
-                            :items="['0-17', '18-29', '30-54', '54+']"
-                            label="Age*"
-                            required
-                          ></v-select>
-                        </v-col>
-                        <v-col cols="12" sm="6">
-                          <v-autocomplete
-                            :items="['Skiing', 'Ice hockey', 'Soccer', 'Basketball', 'Hockey', 'Reading', 'Writing', 'Coding', 'Basejump']"
-                            label="Interests"
-                            multiple
-                          ></v-autocomplete>
-                        </v-col>
-                      </v-row>
+                      <v-form ref="form2" v-model="valid2" lazy-validation @submit.prevent="submitUpdateCategory(category.id, form2)">
+                        <v-text-field
+                          class="mb-4 mt-4"
+                          v-model="form2.name"
+                          :rules="rules2.name"
+                          label="Name"
+                          required
+                        ></v-text-field>
+
+                        <v-textarea
+                          v-model="form2.subheader"
+                          :rules="rules2.subheader"
+                          label="Subheader"
+                          auto-grow
+                          rows="1"
+                          outlined
+                          required
+                        ></v-textarea>
+                        <v-btn type="submit" color="blue darken-1" text>Save</v-btn>
+                      </v-form>
+                      <p v-for="(error, index) in errors2" :key="index" class="red--text">{{ error[0] }}</p>
                     </v-container>
-                    <small>*indicates required field</small>
                   </v-card-text>
-                  <v-card-actions>
-                    <v-spacer></v-spacer>
-                    <v-btn color="blue darken-1" text @click="dialog = false">Close</v-btn>
-                    <v-btn color="blue darken-1" text @click="dialog = false">Save</v-btn>
-                  </v-card-actions>
                 </v-card>
               </v-dialog>
             </v-row>
@@ -119,7 +105,7 @@
                   rows="1"
               ></v-textarea>
               <v-btn
-                  :disabled="!valid || (!form.subheader || !form.name)"
+                  :disabled="!valid2 || (!form.subheader || !form.name)"
                   :loading="buttonLoading"
                   type="submit"
                     class="blue lighten-4" >Create</v-btn>
@@ -141,23 +127,33 @@ import { mapActions } from "vuex"
       panel: [],
       showCreate: false,
       valid: true,
+      valid2: true,
       form: {
         name: "",
         subheader: "",
       },
-    rules: {
-      name: [],
-      subheader: []
-    },
-    errors: ""
+      rules: {
+        name: [],
+        subheader: []
+      },
+      errors: "",
+      errors2: "",
+      form2: {
+        name: "",
+        subheader: "",
+      },
+      rules2: {
+        name: [],
+        subheader: []
+      },
     }),
     computed: {
-      ...mapGetters("categories", ["categories"]),
-      ...mapGetters(["buttonLoading"])
+      ...mapGetters("categories", ["categories", "editCategoryData"]),
+      ...mapGetters(["buttonLoading",])
     },
     methods: {
-      // ...mapActions(["setButtonLoading"]),
       ...mapActions({ createCategory: "categories/createCategory",
+                      updateCategory: "categories/updateCategory",
                       deleteCategory: "categories/deleteCategory",
                       setButtonLoading: "setButtonLoading",
                       setSnackbar: "snackbar/setSnackbar"
@@ -180,6 +176,52 @@ import { mapActions } from "vuex"
             self.createCategory(form)
               .then(response => {
                 self.setSnackbar("You have successfully created a category");
+                self.dialog = false
+              })
+              .catch(error => {
+                if (error.response.status === 429) {
+                  self.errors = [[error.response.statusText]];
+                } else if (error.response.status === 403) {
+                  self.setSnackbar(error.response.data.message);
+                } else {
+                  self.errors = error.response.data.errors;
+                }
+              })
+              .finally(() => {
+                self.setButtonLoading();
+              });
+          }  
+        })
+      },
+      fillForm(categoryId) {
+        this.form2 = this.editCategoryData(categoryId);
+      },
+      submitUpdateCategory(categoryId, form2) {
+        this.errors2 = "";
+        if (
+            JSON.stringify(this.form2) ===
+            JSON.stringify(this.editCategoryData(categoryId))
+          ) {
+            this.errors2 = [["You haven't changed anything!"]];
+            return
+          }
+        this.rules2.title = [
+          v => !!v || "A title is required",
+        ];
+        this.rules2.subheader = [
+          v => !!v || "A subheader is required",
+          v => (v && v.length >= 8) || "SubheaderDescription must be at least 8 characters"
+        ];
+        // console.log(this.$refs.form2[0])
+        // return
+        let self = this
+        setTimeout(function () {
+          if (self.$refs.form2[0].validate()){
+            self.setButtonLoading();
+            self.updateCategory({ form: form2, id: categoryId })
+              .then(response => {
+                self.setSnackbar("You have successfully updated a category");
+                self.dialog = false
               })
               .catch(error => {
                 if (error.response.status === 429) {
@@ -197,9 +239,9 @@ import { mapActions } from "vuex"
         })
       },
       categoryDelete(id) {
+        return
         const answer = window.confirm("Do you really want to delete this category?");
         if (answer) {
-          console.log('sure')
           // need to set some sort of load thing here
           this.deleteCategory(id)
             .then(() => {

@@ -97,7 +97,6 @@ class BlogController extends Controller
         ]);
         $index_key = array_search("category_ids", array_keys($validated));
         $categories = array_splice($validated, $index_key, 1);
-        // dd($categories);
         if ($blog->update($validated) && $blog->categories()->sync($categories["category_ids"])) {
             return response()->json('Blog Successfully Updated', 200);
         } else {

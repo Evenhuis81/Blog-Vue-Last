@@ -18,26 +18,30 @@ class UserTableSeeder extends Seeder
             'name' => 'Admin',
             'email' => 'admin@admin.nl',
             'password' => bcrypt('admin'),
-            'role' => 'admin'
+            'role' => 'admin',
+            'premium' => true
         ]);
         User::create([
             'name' => 'Author',
             'email' => 'author@author.nl',
             'password' => bcrypt('author'),
-            'role' => 'author'
+            'role' => 'author',
+            'premium' => true
         ]);
         User::create([
             'name' => 'Reader',
             'email' => 'reader@reader.nl',
             'password' => bcrypt('reader'),
-            'role' => 'reader'
+            'role' => 'reader',
+            'premium' => false
         ]);
         foreach (range(3, 6) as $steps) {
             User::create([
                 'name' => $faker->firstName(rand(0,1) ? 'male' : 'female').' '.$faker->lastName,
                 'email' => $faker->unique()->safeEmail,
                 'password' => bcrypt($faker->password),
-                'role' => 'author'
+                'role' => 'author',
+                'premium' => true
             ]);
         };
         foreach (range(7, 21) as $steps) {
@@ -45,7 +49,8 @@ class UserTableSeeder extends Seeder
                 'name' => $faker->firstName(rand(0,1) ? 'male' : 'female').' '.$faker->lastName,
                 'email' => $faker->unique()->safeEmail,
                 'password' => bcrypt($faker->password),
-                'role' => 'reader'
+                'role' => 'reader',
+                'premium' => rand(0, 1)
             ]);
         };
     }

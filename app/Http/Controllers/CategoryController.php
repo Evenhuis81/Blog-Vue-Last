@@ -79,7 +79,15 @@ class CategoryController extends Controller
      */
     public function update(Request $request, Category $category)
     {
-        //
+        $validated = $request->validate([
+            'name' => ['required', 'string'],
+            'subheader' => ['required', 'string', 'min:8'],
+        ]);
+        if ($category->update($validated)) {
+            return response()->json('Category Successfully Updated', 200);
+        } else {
+            return response()->json(['errors' => ['server' => ['Error Updating Category']]], 500);
+        }
     }
 
     /**

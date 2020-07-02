@@ -65,6 +65,7 @@ export default {
         authenticated: state => (state.token && state.user) ? true : false,
         userId: state => state.user ? state.user.id : null,
         userRole: state => state.user ? state.user.role : null,
-        userName: state => state.user ? state.user.name : null
+        userName: state => state.user ? state.user.name : null,
+        userPremium: state => state.user ? !!state.user.premium : false
     }
 }

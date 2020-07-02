@@ -22,6 +22,7 @@ class CreateUsersTable extends Migration
             $table->string('password');
             // admin, author(5) & guest
             $table->string('role')->default('reader');
+            $table->boolean('premium');
             $table->rememberToken();
             $table->timestamps();
         });
