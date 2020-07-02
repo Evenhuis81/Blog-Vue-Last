@@ -55,6 +55,11 @@ export default {
           text: "Manage Categories",
           icon: "mdi-dresser",
           route: { path: "/categories" }
+        },
+        {
+          text: "Snackbar",
+          icon: "",
+          route: { path: "/snackbar" }
         }
       ]
     };

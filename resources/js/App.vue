@@ -6,8 +6,9 @@
     <!-- Main Content Area -->
     <v-content class="grey lighten-5 ma-2">
       <!-- On Screen Popups -->
-      <dialogs-snackbars />
-      <!-- <login-dialog/> -->
+      <snackbars />
+      <!-- Dialogs -->
+      <dialogs />
       <!-- Content Loading Indicator On Top Of Page -->
       <v-progress-linear indeterminate :active="this.$store.state.contentLoading" absolute top></v-progress-linear>
       <!-- Routes -->
@@ -18,10 +19,10 @@
 
 <script>
 import Layout from "./components/markup/Layout"
-import DialogsSnackbars from "./components/DialogsSnackbars"
-// import LoginDialog from "./components/LoginDialog"
+import Snackbars from "./components/Snackbars"
+import Dialogs from "./components/Dialogs"
 
 export default {
-  components: { Layout, DialogsSnackbars }
+  components: { Layout, Snackbars, Dialogs }
 }
 </script>
