@@ -32,8 +32,8 @@ export default [
         meta: { requiresAuth: true, scopes: ['author_access'] },
     },
     {
-        path: '/myblogs',
-        name: 'myblogs',
+        path: '/blogs',
+        name: 'blogs',
         component: IndexBlogs,
         meta: { requiresAuth: true, scopes: ['author_access'] },
     },

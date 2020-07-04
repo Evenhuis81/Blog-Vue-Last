@@ -4,14 +4,14 @@
     <!-- Application Markup -->
     <layout />
     <!-- Main Content Area -->
-    <v-content class="grey lighten-5 ma-2">
+    <v-main class="grey lighten-5 ma-2">
       <!-- Dialogs -->
       <dialogs />
       <!-- Content Loading Indicator On Top Of Page -->
       <v-progress-linear indeterminate :active="this.$store.state.contentLoading" absolute top></v-progress-linear>
       <!-- Routes -->
       <router-view />
-    </v-content>
+    </v-main>
   </v-app>
 </template>
 
