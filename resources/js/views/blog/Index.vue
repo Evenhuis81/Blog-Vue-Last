@@ -14,7 +14,7 @@
             <span>Categories</span>
             <v-spacer></v-spacer>
             <v-icon
-              @click="$router.push({ name: 'editblog', params: { id: item.id } })"
+              @click="$router.push({ name: 'updateblog', params: { id: item.id } })"
             >mdi-square-edit-outline</v-icon>
             <span>Edit Blog</span>
             <v-spacer></v-spacer>

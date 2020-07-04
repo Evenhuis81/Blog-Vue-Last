@@ -6,13 +6,16 @@ export default {
                 title: "Dashboard",
                 icon: "mdi-account",
                 route: { name: "dashboard" },
-                spacing: "mb-0"
+                spacing: "mb-0",
+                dividerTop: true,
+                dividerBottom: true
             },
             blogs: {
                 title: "Blogs",
                 icon: "mdi-folder-multiple-outline",
                 route: { name: "blogs" },
-                spacing: "mb-0"
+                spacing: "mb-0",
+                dividerBottom: true
             },
             // comments: {
             //     title: "Comments",

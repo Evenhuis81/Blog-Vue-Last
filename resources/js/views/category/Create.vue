@@ -1,3 +1,3 @@
 <template>
-  <div>Create</div>
+  <div>Create Category</div>
 </template>

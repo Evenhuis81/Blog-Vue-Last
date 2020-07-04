@@ -17,7 +17,7 @@
       </v-card-text>
       <v-card-actions class="justify-center">
         <v-btn
-          @click="blog.premium ? switchLoginDialog() : $router.push({ path: '/blog/' + blog.id })"
+          @click="blog.premium ? switchLoginDialog() : $router.push({ path: '/blogs/' + blog.id + '/show' })"
           text
           class="mb-5"
         >READ MORE...</v-btn>

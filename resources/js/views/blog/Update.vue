@@ -1,6 +1,6 @@
 <template>
   <v-container>
-    <h2>Edit Blog</h2>
+    <h2>Update Blog</h2>
     <v-form ref="form" v-model="valid" lazy-validation @submit.prevent="submitUpdateBlog">
       <v-text-field
         class="mb-4 mt-4"

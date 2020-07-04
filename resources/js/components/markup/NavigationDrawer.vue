@@ -5,13 +5,14 @@
     </v-col>
 
     <v-list dense nav>
-      <v-divider></v-divider>
+      <!-- <v-divider></v-divider> -->
 
       <!-- <vf-list-item :title="routes.dashboard.title" :icon="routes.dashboard.icon" :route="routes.dashboard.route"></vf-list-item> -->
+
       <vf-list-item v-for="item in drawerItems.main" :key="item.title" :listItems="item"></vf-list-item>
       <!-- <vf-list-item :listItems="drawerItems.main.blogs"></vf-list-item> -->
 
-      <v-divider></v-divider>
+      <!-- <v-divider></v-divider> -->
 
       <!-- <div v-if="userRole === 'author'" class="mt-6">
         <vf-list-item-group :listItems="drawerItems.blogActions"></vf-list-item-group>

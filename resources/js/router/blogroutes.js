@@ -1,46 +1,33 @@
-import Show from '../views/blog/Show.vue'
-import Comments from '../components/Comments.vue'
-import CreateBlog from '../views/blog/Create.vue'
-import IndexBlogs from '../views/blog/Index.vue'
-import EditBlog from '../views/blog/Edit.vue'
+import Index from '../views/blog/Index.vue'
+import Create from '../views/blog/Create.vue'
+import Read from '../views/blog/Read.vue'
+import Update from '../views/blog/Update.vue'
+import Delete from '../views/blog/Delete.vue'
 import store from '../store'
 
 export default [
     {
-        path: '/blog/:id',
-        component: Show,
-        props: true,
-        beforeEnter: (to, from, next) => {
-            if (store.getters['blogs/blogs'].map(x => x.id).includes(parseInt(to.params.id))) {
-                next();
-            } else {
-                next({ name: 'pagenotfound' })
-            }
-        },
-        children: [
-            {
-                path: '',
-                name: 'blog',
-                component: Comments
-            }
-        ]
-    },
-    {
-        path: '/createblog',
-        name: 'createblog',
-        component: CreateBlog,
-        meta: { requiresAuth: true, scopes: ['author_access'] },
-    },
-    {
         path: '/blogs',
         name: 'blogs',
-        component: IndexBlogs,
+        component: Index,
         meta: { requiresAuth: true, scopes: ['author_access'] },
     },
     {
-        path: '/editblog/:id',
-        name: 'editblog',
-        component: EditBlog,
+        path: '/blogs/create',
+        name: 'createblog',
+        component: Create,
+        meta: { requiresAuth: true, scopes: ['author_access'] },
+    },
+    {
+        path: '/blogs/:id',
+        name: 'readblog',
+        component: Read,
+        meta: { requiresAuth: true, scopes: ['author_access', 'admin_access'] },
+    },
+    {
+        path: '/blogs/:id/update',
+        name: 'updateblog',
+        component: Update,
         meta: { requiresAuth: true, scopes: ['author_access'] },
         props: true,
         beforeEnter: (to, from, next) => {
@@ -59,4 +46,10 @@ export default [
             }
         },
     },
+    {
+        path: '/blogs/:id/delete',
+        name: 'deleteblog',
+        component: Delete,
+        meta: { requiresAuth: true, scopes: ['author_access', 'admin_access'] },
+    }
 ]
