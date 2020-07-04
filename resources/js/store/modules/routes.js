@@ -17,21 +17,23 @@ export default {
                 spacing: "mb-0",
                 dividerBottom: true
             },
-            // comments: {
-            //     title: "Comments",
-            //     icon: "mdi-clipboard-text-outline",
-            //     route: { name: "comments" },
-            //     spacing: "mb-0"
-            // },
-            // categories: {
-            //     title: "Categories",
-            //     icon: "mdi-format-list-bulleted",
-            //     route: { name: "categories" },
-            //     spacing: "mb-0"
-            // }
+            categories: {
+                title: "Categories",
+                icon: "mdi-format-list-bulleted",
+                route: { name: "categories" },
+                spacing: "mb-0",
+                dividerBottom: true
+            },
+            comments: {
+                title: "Comments",
+                icon: "mdi-clipboard-text-outline",
+                route: { name: "comments" },
+                spacing: "mb-0",
+                dividerBottom: true
+            }
         },
         action: {
-            blog: [
+            BlogActions: [
                 {
                 title: "Create Blog",
                 icon: "mdi-plus",
@@ -53,7 +55,7 @@ export default {
                 route: { name: "deleteblog" }
                 }
             ],
-            comment: [
+            CommentActions: [
                 {
                 title: "Create Comment",
                 icon: "mdi-plus",
@@ -75,7 +77,7 @@ export default {
                 route: { name: "deletecomment" }
                 }
             ],
-            category: [
+            CategoryActions: [
                 {
                 title: "Create Category",
                 icon: "mdi-plus",

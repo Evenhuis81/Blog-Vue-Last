@@ -1,3 +1,3 @@
 <template>
-  <div>Create</div>
+  <div>Create Comment</div>
 </template>

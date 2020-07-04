@@ -19,35 +19,35 @@ export default [
         meta: { requiresAuth: true, scopes: ['author_access'] },
     },
     {
-        path: '/blogs/:id',
+        path: '/blogs/read',
         name: 'readblog',
         component: Read,
         meta: { requiresAuth: true, scopes: ['author_access', 'admin_access'] },
     },
     {
-        path: '/blogs/:id/update',
+        path: '/blogs/update',
         name: 'updateblog',
         component: Update,
         meta: { requiresAuth: true, scopes: ['author_access'] },
-        props: true,
-        beforeEnter: (to, from, next) => {
-            if (store.getters['blogs/blogs'].map(x => x.id).includes(parseInt(to.params.id))) {
-                if (store.getters['auth/userId'] == store.getters['blogs/blog'](to.params.id).owner_id) {
-                    next()
-                } else {
-                    store.dispatch('snackbar/lunchRoom', {
-                        text: "You are not authorized for this route!",
-                        color: "error"
-                    })
-                    return next({ name: "redirect" })
-                }
-            } else {
-                next({ name: 'pagenotfound' })
-            }
-        },
+        // props: true,
+        // beforeEnter: (to, from, next) => {
+            // if (store.getters['blogs/blogs'].map(x => x.id).includes(parseInt(to.params.id))) {
+            //     if (store.getters['auth/userId'] == store.getters['blogs/blog'](to.params.id).owner_id) {
+            //         next()
+            //     } else {
+            //         store.dispatch('snackbar/snackbar', {
+            //             text: "You are not authorized for this route!",
+            //             color: "error"
+            //         })
+            //         return next({ name: "redirect" })
+            //     }
+            // } else {
+            //     next({ name: 'pagenotfound' })
+            // }
+        // },
     },
     {
-        path: '/blogs/:id/delete',
+        path: '/blogs/delete',
         name: 'deleteblog',
         component: Delete,
         meta: { requiresAuth: true, scopes: ['author_access', 'admin_access'] },

@@ -1,3 +1,3 @@
 <template>
-  <div>Delete</div>
+  <div>Read Comment</div>
 </template>

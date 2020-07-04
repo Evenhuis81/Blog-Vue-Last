@@ -1,3 +1,3 @@
 <template>
-  <div>Update</div>
+  <div>Update Comment</div>
 </template>
