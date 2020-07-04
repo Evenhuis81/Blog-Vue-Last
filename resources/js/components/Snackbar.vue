@@ -1,19 +1,20 @@
 <template>
   <v-snackbar
-    :absolute="absolute"
-    :centered="centered"
     v-model="snackbar"
-    :bottom="y === 'bottom'"
     :color="color"
-    :left="x === 'left'"
-    :right="x === 'right'"
     :timeout="timeout"
     :top="y === 'top'"
+    :bottom="y === 'bottom'"
+    :left="x === 'left'"
+    :right="x === 'right'"
+    :absolute="absolute"
+    centered
+    app
   >
     {{ text }}
-    <!-- <template v-slot:action="{ attrs }"> -->
-    <v-btn dark text @click="snackbar = false">Close</v-btn>
-    <!-- </template> -->
+    <template v-slot:action="{ attrs }">
+      <v-btn dark text v-bind="attrs" @click="snackbar = false">Close</v-btn>
+    </template>
   </v-snackbar>
 </template>
 
@@ -24,7 +25,7 @@ export default {
   computed: {
     ...mapGetters("snackbar", [
       "getSnackbar",
-      "centered",
+      // "centered",
       "color",
       "text",
       "timeout",

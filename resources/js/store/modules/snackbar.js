@@ -3,10 +3,11 @@
 export default {
     namespaced: true,
     state: {
-        // default = top/center??, 3 sec timeout, black
+        // default = centered, 3 sec timeout, black, close button
         snackbar: false,
+        dismiss: true,
         color: '',
-        text: 'No Text Set',
+        text: 'Empty Snackbar',
         timeout: 3000,
         absolute: false,
         x: null,
@@ -15,6 +16,10 @@ export default {
     mutations: {
         set_snackbar(state, boolean) {
             state.snackbar = boolean
+        },
+        set_options(state, options) {
+            console.log(options)
+            console.log(state)
         },
         set_text(state, text) {
             state.text = text
@@ -47,20 +52,26 @@ export default {
         setSnackbar({ commit }, boolean) {
             commit('set_snackbar', boolean)
         },
-        lunchRoom({ commit }, options) {
+        snackbar({ commit }, options) {
+            // return new Promise((resolve, reject) => {
+            //     console.log(options)
+            //     resolve
+            // })
+            console.log(options)
+            return
             commit('reset')
             // requires safetynet, text is not optional , error handling promise?
             options.text ? commit('set_text', options.text) : false
             options.color ? commit('set_color', options.color) : false
             options.timeout ? commit('set_timeout', options.timeout) : false
             // another safetynet needed x needs y and vica versa
-            // options.x ? commit('set_x', options.x) : commit('set_x', null)
-            // options.y ? commit('set_y', options.y) : commit('set_y', null)
+            options.x ? commit('set_x', options.x) : false
+            options.y ? commit('set_y', options.y) : commit('set_y', null)
             commit('set_snackbar', true)
         }
     },
     getters: {
-        getSnackbar: state => { return state.snackbar },
+        getSnackbar: state => { return state.active },
         color(state) { return state.color },
         text(state) { return state.text },
         timeout(state) { return state.timeout },

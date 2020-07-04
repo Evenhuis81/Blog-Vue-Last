@@ -4,6 +4,7 @@ import categories from "./modules/categories.js"
 import comments from "./modules/comments.js"
 import layoutelements from "./modules/layoutelements.js"
 import snackbar from "./modules/snackbar.js"
+import routes from "./modules/routes.js"
 
 let modules = {
     auth,
@@ -11,7 +12,8 @@ let modules = {
     categories,
     comments,
     layoutelements,
-    snackbar
+    snackbar,
+    routes
 }
 
 export default modules

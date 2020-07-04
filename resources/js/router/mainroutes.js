@@ -1,6 +1,6 @@
 import Index from '../views/main/Index.vue'
 import Redirect from '../views/main/Redirect.vue'
-// import Snackbar from '../components/Snackbars.vue'
+import SnackButton from '../components/SnackButton.vue'
 
 const PageNotFound = { template: "<div>Page Not Found => " + window.location.pathname.substr(1) + "</div>" }
 
@@ -16,10 +16,8 @@ export default [
         component: Redirect
     },
     {
-        path: '/snackbar',
-        name: 'snackbar',
-        // component: Snackbar
-        component: PageNotFound
+        path: '/snackbutton',
+        component: SnackButton
     },
     {
         path: '/404',
