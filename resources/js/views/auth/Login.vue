@@ -50,13 +50,13 @@
                 <v-btn
                   text
                   outlined
-                  :loading="buttonLoading"
+                  :loading="btnLoad"
                   :disabled="!valid"
                   color="primary"
                   type="submit"
                 >Login</v-btn>
                 <v-spacer></v-spacer>
-                <v-btn :disabled="buttonLoading" text @click="resetLoginForm">CLEAR INPUT</v-btn>
+                <v-btn :disabled="btnLoad" text @click="resetLoginForm">CLEAR INPUT</v-btn>
               </v-card-actions>
               <p
                 v-for="(error, index) in errors.loginForm"
@@ -106,18 +106,18 @@ export default {
     valid: true
   }),
   computed: {
-    ...mapGetters(["buttonLoading"])
+    ...mapGetters(["btnLoad"])
   },
   methods: {
     ...mapActions({
       login: "auth/login",
       lunchRoom: "snackbar/lunchRoom",
-      setButtonLoading: "setButtonLoading"
+      setBtnLoad: "setBtnLoad"
     }),
     submitLogin() {
       this.errors.loginForm = "";
       if (this.$refs.form.validate()) {
-        this.setButtonLoading();
+        this.setBtnLoad();
         this.login(this.form)
           .then(role => {
             this.$router.push({ name: "dashboard" });
@@ -145,7 +145,7 @@ export default {
             }
           })
           .finally(() => {
-            this.setButtonLoading();
+            this.setBtnLoad();
           });
       } else {
         this.errors.loginForm = [["Something went wrong"]];

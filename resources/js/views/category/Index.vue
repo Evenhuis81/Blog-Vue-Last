@@ -103,7 +103,7 @@
           ></v-textarea>
           <v-btn
             :disabled="!valid2 || (!form.subheader || !form.name)"
-            :loading="buttonLoading"
+            :loading="btnLoad"
             type="submit"
             class="blue lighten-4"
           >Create</v-btn>
@@ -146,14 +146,14 @@ export default {
   }),
   computed: {
     ...mapGetters("categories", ["categories", "editCategoryData"]),
-    ...mapGetters(["buttonLoading"])
+    ...mapGetters(["btnLoad"])
   },
   methods: {
     ...mapActions({
       createCategory: "categories/createCategory",
       updateCategory: "categories/updateCategory",
       deleteCategory: "categories/deleteCategory",
-      setButtonLoading: "setButtonLoading",
+      setBtnLoad: "setBtnLoad",
       lunchRoom: "snackbar/lunchRoom"
     }),
     submitCreateCategory(form) {
@@ -168,7 +168,7 @@ export default {
       let self = this;
       setTimeout(function() {
         if (self.$refs.form.validate()) {
-          self.setButtonLoading();
+          self.setBtnLoad();
           self
             .createCategory(form)
             .then(response => {
@@ -191,7 +191,7 @@ export default {
               }
             })
             .finally(() => {
-              self.setButtonLoading();
+              self.setBtnLoad();
             });
         }
       });
@@ -220,7 +220,7 @@ export default {
       let self = this;
       setTimeout(function() {
         if (self.$refs.form2[0].validate()) {
-          self.setButtonLoading();
+          self.setBtnLoad();
           self
             .updateCategory({ form: form2, id: categoryId })
             .then(response => {
@@ -243,7 +243,7 @@ export default {
               }
             })
             .finally(() => {
-              self.setButtonLoading();
+              self.setBtnLoad();
             });
         }
       });

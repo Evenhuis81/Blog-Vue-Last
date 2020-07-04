@@ -1,5 +1,5 @@
 <template>
-  <v-dialog v-model="loginDialog" max-width="290">
+  <v-dialog v-model="dialog" max-width="290">
     <v-card>
       <v-card-title class="headline">Use Google's location service?</v-card-title>
 
@@ -8,7 +8,7 @@
       <v-card-actions>
         <v-spacer></v-spacer>
 
-        <v-btn color="green darken-1" text @click="switchLoginDialog()">Close(Disagree)</v-btn>
+        <v-btn color="green darken-1" text @click="switchDialog()">Close(Disagree)</v-btn>
 
         <v-btn color="green darken-1" text>Agree</v-btn>
       </v-card-actions>
@@ -22,23 +22,22 @@ import { mapGetters, mapActions } from "vuex";
 export default {
   computed: {
     ...mapGetters({
-      getLoginDialog: "loginDialog"
+      getDialog: "getDialog"
     }),
-    loginDialog: {
+    dialog: {
       get() {
-        return this.getLoginDialog;
+        return this.getDialog;
       },
       set(value) {
-        console.log("set");
-        // this.setLoginDialog(value);
-        this.switchLoginDialog();
+        console.log("dialog set");
+        this.switchDialog();
       }
     }
   },
   methods: {
     ...mapActions({
-      setLoginDialog: "setLoginDialog",
-      switchLoginDialog: "switchLoginDialog"
+      // setDialog: "setDialog",
+      switchDialog: "switchDialog"
     })
   }
 };

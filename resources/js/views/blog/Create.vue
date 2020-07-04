@@ -1,47 +1,8 @@
 <template>
   <v-container>
-    <!-- <v-row justify="center"> -->
-    <!-- </v-row> -->
-    <v-form ref="form" v-model="valid" lazy-validation @submit.prevent="submitCreateBlog">
-      <v-text-field
-        ref="title"
-        class="mb-4 mt-4"
-        v-model="form.title"
-        :rules="rules.title"
-        label="Title"
-        required
-      ></v-text-field>
 
-      <v-textarea
-        v-model="form.description"
-        :rules="rules.description"
-        label="Description"
-        auto-grow
-        rows="1"
-        outlined
-        required
-      ></v-textarea>
+    <vf-form></vf-form>
 
-      <v-select
-        v-model="tempCategoryName"
-        :items="categoryNames"
-        :rules="rules.category"
-        label="Category"
-        required
-      ></v-select>
-
-      <v-checkbox class="mb-4" v-model="form.premium" label="Premium Content?"></v-checkbox>
-
-      <v-btn
-        :disabled="!valid"
-        color="primary"
-        class="mr-4"
-        :loading="buttonLoading"
-        type="submit"
-      >Save Blog</v-btn>
-
-      <p v-for="(error, index) in errors.submitForm" :key="index" class="red--text">{{ error[0] }}</p>
-    </v-form>
   </v-container>
 </template>
 
@@ -71,15 +32,15 @@ export default {
   computed: {
     ...mapGetters({
       categoryNames: "categories/categoryNames",
-      buttonLoading: "buttonLoading"
+      // btnLoad: "btnLoad"
     })
   },
   methods: {
     ...mapActions({
       categoryId: "categories/categoryId",
       createBlog: "blogs/createBlog",
-      setButtonLoading: "setButtonLoading",
-      lunchRoom: "snackbar/lunchRoom"
+      setBtnLoad: "setBtnLoad",
+      lunchRoom: "snackbars/lunchRoom"
     }),
     submitCreateBlog() {
       this.errors.submitForm = "";
@@ -94,7 +55,7 @@ export default {
       ];
       this.rules.category = [v => !!v || "A category is required"];
       if (this.$refs.form.validate()) {
-        this.setButtonLoading();
+        this.setBtnLoad();
         // this.form.category = this.categoryId(this.tempCategoryName)
         this.form.category_id =
           this.categoryNames.indexOf(this.tempCategoryName) + 1;
@@ -119,13 +80,10 @@ export default {
             }
           })
           .finally(() => {
-            this.setButtonLoading();
+            this.setBtnLoad();
           });
       }
     }
   },
-  mounted() {
-    this.$refs.title.focus();
-  }
 };
 </script>

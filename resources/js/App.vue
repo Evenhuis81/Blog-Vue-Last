@@ -8,7 +8,7 @@
       <!-- Dialogs -->
       <dialogs />
       <!-- Content Loading Indicator On Top Of Page -->
-      <v-progress-linear indeterminate :active="this.$store.state.contentLoading" absolute top></v-progress-linear>
+      <v-progress-linear indeterminate :active="this.$store.state.contentLoad" absolute top></v-progress-linear>
       <!-- Routes -->
       <router-view />
     </v-main>

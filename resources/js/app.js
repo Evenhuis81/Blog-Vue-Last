@@ -8,8 +8,9 @@ import vuetify from "./vuetify.js"
 import router from './router'
 import store from './store'
 
-Vue.component('vf-list-item', require('./components/VfCustom/VFListItem.vue').default)
-Vue.component('vf-list-item-group', require('./components/VfCustom/VFListItemGroup').default)
+Vue.component('vf-list-item', require('./components/VfCustom/VfListItem.vue').default)
+Vue.component('vf-list-item-group', require('./components/VfCustom/VfListItemGroup').default)
+Vue.component('vf-form', require('./components/VfCustom/VfForm.vue').default)
 
 new Vue({
     store,

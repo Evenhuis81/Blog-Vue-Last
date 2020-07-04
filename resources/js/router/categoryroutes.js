@@ -18,19 +18,19 @@ export default [
         meta: { requiresAuth: true, scopes: ['author_access', 'admin_access'] },
     },
     {
-        path: '/categories/:id',
+        path: '/categories/read',
         name: 'readcategory',
         component: Read,
         meta: { requiresAuth: true, scopes: ['author_access', 'admin_access'] },
     },
     {
-        path: '/categories/:id/update',
+        path: '/categories/update',
         name: 'updatecategory',
         component: Update,
         meta: { requiresAuth: true, scopes: ['author_access', 'admin_access'] },
     },
     {
-        path: '/categories/:id/delete',
+        path: '/categories/delete',
         name: 'deletecategory',
         component: Delete,
         meta: { requiresAuth: true, scopes: ['author_access', 'admin_access'] },

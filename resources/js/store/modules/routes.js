@@ -36,66 +36,66 @@ export default {
             BlogActions: [
                 {
                 title: "Create Blog",
-                icon: "mdi-plus",
+                actionIcon: "mdi-plus",
                 route: { name: "createblog" }
                 },
                 {
                 title: "Read Blog",
-                icon: "mdi-folder",
+                actionIcon: "mdi-folder",
                 route: { name: "readblog" }
                 },
                 {
                 title: "Update Blog",
-                icon: "mdi-update",
+                actionIcon: "mdi-update",
                 route: { name: "updateblog" }
                 },
                 {
                 title: "Delete Blog",
-                icon: "mdi-delete",
+                actionIcon: "mdi-delete",
                 route: { name: "deleteblog" }
                 }
             ],
             CommentActions: [
                 {
                 title: "Create Comment",
-                icon: "mdi-plus",
+                actionIcon: "mdi-plus",
                 route: { name: "createcomment" }
                 },
                 {
-                title: "ReadComment",
-                icon: "mdi-folder",
+                title: "Read Comment",
+                actionIcon: "mdi-folder",
                 route: { name: "readcomment" }
                 },
                 {
-                title: "UpdateComment",
-                icon: "mdi-update",
+                title: "Update Comment",
+                actionIcon: "mdi-update",
                 route: { name: "updatecomment" }
                 },
                 {
-                title: "DeleteComment",
-                icon: "mdi-delete",
+                title: "Delete Comment",
+                actionIcon: "mdi-delete",
                 route: { name: "deletecomment" }
                 }
             ],
             CategoryActions: [
                 {
                 title: "Create Category",
-                icon: "mdi-plus",
+                actionIcon: "mdi-plus",
                 route: { name: "createcategory" }
                 },
                 {
                 title: "Read Category",
-                icon: "mdi-folder",
+                actionIcon: "mdi-folder",
                 route: { name: "readcategory" }
                 },
                 {
                 title: "Update Category",
-                icon: "mdi-update",
+                actionIcon: "mdi-update",
                 route: { name: "updatecategory" }
                 },
                 {
                 title: "Delete Category",
-                icon: "mdi-delete",
+                actionIcon: "mdi-delete",
                 route: { name: "deletecategory" }
                 }
             ]

@@ -41,7 +41,7 @@
         :disabled="!valid"
         color="primary"
         class="mr-4"
-        :loading="buttonLoading"
+        :loading="btnLoad"
         type="submit"
       >Save Blog</v-btn>
 
@@ -83,7 +83,7 @@ export default {
       // blogCategoriesIds: "blogs/blogCategoriesIds",
       categoryNames: "categories/categoryNames",
       categories: "categories/categories",
-      buttonLoading: "buttonLoading",
+      btnLoad: "btnLoad",
       editFormData: "blogs/editFormData"
     }),
     blog() {
@@ -94,7 +94,7 @@ export default {
     ...mapActions({
       updateBlog: "blogs/updateBlog",
       lunchRoom: "snackbar/lunchRoom",
-      setButtonLoading: "setButtonLoading"
+      setBtnLoad: "setBtnLoad"
     }),
     submitUpdateBlog() {
       this.errors.submitForm = "";
@@ -116,7 +116,7 @@ export default {
           this.errors.submitForm = [["You haven't changed anything!"]];
           return;
         }
-        this.setButtonLoading();
+        this.setBtnLoad();
         this.updateBlog({ form: this.form, id: this.id })
           .then(response => {
             this.$router.push({ name: "blog", params: { id: this.id } });
@@ -138,7 +138,7 @@ export default {
             }
           })
           .finally(() => {
-            this.setButtonLoading();
+            this.setBtnLoad();
           });
       }
     }

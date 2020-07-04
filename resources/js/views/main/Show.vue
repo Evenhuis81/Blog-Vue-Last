@@ -29,7 +29,7 @@
           text
         >Edit</v-btn>
         <v-btn
-          :loading="buttonLoading"
+          :loading="btnLoad"
           @click="blogDelete(blog.id)"
           text
           outlined
@@ -52,7 +52,7 @@ export default {
       getBlog: "blogs/blog",
       blogCategories: "blogs/blogCategories",
       userId: "auth/userId",
-      buttonLoading: "buttonLoading"
+      btnLoad: "btnLoad"
     }),
     blog() {
       return this.getBlog(this.id);
@@ -68,13 +68,13 @@ export default {
   methods: {
     ...mapActions({
       deleteBlog: "blogs/deleteBlog",
-      setButtonLoading: "setButtonLoading",
+      setBtnLoad: "setBtnLoad",
       lunchRoom: "snackbar/lunchRoom"
     }),
     blogDelete(blogId) {
       const answer = window.confirm("Do you really want to delete this blog?");
       if (answer) {
-        this.setButtonLoading;
+        this.setBtnLoad;
         // need to set some sort of load thing here
         this.deleteBlog(blogId)
           .then(() => {
@@ -88,7 +88,7 @@ export default {
             console.log(err);
           })
           .finally(() => {
-            this.setButtonLoading();
+            this.setBtnLoad();
           });
       }
     }

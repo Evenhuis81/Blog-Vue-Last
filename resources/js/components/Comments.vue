@@ -15,7 +15,7 @@
           ></v-textarea>
           <v-btn
             :disabled="!form.description"
-            :loading="buttonLoading"
+            :loading="btnLoad"
             type="submit"
             class="blue lighten-4"
           >Send</v-btn>
@@ -68,14 +68,14 @@ export default {
       authenticated: "auth/authenticated",
       userId: "auth/userId",
       blog: "blogs/blog",
-      buttonLoading: "buttonLoading"
+      btnLoad: "btnLoad"
     })
   },
   methods: {
     ...mapActions({
       createComment: "comments/createComment",
       deleteComment: "comments/deleteComment",
-      setButtonLoading: "setButtonLoading",
+      setBtnLoad: "setBtnLoad",
       lunchRoom: "snackbar/lunchRoom"
     }),
     confirmDelete(commentId) {
@@ -94,7 +94,7 @@ export default {
       }
     },
     submitComment() {
-      this.setButtonLoading();
+      this.setBtnLoad();
       this.form.blog_id = parseInt(this.$route.params.id);
       this.form.owner_id = this.userId;
       this.createComment(this.form)
@@ -118,7 +118,7 @@ export default {
           }
         })
         .finally(() => {
-          this.setButtonLoading();
+          this.setBtnLoad();
         });
     }
   }

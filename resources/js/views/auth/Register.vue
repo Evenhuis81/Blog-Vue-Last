@@ -53,13 +53,13 @@
             <v-btn
               text
               outlined
-              :loading="buttonLoading"
+              :loading="btnLoad"
               :disabled="!valid"
               color="primary"
               type="submit"
             >Register</v-btn>
             <v-spacer></v-spacer>
-            <v-btn :disabled="buttonLoading" text @click="resetRegisterForm">CLEAR INPUT</v-btn>
+            <v-btn :disabled="btnLoad" text @click="resetRegisterForm">CLEAR INPUT</v-btn>
           </v-card-actions>
           <!-- </v-col> -->
           <!-- </v-row> -->
@@ -104,18 +104,18 @@ export default {
     }
   }),
   computed: {
-    ...mapGetters({ buttonLoading: "buttonLoading", role: "auth/role" })
+    ...mapGetters({ btnLoad: "btnLoad", role: "auth/role" })
   },
   methods: {
     ...mapActions({
       register: "auth/register",
-      setButtonLoading: "setButtonLoading",
+      setBtnLoad: "setBtnLoad",
       lunchRoom: "snackbar/lunchRoom"
     }),
     submitRegisterForm() {
       this.errors.registerForm = "";
       if (this.$refs.form.validate()) {
-        this.setButtonLoading();
+        this.setBtnLoad();
         this.register(this.form)
           .then(() => {
             this.$router.push({
@@ -137,7 +137,7 @@ export default {
             }
           })
           .finally(() => {
-            this.setButtonLoading();
+            this.setBtnLoad();
           });
       } else {
         this.errors.registerForm = [["Something went wrong with validation."]];

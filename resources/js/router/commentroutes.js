@@ -18,19 +18,19 @@ export default [
         meta: { requiresAuth: true, scopes: ['author_access', 'admin_access', 'reader_access'] },
     },
     {
-        path: '/comments/:id',
+        path: '/comments/read',
         name: 'readcomment',
         component: Read,
         meta: { requiresAuth: true, scopes: ['author_access', 'admin_access', 'reader_access'] },
     },
     {
-        path: '/comments/:id/update',
+        path: '/comments/update',
         name: 'updatecomment',
         component: Update,
         meta: { requiresAuth: true, scopes: ['author_access', 'admin_access', 'reader_access'] },
     },
     {
-        path: '/comments/:id/delete',
+        path: '/comments/delete',
         name: 'deletecomment',
         component: Delete,
         meta: { requiresAuth: true, scopes: ['author_access', 'admin_access', 'reader_access'] },
