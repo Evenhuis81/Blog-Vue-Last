@@ -76,7 +76,7 @@ export default {
       createComment: "comments/createComment",
       deleteComment: "comments/deleteComment",
       setBtnLoad: "setBtnLoad",
-      lunchRoom: "snackbar/lunchRoom"
+      snackbar: "snackbar/snackbar"
     }),
     confirmDelete(commentId) {
       const answer = window.confirm(
@@ -85,7 +85,7 @@ export default {
       if (answer) {
         // need to set some sort of load thing here
         this.deleteComment(commentId).then(() => {
-          this.lunchRoom({
+          this.snackbar({
             text: "Comment Deleted!",
             color: "error",
             y: "bottom"
@@ -100,7 +100,7 @@ export default {
       this.createComment(this.form)
         .then(response => {
           this.form.description = "";
-          this.lunchRoom({
+          this.snackbar({
             text: "You have successfully created a comment",
             color: "success"
           });
@@ -109,7 +109,7 @@ export default {
           if (error.response.status === 429) {
             this.errors = [[error.response.statusText]];
           } else if (error.response.status === 403) {
-            this.lunchRoom({
+            this.snackbar({
               text: error.response.data.message,
               color: "error"
             });

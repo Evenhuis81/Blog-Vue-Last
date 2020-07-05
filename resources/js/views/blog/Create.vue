@@ -40,7 +40,7 @@ export default {
       categoryId: "categories/categoryId",
       createBlog: "blogs/createBlog",
       setBtnLoad: "setBtnLoad",
-      lunchRoom: "snackbars/lunchRoom"
+      snackbar: "snackbars/snackbar"
     }),
     submitCreateBlog() {
       this.errors.submitForm = "";
@@ -62,7 +62,7 @@ export default {
         this.createBlog(this.form)
           .then(response => {
             this.$router.push({ name: "dashboard" });
-            this.lunchRoom({
+            this.snackbar({
               text: "Blog successfully created",
               color: "success"
             });
@@ -71,7 +71,7 @@ export default {
             if (error.response.status === 429) {
               this.errors.submitForm = [[error.response.statusText]];
             } else if (error.response.status === 403) {
-              this.lunchRoom({
+              this.snackbar({
                 text: error.response.data.message,
                 color: "error"
               });

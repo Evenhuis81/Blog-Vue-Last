@@ -93,7 +93,7 @@ export default {
   methods: {
     ...mapActions({
       updateBlog: "blogs/updateBlog",
-      lunchRoom: "snackbar/lunchRoom",
+      snackbar: "snackbar/snackbar",
       setBtnLoad: "setBtnLoad"
     }),
     submitUpdateBlog() {
@@ -120,7 +120,7 @@ export default {
         this.updateBlog({ form: this.form, id: this.id })
           .then(response => {
             this.$router.push({ name: "blog", params: { id: this.id } });
-            this.lunchRoom({
+            this.snackbar({
               text: "You have successfully edited your blog",
               color: "success"
             });
@@ -129,7 +129,7 @@ export default {
             if (error.response.status === 429) {
               this.errors.submitForm = [[error.response.statusText]];
             } else if (error.response.status === 403) {
-              this.lunchRoom({
+              this.snackbar({
                 text: error.response.data.message,
                 color: "error"
               });

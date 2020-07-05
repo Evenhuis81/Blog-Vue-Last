@@ -110,7 +110,7 @@ export default {
     ...mapActions({
       register: "auth/register",
       setBtnLoad: "setBtnLoad",
-      lunchRoom: "snackbar/lunchRoom"
+      snackbar: "snackbar/snackbar"
     }),
     submitRegisterForm() {
       this.errors.registerForm = "";
@@ -127,7 +127,7 @@ export default {
             if (error.response.status === 429) {
               this.errors.registerForm = [[error.response.statusText]];
             } else if (error.response.status === 403) {
-              this.lunchRoom({
+              this.snackbar({
                 text: error.response.data.message,
                 color: "error"
               });

@@ -27,7 +27,7 @@ export default async function (to, from, next) {
       if (scopes.map(x => x).includes(role + '_access')) {
         next()
       } else {
-        store.dispatch('snackbar/lunchRoom', {
+        store.dispatch('snackbar/snackbar', {
           text: "You are not authorized for this route!",
           color: "error"
         })
@@ -35,7 +35,7 @@ export default async function (to, from, next) {
       }
     } else {
       console.log('not authenticated')
-      store.dispatch('snackbar/lunchRoom', {
+      store.dispatch('snackbar/snackbar', {
         text: "You are not authenticated for this route!",
         color: "error"
       })
@@ -44,7 +44,7 @@ export default async function (to, from, next) {
   }
   // pages with guestRouteOnly are not available for logged in users (register, login page)
   if (to.meta.guestRouteOnly && auth) {
-    store.dispatch('snackbar/lunchRoom', {
+    store.dispatch('snackbar/snackbar', {
       text: "You are already registered and logged in!",
       color: "error"
     })

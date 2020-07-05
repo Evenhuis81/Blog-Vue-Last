@@ -154,7 +154,7 @@ export default {
       updateCategory: "categories/updateCategory",
       deleteCategory: "categories/deleteCategory",
       setBtnLoad: "setBtnLoad",
-      lunchRoom: "snackbar/lunchRoom"
+      snackbar: "snackbar/snackbar"
     }),
     submitCreateCategory(form) {
       this.errors = "";
@@ -172,7 +172,7 @@ export default {
           self
             .createCategory(form)
             .then(response => {
-              self.lunchRoom({
+              self.snackbar({
                 text: "You have successfully created a category",
                 color: "success"
               });
@@ -182,7 +182,7 @@ export default {
               if (error.response.status === 429) {
                 self.errors = [[error.response.statusText]];
               } else if (error.response.status === 403) {
-                self.lunchRoom({
+                self.snackbar({
                   text: error.response.data.message,
                   color: "error"
                 });
@@ -224,7 +224,7 @@ export default {
           self
             .updateCategory({ form: form2, id: categoryId })
             .then(response => {
-              self.lunchRoom({
+              self.snackbar({
                 text: "You have successfully updated a category",
                 color: "info"
               });
@@ -234,7 +234,7 @@ export default {
               if (error.response.status === 429) {
                 self.errors = [[error.response.statusText]];
               } else if (error.response.status === 403) {
-                self.lunchRoom({
+                self.snackbar({
                   text: error.response.data.message,
                   color: "error"
                 });
@@ -257,7 +257,7 @@ export default {
         this.deleteCategory(id)
           .then(() => {
             this.none();
-            this.lunchRoom({
+            this.snackbar({
               text: "Category Deleted!",
               color: "error"
             });

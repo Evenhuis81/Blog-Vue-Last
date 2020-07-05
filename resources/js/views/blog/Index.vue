@@ -54,7 +54,7 @@ export default {
   methods: {
     ...mapActions({
       deleteBlog: "blogs/deleteBlog",
-      lunchRoom: "snackbar/lunchRoom"
+      snackbar: "snackbar/snackbar"
     }),
     blogDelete(blogId) {
       const answer = window.confirm("Do you really want to delete this blog?");
@@ -63,7 +63,7 @@ export default {
         this.deleteBlog(blogId)
           .then(() => {
             // this.$router.push({ name: "readblog" });
-            this.lunchRoom({
+            this.snackbar({
               text: "Blog Deleted!",
               color: "error"
             });

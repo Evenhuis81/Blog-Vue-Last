@@ -37,13 +37,13 @@ export default {
   methods: {
     ...mapActions({
       logOut: "auth/logOut",
-      lunchRoom: "snackbar/lunchRoom"
+      snackbar: "snackbar/snackbar"
     }),
     loggingOut() {
       this.logOut()
         .then(() => {
           this.$router.push("/", () => {});
-          this.lunchRoom({
+          this.snackbar({
             text: "You are now logged out",
             color: "info"
           });

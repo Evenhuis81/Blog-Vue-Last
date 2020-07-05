@@ -111,7 +111,7 @@ export default {
   methods: {
     ...mapActions({
       login: "auth/login",
-      lunchRoom: "snackbar/lunchRoom",
+      snackbar: "snackbar/snackbar",
       setBtnLoad: "setBtnLoad"
     }),
     submitLogin() {
@@ -121,7 +121,7 @@ export default {
         this.login(this.form)
           .then(role => {
             this.$router.push({ name: "dashboard" });
-            this.lunchRoom({
+            this.snackbar({
               text: "You are now logged in",
               color: "info"
             });
@@ -136,7 +136,7 @@ export default {
                 ]
               ];
             } else if (error.response.status === 403) {
-              this.lunchRoom({
+              this.snackbar({
                 text: error.response.data.message,
                 color: "error"
               });
