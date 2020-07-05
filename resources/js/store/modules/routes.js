@@ -8,21 +8,22 @@ export default {
                 route: { name: "dashboard" },
                 spacing: "mb-0",
                 dividerTop: true,
-                dividerBottom: true
+                dividerBottom: true,
             },
             blogs: {
                 title: "Blogs",
                 icon: "mdi-folder-multiple-outline",
                 route: { name: "blogs" },
                 spacing: "mb-0",
-                dividerBottom: true
+                dividerBottom: true,
             },
             categories: {
                 title: "Categories",
                 icon: "mdi-format-list-bulleted",
                 route: { name: "categories" },
                 spacing: "mb-0",
-                dividerBottom: true
+                dividerBottom: true,
+                auth: 'author'
             },
             comments: {
                 title: "Comments",

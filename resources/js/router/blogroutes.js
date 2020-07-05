@@ -11,6 +11,9 @@ export default [
         name: 'blogs',
         component: Index,
         meta: { requiresAuth: true, scopes: ['author_access'] },
+        children: [
+                //
+        ]
     },
     {
         path: '/blogs/create',
