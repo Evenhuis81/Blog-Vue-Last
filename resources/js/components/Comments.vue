@@ -87,7 +87,7 @@ export default {
         this.deleteComment(commentId).then(() => {
           this.snackbar({
             text: "Comment Deleted!",
-            color: "error",
+            color: "warning",
             y: "bottom"
           });
         });
@@ -111,7 +111,8 @@ export default {
           } else if (error.response.status === 403) {
             this.snackbar({
               text: error.response.data.message,
-              color: "error"
+              color: "warning",
+              y: "bottom"
             });
           } else {
             this.errors = error.response.data.errors;

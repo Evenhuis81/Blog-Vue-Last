@@ -259,7 +259,8 @@ export default {
             this.none();
             this.snackbar({
               text: "Category Deleted!",
-              color: "error"
+              color: "error",
+              y: "bottom"
             });
           })
           .catch(err => {

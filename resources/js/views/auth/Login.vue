@@ -127,7 +127,6 @@ export default {
             });
           })
           .catch(error => {
-            console.log("why");
             if (error.response.status === 429) {
               this.errors.loginForm = [
                 [
@@ -138,7 +137,8 @@ export default {
             } else if (error.response.status === 403) {
               this.snackbar({
                 text: error.response.data.message,
-                color: "error"
+                color: "error",
+                y: "bottom"
               });
             } else {
               this.errors.loginForm = error.response.data.errors;

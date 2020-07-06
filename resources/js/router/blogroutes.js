@@ -12,7 +12,7 @@ export default [
         component: Index,
         meta: { requiresAuth: true, scopes: ['author_access'] },
         children: [
-                //
+            //
         ]
     },
     {
@@ -28,26 +28,26 @@ export default [
         meta: { requiresAuth: true, scopes: ['author_access', 'admin_access'] },
     },
     {
-        path: '/blogs/update',
+        path: '/blogs/:id/update',
         name: 'updateblog',
         component: Update,
         meta: { requiresAuth: true, scopes: ['author_access'] },
-        // props: true,
-        // beforeEnter: (to, from, next) => {
-            // if (store.getters['blogs/blogs'].map(x => x.id).includes(parseInt(to.params.id))) {
-            //     if (store.getters['auth/userId'] == store.getters['blogs/blog'](to.params.id).owner_id) {
-            //         next()
-            //     } else {
-            //         store.dispatch('snackbar/snackbar', {
-            //             text: "You are not authorized for this route!",
-            //             color: "error"
-            //         })
-            //         return next({ name: "redirect" })
-            //     }
-            // } else {
-            //     next({ name: 'pagenotfound' })
-            // }
-        // },
+        props: true,
+        beforeEnter: (to, from, next) => {
+            if (store.getters['blogs/blogs'].map(x => x.id).includes(parseInt(to.params.id))) {
+                if (store.getters['auth/userId'] == store.getters['blogs/blog'](to.params.id).owner_id) {
+                    next()
+                } else {
+                    store.dispatch('snackbar/snackbar', {
+                        text: "You are not authorized for this route!",
+                        color: "error"
+                    })
+                    return next({ name: "redirect" })
+                }
+            } else {
+                next({ name: 'pagenotfound' })
+            }
+        },
     },
     {
         path: '/blogs/delete',

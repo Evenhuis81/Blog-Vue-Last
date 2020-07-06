@@ -28,13 +28,7 @@
           color="primary"
           text
         >Edit</v-btn>
-        <v-btn
-          :loading="btnLoad"
-          @click="blogDelete(blog.id)"
-          text
-          outlined
-          class="ml-auto"
-        >Delete</v-btn>
+        <v-btn :loading="btnLoad" @click="blogDelete(blog.id)" text outlined class="ml-auto">Delete</v-btn>
       </v-card-actions>
     </v-card>
     <router-view></router-view>
@@ -81,7 +75,8 @@ export default {
             this.$router.push({ name: "myblogs" });
             this.snackbar({
               text: "Blog Deleted!",
-              color: "error"
+              color: "warning",
+              y: "bottom"
             });
           })
           .catch(err => {

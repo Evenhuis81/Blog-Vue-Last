@@ -3,23 +3,27 @@
 export default {
     namespaced: true,
     state: {
-        // default = centered, 3 sec timeout, black, close button
-        snackbar: false,
+        // default: top, 3 sec timeout, black, dismissable
+        active: false,
         dismiss: true,
-        color: '',
-        text: 'Empty Snackbar',
+        color: "red",
+        text: "Empty Snackbar",
         timeout: 3000,
         absolute: false,
         x: null,
-        y: null
+        y: "top",
+        centered: false
     },
     mutations: {
         set_snackbar(state, boolean) {
-            state.snackbar = boolean
+            state.active = boolean
         },
         set_options(state, options) {
             console.log(options)
             console.log(state)
+        },
+        set_dismiss(state) {
+            state.dismiss = false
         },
         set_text(state, text) {
             state.text = text
@@ -30,22 +34,24 @@ export default {
         set_timeout(state, timeout) {
             state.timeout = timeout
         },
-        set_timeout(state, boolean) {
-            state.absolute = boolean
-        },
         set_x(state, x) {
             state.x = x
         },
         set_y(state, y) {
             state.y = y
         },
+        set_centered(state) {
+            state.centered = true
+        },
         reset(state) {
-            state.color = ''
-            state.text = 'No Text Set'
+            state.dismiss = true
+            state.color = ""
+            state.text = "Empty Snackbar"
             state.timeout = 3000
             state.absolute = false
             state.x = null
-            state.y = null
+            state.y = "top"
+            state.centered = false
         }
     },
     actions: {
@@ -57,16 +63,23 @@ export default {
             //     console.log(options)
             //     resolve
             // })
-            console.log(options)
-            return
+            // console.log(options)
+            // return
             commit('reset')
             // requires safetynet, text is not optional , error handling promise?
+            // map options and only set options available
+            // options.dismiss ? commit('set_dismiss') : false
             options.text ? commit('set_text', options.text) : false
             options.color ? commit('set_color', options.color) : false
             options.timeout ? commit('set_timeout', options.timeout) : false
             // another safetynet needed x needs y and vica versa
-            options.x ? commit('set_x', options.x) : false
-            options.y ? commit('set_y', options.y) : commit('set_y', null)
+            if (options.centered) {
+                commit("set_centered")
+                commit("set_y", null)
+            } else {
+                options.x ? commit('set_x', options.x) : false
+                options.y ? commit('set_y', options.y) : false
+            }
             commit('set_snackbar', true)
         }
     },
@@ -76,8 +89,8 @@ export default {
         text(state) { return state.text },
         timeout(state) { return state.timeout },
         absolute(state) { return state.absolute },
-        centered: state => { return state.centered },
         x(state) { return state.x },
-        y(state) { return state.y }
+        y(state) { return state.y },
+        centered(state) { return state.centered }
     }
 }

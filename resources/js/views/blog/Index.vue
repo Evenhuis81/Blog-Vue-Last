@@ -65,7 +65,8 @@ export default {
             // this.$router.push({ name: "readblog" });
             this.snackbar({
               text: "Blog Deleted!",
-              color: "error"
+              color: "error",
+              y: "bottom"
             });
           })
           .catch(err => {

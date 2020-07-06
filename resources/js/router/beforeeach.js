@@ -34,10 +34,9 @@ export default async function (to, from, next) {
         return next({ name: "redirect" })
       }
     } else {
-      console.log('not authenticated')
       store.dispatch('snackbar/snackbar', {
         text: "You are not authenticated for this route!",
-        color: "error"
+        color: "warning"
       })
       return next({ name: "redirect" })
     }
@@ -46,7 +45,7 @@ export default async function (to, from, next) {
   if (to.meta.guestRouteOnly && auth) {
     store.dispatch('snackbar/snackbar', {
       text: "You are already registered and logged in!",
-      color: "error"
+      color: "warning"
     })
     return next({ name: "redirect" })
   }

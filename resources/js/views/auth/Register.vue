@@ -129,7 +129,8 @@ export default {
             } else if (error.response.status === 403) {
               this.snackbar({
                 text: error.response.data.message,
-                color: "error"
+                color: "error",
+                y: "bottom"
               });
               this.$router.push({ name: this.role + "dashboard" });
             } else {

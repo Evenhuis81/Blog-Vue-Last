@@ -36,69 +36,69 @@ export default {
         action: {
             BlogActions: [
                 {
-                title: "Create Blog",
-                actionIcon: "mdi-plus",
-                route: { name: "createblog" }
+                    title: "Create Blog",
+                    actionIcon: "mdi-plus",
+                    route: { name: "createblog" }
                 },
-                {
-                title: "Read Blog",
-                actionIcon: "mdi-folder",
-                route: { name: "readblog" }
-                },
-                {
-                title: "Update Blog",
-                actionIcon: "mdi-update",
-                route: { name: "updateblog" }
-                },
-                {
-                title: "Delete Blog",
-                actionIcon: "mdi-delete",
-                route: { name: "deleteblog" }
-                }
+                // {
+                //     title: "Read Blog",
+                //     actionIcon: "mdi-folder",
+                //     route: { name: "readblog" }
+                // },
+                // {
+                //     title: "Update Blog",
+                //     actionIcon: "mdi-update",
+                //     route: { name: "updateblog" }
+                // },
+                // {
+                //     title: "Delete Blog",
+                //     actionIcon: "mdi-delete",
+                //     route: { name: "deleteblog" }
+                // }
             ],
             CommentActions: [
                 {
-                title: "Create Comment",
-                actionIcon: "mdi-plus",
-                route: { name: "createcomment" }
+                    title: "Create Comment",
+                    actionIcon: "mdi-plus",
+                    route: { name: "createcomment" }
                 },
-                {
-                title: "Read Comment",
-                actionIcon: "mdi-folder",
-                route: { name: "readcomment" }
-                },
-                {
-                title: "Update Comment",
-                actionIcon: "mdi-update",
-                route: { name: "updatecomment" }
-                },
-                {
-                title: "Delete Comment",
-                actionIcon: "mdi-delete",
-                route: { name: "deletecomment" }
-                }
+                // {
+                // title: "Read Comment",
+                // actionIcon: "mdi-folder",
+                // route: { name: "readcomment" }
+                // },
+                // {
+                // title: "Update Comment",
+                // actionIcon: "mdi-update",
+                // route: { name: "updatecomment" }
+                // },
+                // {
+                // title: "Delete Comment",
+                // actionIcon: "mdi-delete",
+                // route: { name: "deletecomment" }
+                // }
             ],
             CategoryActions: [
                 {
-                title: "Create Category",
-                actionIcon: "mdi-plus",
-                route: { name: "createcategory" }
+                    title: "Create Category",
+                    actionIcon: "mdi-plus",
+                    route: { name: "createcategory" }
                 },
-                {
-                title: "Read Category",
-                actionIcon: "mdi-folder",
-                route: { name: "readcategory" }
-                },
-                {
-                title: "Update Category",
-                actionIcon: "mdi-update",
-                route: { name: "updatecategory" }
-                },
-                {
-                title: "Delete Category",
-                actionIcon: "mdi-delete",
-                route: { name: "deletecategory" }
-                }
+                // {
+                // title: "Read Category",
+                // actionIcon: "mdi-folder",
+                // route: { name: "readcategory" }
+                // },
+                // {
+                // title: "Update Category",
+                // actionIcon: "mdi-update",
+                // route: { name: "updatecategory" }
+                // },
+                // {
+                // title: "Delete Category",
+                // actionIcon: "mdi-delete",
+                // route: { name: "deletecategory" }
+                // }
             ]
         }
     },

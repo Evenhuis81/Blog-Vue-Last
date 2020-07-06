@@ -122,16 +122,18 @@ export default {
             this.$router.push({ name: "blog", params: { id: this.id } });
             this.snackbar({
               text: "You have successfully edited your blog",
-              color: "success"
+              color: "teal"
             });
           })
           .catch(error => {
+            console.log("catched error");
             if (error.response.status === 429) {
               this.errors.submitForm = [[error.response.statusText]];
             } else if (error.response.status === 403) {
               this.snackbar({
                 text: error.response.data.message,
-                color: "error"
+                color: "error",
+                y: "bottom"
               });
             } else {
               this.errors.submitForm = error.response.data.errors;
