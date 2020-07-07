@@ -51,14 +51,20 @@ export default {
         blogs: state => {
             return state.blogs
         },
+        blogsNewOld(state) {
+            return state.blogs.slice().sort((a, b) => new Date(b.created_at) - new Date(a.created_at))
+            // console.log(newArr)
+            // return newArr
+        },
         blog: (state) => (id) => {
             return state.blogs.find(blog => blog.id == id)
         },
         authorBlogs: (state, getters, rootState, rootGetters) => {
-            return state.blogs.filter(blog => blog.owner_id == rootGetters["auth/userId"])
+            const arr = state.blogs.filter(blog => blog.owner_id == rootGetters["auth/userId"])
+            return arr.slice().sort((a, b) => new Date(b.created_at) - new Date(a.created_at))
+
         },
         editFormData: (state, getters) => (id) => {
-            // let blog = getters.blog.state.blogs.find(blog => blog.id == id)
             let blog = getters.blog(id)
             let formData = {
                 'title': blog.title,

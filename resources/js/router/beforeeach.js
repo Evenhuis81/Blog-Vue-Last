@@ -4,7 +4,7 @@ export default async function (to, from, next) {
   // is no user is set, but has token (page refresh)
   if (store.getters['auth/unverifiedToken']) {
     store.dispatch('setContentLoad', true)
-    await store.dispatch('auth/verifyToken')
+    store.dispatch('auth/verifyToken')
       .catch((e) => {
         return next({ name: "index" })
       }).finally(() => {

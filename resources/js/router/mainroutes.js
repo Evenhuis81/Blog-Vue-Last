@@ -10,7 +10,11 @@ export default [
     {
         path: '/',
         name: 'index',
-        component: Index
+        component: Index,
+        // beforeEnter: (to, from, next) => {
+        // console.log(store.getters["categories/categoryNames"])
+        // next();
+        // },
     },
     {
         path: '/blogs/:id/show',

@@ -10,21 +10,22 @@ export default {
     },
     actions: {
         getCategories({ commit }) {
-            this._vm.$http.get('/api/categories')
+            return this._vm.$http.get('/api/categories')
                 .then(res => {
                     commit('get_categories', res.data)
+                    return
                 }).catch(err => {
                     throw err
                 })
         },
         createCategory({ dispatch }, category) {
             return this._vm.$http.post('/api/categories', category)
-            .then(res => {
-                dispatch("categories/getCategories", {}, { root: true })
-                return
-            }).catch(err => {
-                throw err
-            })
+                .then(res => {
+                    dispatch("categories/getCategories", {}, { root: true })
+                    return
+                }).catch(err => {
+                    throw err
+                })
         },
         updateCategory({ dispatch }, payload) {
             return this._vm.$http.patch('/api/categories/' + payload.id, payload.form)
@@ -39,8 +40,8 @@ export default {
         deleteCategory({ dispatch }, id) {
             return this._vm.$http.delete('/api/categories/' + id)
                 .then(res => {
-                    dispatch('blogs/getBlogs', {}, {root: true})
-                    dispatch('categories/getCategories', {}, {root: true})
+                    dispatch('blogs/getBlogs', {}, { root: true })
+                    dispatch('categories/getCategories', {}, { root: true })
                     return
                 }).catch(err => {
                     throw err
