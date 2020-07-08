@@ -14,11 +14,14 @@ class CategoryTableSeeder extends Seeder
     public function run()
     {
         // $color = ['white--text', 'black--text', 'blue--text text--darken-2', 'white--text', 'white--text', 'black--text', 'black--text', 'blue--text text--darken-2', 'white--text', 'black--text'];
+        // gebuirk camelCase, dus subHeader
         $subheader = ['Dare to take risks', 'New ways to find a partner', 'How to make your website even more popular', 'What\'s new in the world of mobile phones', 'Find out what\'s in theatres now', 'The latest releases', 'Check out the latest inventions', 'Keeping up with appearances', 'Hot and not in the world of trends', 'What to expect from the future'];
         $arr_names = [];
         $image_names = [];
         $fullpath_image_names = Storage::files('/public/categoryimages');
         // try strreplacemethod
+
+        // cryptische code, kan dit eenvoudiger?
         foreach ($fullpath_image_names as $element) {
             array_push($arr_names, '/storage/'.explode('/', $element, 2)[1]);
         };

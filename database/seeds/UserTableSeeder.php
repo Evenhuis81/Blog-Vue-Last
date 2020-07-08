@@ -35,22 +35,33 @@ class UserTableSeeder extends Seeder
             'role' => 'reader',
             'premium' => false
         ]);
-        foreach (range(3, 6) as $steps) {
+        // foreach (range(3, 6) as $steps) {
+        //     User::create([
+        //         'name' => $faker->firstName(rand(0,1) ? 'male' : 'female').' '.$faker->lastName,
+        //         'email' => $faker->unique()->safeEmail,
+        //         'password' => bcrypt($faker->password),
+        //         'role' => 'author',
+        //         'premium' => true
+        //     ]);
+        // };
+        // foreach (range(7, 21) as $steps) {
+        //     User::create([
+        //         'name' => $faker->firstName(rand(0,1) ? 'male' : 'female').' '.$faker->lastName,
+        //         'email' => $faker->unique()->safeEmail,
+        //         'password' => bcrypt($faker->password),
+        //         'role' => 'reader',
+        //         'premium' => rand(0, 1)
+        //     ]);
+        // };
+
+        // bovenstaande kan in 1 loop
+        foreach (range(1, 19) as $step) {
             User::create([
                 'name' => $faker->firstName(rand(0,1) ? 'male' : 'female').' '.$faker->lastName,
                 'email' => $faker->unique()->safeEmail,
                 'password' => bcrypt($faker->password),
-                'role' => 'author',
+                'role' => $step > 5 ? 'author' : 'reader',
                 'premium' => true
-            ]);
-        };
-        foreach (range(7, 21) as $steps) {
-            User::create([
-                'name' => $faker->firstName(rand(0,1) ? 'male' : 'female').' '.$faker->lastName,
-                'email' => $faker->unique()->safeEmail,
-                'password' => bcrypt($faker->password),
-                'role' => 'reader',
-                'premium' => rand(0, 1)
             ]);
         };
     }

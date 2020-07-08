@@ -5,10 +5,11 @@
 use App\Comment;
 use Faker\Generator as Faker;
 
-$autoIncrement = autoIncrement();
+// autoincrement gaf errors tijdens seeden dus uitgecommentariseerd / verwijderd
+//$autoIncrement = autoIncrement();
 
-$factory->define(Comment::class, function (Faker $faker) use ($autoIncrement) {
-    $autoIncrement->next();
+$factory->define(Comment::class, function (Faker $faker)  {
+    //$autoIncrement->next();
     return [
         'description' => $faker->text(rand(5, 75)),
         'owner_id' => rand(8, 22),
