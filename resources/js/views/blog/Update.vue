@@ -107,42 +107,44 @@ export default {
         v =>
           (v && v.length >= 10) || "Description must be at least 10 characters"
       ];
-      if (this.$refs.form.validate()) {
-        // check if input has changed
-        if (
-          JSON.stringify(this.form) ===
-          JSON.stringify(this.editFormData(this.id))
-        ) {
-          this.errors.submitForm = [["You haven't changed anything!"]];
-          return;
-        }
-        this.setBtnLoad();
-        this.updateBlog({ form: this.form, id: this.id })
-          .then(response => {
-            this.$router.push({ name: "blog", params: { id: this.id } });
-            this.snackbar({
-              text: "You have successfully edited your blog",
-              color: "teal"
-            });
-          })
-          .catch(error => {
-            console.log("catched error");
-            if (error.response.status === 429) {
-              this.errors.submitForm = [[error.response.statusText]];
-            } else if (error.response.status === 403) {
-              this.snackbar({
-                text: error.response.data.message,
-                color: "error",
-                y: "bottom"
-              });
-            } else {
-              this.errors.submitForm = error.response.data.errors;
-            }
-          })
-          .finally(() => {
-            this.setBtnLoad();
-          });
-      }
+      return;
+      // if (this.$refs.form.validate()) {
+      //   console.log("error");
+      //   // check if input has changed
+      //   if (
+      //     JSON.stringify(this.form) ===
+      //     JSON.stringify(this.editFormData(this.id))
+      //   ) {
+      //     this.errors.submitForm = [["You haven't changed anything!"]];
+      //     return;
+      //   }
+      //   this.setBtnLoad();
+      //   this.updateBlog({ form: this.form, id: this.id })
+      //     .then(response => {
+      //       this.$router.push({ name: "blog", params: { id: this.id } });
+      //       this.snackbar({
+      //         text: "You have successfully edited your blog",
+      //         color: "teal"
+      //       });
+      //     })
+      //     .catch(error => {
+      //       console.log("catched error");
+      //       if (error.response.status === 429) {
+      //         this.errors.submitForm = [[error.response.statusText]];
+      //       } else if (error.response.status === 403) {
+      //         this.snackbar({
+      //           text: error.response.data.message,
+      //           color: "error",
+      //           y: "bottom"
+      //         });
+      //       } else {
+      //         this.errors.submitForm = error.response.data.errors;
+      //       }
+      //     })
+      //     .finally(() => {
+      //       this.setBtnLoad();
+      //     });
+      // }
     }
   },
   created() {

@@ -1,6 +1,6 @@
 <template>
   <v-container>
-    <vf-form v-model="userData" :config="config"></vf-form>
+    <vf-form v-model="blogData" :config="config"></vf-form>
   </v-container>
 </template>
 
@@ -15,9 +15,10 @@ export default {
       description: true,
       categories: true,
       premium: true,
+      imageInput: true,
       focus: "description"
     },
-    userData: {}
+    blogData: {}
   })
 };
 </script>

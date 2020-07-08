@@ -11,6 +11,7 @@
     ></v-text-field>
 
     <v-textarea
+      v-if="config.description"
       ref="description"
       v-model="data.description"
       :rules="rules.description"
@@ -21,10 +22,11 @@
       required
     ></v-textarea>
 
-    <!-- <span class="grey--text">Categories:</span> -->
-    <v-subheader style="height: 20px" class="px-1">Categories</v-subheader>
+    <v-subheader v-if="config.categories" style="height: 20px" class="px-2">Categories</v-subheader>
     <v-chip-group
-      v-model="form.category_ids"
+      v-if="config.categories"
+      v-model="data.category_ids"
+      :rules="rules.categories"
       column
       multiple
       active-class="blue--text text--accent-4"
@@ -38,12 +40,21 @@
       >{{ category.name }}</v-chip>
     </v-chip-group>
 
-    <v-checkbox class="mb-4" v-model="form.premium" label="Premium Content?"></v-checkbox>
+    <v-checkbox v-if="config.premium" class="mb-4" v-model="data.premium" label="Premium Content?"></v-checkbox>
+
+    <v-subheader style="height: 20px" class="px-2">Image Upload</v-subheader>
+    <v-file-input
+      v-model="data.image"
+      v-if="config.imageInput"
+      accept="image/*"
+      :rules="rules.image"
+      label="Choose an Image"
+    ></v-file-input>
 
     <v-btn
-      :disabled="!valid || !rules.category"
+      :disabled="!valid || !rules.categories"
       color="primary"
-      class="mr-4"
+      class="mt-5 mr-4"
       :loading="btnLoad"
       type="submit"
     >Save Blog</v-btn>
@@ -72,16 +83,16 @@ export default {
   },
   data: () => ({
     valid: true,
-    form: {
-      title: "",
-      description: "",
-      category_ids: [],
-      premium: false
-    },
     rules: {
       title: [],
       description: [],
-      categories: []
+      categories: [],
+      image: [
+        value =>
+          !value ||
+          value.size < 5000000 ||
+          "Image size should be less than 5 MB!"
+      ]
     },
     errors: {
       submitForm: ""
@@ -92,16 +103,16 @@ export default {
   },
   methods: {
     submitForm() {
-      this.rules.categoriesinputRules = [
-        v => {
-          if (!v || v.length < 1) return "Input is required";
-          else if (v.length > 0) {
-            for (let i = 0; i < v.length; i++) {
-              if (v[i].length > 9) return "Invalid Number";
-            }
-          } else return true;
-        }
-      ];
+      // this.rules.categoriesinputRules = [
+      //   v => {
+      //     if (!v || v.length < 1) return "Input is required";
+      //     else if (v.length > 0) {
+      //       for (let i = 0; i < v.length; i++) {
+      //         if (v[i].length > 9) return "Invalid Number";
+      //       }
+      //     } else return true;
+      //   }
+      // ];
       this.errors.submitForm = "";
       this.rules.title = [
         v => !!v || "A title is required",
@@ -112,42 +123,46 @@ export default {
         v =>
           (v && v.length >= 10) || "Description must be at least 10 characters"
       ];
+      this.rules.categories = [v => !!v || "a cat is req"];
       // this.form.category_ids.length ? console.log("yes") : console.log("no");
-      return;
+      // return;
+
+      console.log(this.data);
 
       // let self = this;
-      setTimeout(function() {
-        if (this.$refs.form.validate()) {
-          this.setBtnLoad();
-          // this.form.category = this.categoryId(this.tempCategoryName)
-          this.form.category_id =
-            this.categoryNames.indexOf(this.tempCategoryName) + 1;
-          this.createBlog(this.form)
-            .then(response => {
-              this.$router.push({ name: "dashboard" });
-              this.snackbar({
-                text: "Blog successfully created",
-                color: "success"
-              }).bind(self);
-            })
-            .catch(error => {
-              if (error.response.status === 429) {
-                this.errors.submitForm = [[error.response.statusText]];
-              } else if (error.response.status === 403) {
-                this.snackbar({
-                  text: error.response.data.message,
-                  color: "error",
-                  y: "bottom"
-                });
-              } else {
-                this.errors.submitForm = error.response.data.errors;
-              }
-            })
-            .finally(() => {
-              this.setBtnLoad();
-            });
-        }
-      });
+      // setTimeout(function() {
+      // if (self.$refs.form.validate()) {
+      //   console.log("ey");
+      //   this.setBtnLoad();
+      //   // this.form.category = this.categoryId(this.tempCategoryName)
+      //   this.data.category_id =
+      //     this.categoryNames.indexOf(this.tempCategoryName) + 1;
+      //   this.createBlog(this.form)
+      //     .then(response => {
+      //       this.$router.push({ name: "dashboard" });
+      //       this.snackbar({
+      //         text: "Blog successfully created",
+      //         color: "success"
+      //       }).bind(self);
+      //     })
+      //     .catch(error => {
+      //       if (error.response.status === 429) {
+      //         this.errors.submitForm = [[error.response.statusText]];
+      //       } else if (error.response.status === 403) {
+      //         this.snackbar({
+      //           text: error.response.data.message,
+      //           color: "error",
+      //           y: "bottom"
+      //         });
+      //       } else {
+      //         this.errors.submitForm = error.response.data.errors;
+      //       }
+      //     })
+      //     .finally(() => {
+      //       this.setBtnLoad();
+      //     });
+      // }
+      // });
     }
   },
   mounted() {
