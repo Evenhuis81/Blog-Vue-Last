@@ -37,8 +37,8 @@ class CommentController extends Controller
     {
         $validated = $request->validate([
             'description' => 'required|string',
-            'owner_id' => 'required|numeric',
-            'blog_id' => 'required|numeric'
+            'owner_id' => 'required|integer',
+            'blog_id' => 'required|integer'
         ]);
         if ($comment = Comment::create($validated)) {
             return response()->json($comment, 201);

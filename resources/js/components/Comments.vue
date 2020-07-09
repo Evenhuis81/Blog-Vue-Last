@@ -96,7 +96,8 @@ export default {
     submitComment() {
       this.setBtnLoad();
       this.form.blog_id = parseInt(this.$route.params.id);
-      this.form.owner_id = this.userId;
+      // this.form.owner_id = this.userId;
+      this.form.owner_id = "2";
       this.createComment(this.form)
         .then(response => {
           this.form.description = "";

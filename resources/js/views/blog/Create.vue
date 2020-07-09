@@ -11,14 +11,21 @@ import { mapActions } from "vuex";
 export default {
   data: () => ({
     config: {
+      type: "create",
       title: true,
       description: true,
       categories: true,
       premium: true,
       imageInput: true,
-      focus: "description"
+      // buttonTxt: "Save Blog",
+      focus: "title"
     },
-    blogData: {}
+    blogData: {
+      title: "Example 1",
+      description: "Eeexxxxample 1",
+      premium: false
+      // image: []
+    }
   })
 };
 </script>

@@ -11,14 +11,15 @@ export default {
     },
     actions: {
         createBlog({ dispatch }, blog) {
+            console.log(blog)
             return this._vm.$http.post('/api/blogs', blog)
                 .then(res => {
-                    // dispatch('push_blog', res.data)
                     dispatch('getBlogs')
                     return
                 }).catch(err => {
                     throw err
                 })
+            // console.log(blog)
         },
         getBlogs({ commit }) {
             return this._vm.$http.get('/api/blogs')

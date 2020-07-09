@@ -1,18 +1,17 @@
 <template>
-  <v-form ref="form" lazy-validation @submit.prevent="submitForm">
+  <v-form v-model="valid" ref="form" lazy-validation @submit.prevent="submitForm">
     <v-text-field
       v-if="config.title"
-      ref="title"
-      class="mb-4 mt-4"
       v-model="data.title"
       :rules="rules.title"
+      ref="title"
+      class="mb-4 mt-4"
       label="Title"
       required
     ></v-text-field>
 
     <v-textarea
       v-if="config.description"
-      ref="description"
       v-model="data.description"
       :rules="rules.description"
       label="Description"
@@ -22,51 +21,48 @@
       required
     ></v-textarea>
 
-    <v-subheader v-if="config.categories" style="height: 20px" class="px-2">Categories</v-subheader>
-    <v-chip-group
+    <v-subheader v-if="config.categories" style="height: 20px" class="px-1 mt-7">Categories</v-subheader>
+    <v-select
       v-if="config.categories"
-      v-model="data.category_ids"
+      v-model="tempCategories"
       :rules="rules.categories"
-      column
+      :items="categoryNames"
+      :menu-props="{ maxHeight: '300' }"
+      label="Select"
       multiple
-      active-class="blue--text text--accent-4"
-    >
-      <v-chip
-        v-for="(category, index) in categories"
-        :key="index"
-        :value="category.id"
-        filter
-        outlined
-      >{{ category.name }}</v-chip>
-    </v-chip-group>
+      hint="Choose 1 - 3 Categories"
+      persistent-hint
+      required
+    ></v-select>
 
-    <v-checkbox v-if="config.premium" class="mb-4" v-model="data.premium" label="Premium Content?"></v-checkbox>
+    <v-checkbox v-if="config.premium" class="my-10" v-model="data.premium" label="Premium Content?"></v-checkbox>
 
-    <v-subheader style="height: 20px" class="px-2">Image Upload</v-subheader>
+    <v-subheader style="height: 20px" class="px-1 mt-7">Image Upload</v-subheader>
     <v-file-input
-      v-model="data.image"
+      v-model="tempImage"
       v-if="config.imageInput"
       accept="image/*"
       :rules="rules.image"
-      label="Choose an Image"
+      label="Select"
+      required
     ></v-file-input>
 
     <v-btn
-      :disabled="!valid || !rules.categories"
+      :disabled="!valid"
       color="primary"
       class="mt-5 mr-4"
       :loading="btnLoad"
       type="submit"
-    >Save Blog</v-btn>
+    >{{ config.type + " Blog"}}</v-btn>
 
     <p v-for="(error, index) in errors.submitForm" :key="index" class="red--text">{{ error[0] }}</p>
   </v-form>
 </template>
 
 <script>
-import { mapGetters } from "vuex";
+import { mapGetters, mapActions } from "vuex";
+
 export default {
-  // props: ["formType"],
   model: {
     prop: "data",
     event: "update"
@@ -83,36 +79,88 @@ export default {
   },
   data: () => ({
     valid: true,
+    tempCategories: ["Music", "Dating"],
+    tempImage: null,
     rules: {
       title: [],
       description: [],
       categories: [],
-      image: [
-        value =>
-          !value ||
-          value.size < 5000000 ||
-          "Image size should be less than 5 MB!"
-      ]
+      image: []
     },
     errors: {
       submitForm: ""
     }
   }),
   computed: {
-    ...mapGetters({ btnLoad: "btnLoad", categories: "categories/categories" })
+    ...mapGetters({
+      btnLoad: "btnLoad",
+      categories: "categories/categories",
+      categoryNames: "categories/categoryNames"
+    })
   },
   methods: {
+    ...mapActions({
+      createBlog: "blogs/createBlog",
+      switchBtnLoad: "switchBtnLoad",
+      snackbar: "snackbar/snackbar"
+    }),
     submitForm() {
-      // this.rules.categoriesinputRules = [
-      //   v => {
-      //     if (!v || v.length < 1) return "Input is required";
-      //     else if (v.length > 0) {
-      //       for (let i = 0; i < v.length; i++) {
-      //         if (v[i].length > 9) return "Invalid Number";
-      //       }
-      //     } else return true;
-      //   }
-      // ];
+      this.activateRules();
+      var vm = this;
+      setTimeout(function() {
+        if (vm.$refs.form.validate()) {
+          vm.switchBtnLoad();
+
+          vm.data.category_ids = vm.categories
+            .filter(cat => vm.tempCategories.includes(cat.name))
+            .map(x => x.id);
+
+          var formData = new FormData();
+          // for (var key in vm.data) {
+          //   formData.append(key, vm.data[key]);
+          // }
+          formData.append("props", JSON.stringify(vm.data));
+          // cat_ids.map(id => formData.append("category_ids[]", id));
+
+          formData.append("image", vm.tempImage);
+          // console.log(vm.data);
+          // console.log(formData);
+          // return;
+
+          // formData.append("username", "Groucho");
+
+          vm[vm.config.type + "Blog"](formData)
+            .then(res => {
+              if (vm.config.type == "create") {
+                console.log("created");
+                // this.$router.push({ name: "dashboard" });
+                // this.snackbar({
+                // text: "Blog successfully created",
+                // color: "success"
+                // });
+              }
+            })
+            .catch(err => {
+              console.log("error");
+              // if (err.response.status === 429) {
+              //   this.errors.submitForm = [[err.response.statusText]];
+              // } else if (err.response.status === 403) {
+              //   this.snackbar({
+              //     text: err.response.data.message,
+              //     color: "error",
+              //     y: "bottom"
+              //   });
+              // } else {
+              //   this.errors.submitForm = err.response.data.errors;
+              // }
+            })
+            .finally(() => {
+              vm.switchBtnLoad();
+            });
+        }
+      });
+    },
+    activateRules() {
       this.errors.submitForm = "";
       this.rules.title = [
         v => !!v || "A title is required",
@@ -123,51 +171,18 @@ export default {
         v =>
           (v && v.length >= 10) || "Description must be at least 10 characters"
       ];
-      this.rules.categories = [v => !!v || "a cat is req"];
-      // this.form.category_ids.length ? console.log("yes") : console.log("no");
-      // return;
-
-      console.log(this.data);
-
-      // let self = this;
-      // setTimeout(function() {
-      // if (self.$refs.form.validate()) {
-      //   console.log("ey");
-      //   this.setBtnLoad();
-      //   // this.form.category = this.categoryId(this.tempCategoryName)
-      //   this.data.category_id =
-      //     this.categoryNames.indexOf(this.tempCategoryName) + 1;
-      //   this.createBlog(this.form)
-      //     .then(response => {
-      //       this.$router.push({ name: "dashboard" });
-      //       this.snackbar({
-      //         text: "Blog successfully created",
-      //         color: "success"
-      //       }).bind(self);
-      //     })
-      //     .catch(error => {
-      //       if (error.response.status === 429) {
-      //         this.errors.submitForm = [[error.response.statusText]];
-      //       } else if (error.response.status === 403) {
-      //         this.snackbar({
-      //           text: error.response.data.message,
-      //           color: "error",
-      //           y: "bottom"
-      //         });
-      //       } else {
-      //         this.errors.submitForm = error.response.data.errors;
-      //       }
-      //     })
-      //     .finally(() => {
-      //       this.setBtnLoad();
-      //     });
-      // }
-      // });
+      this.rules.categories = [
+        v => !!v.length || "At least 1 category is required",
+        v => v.length < 4 || "Maximum number of categories is 3"
+      ];
+      this.rules.image = [
+        v => !v || v.size < 2000000 || "Image size should be less than 2 MB!",
+        v => !!v || "An image is required"
+      ];
     }
   },
   mounted() {
     this.$refs[this.config.focus].focus();
-    this.$refs["title"].focus();
   }
 };
 </script>

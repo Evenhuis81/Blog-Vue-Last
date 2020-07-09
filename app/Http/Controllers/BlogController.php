@@ -47,10 +47,12 @@ class BlogController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
+    // public function store(Request $request)
     public function store(CreateBlog $request)
     {
-        $validated = $request->all();
-        $validated['owner_id'] = auth()->user()->id;
+        // $validated = $request->all();
+        dd($request->all());
+
         if ($blog = Blog::create($validated)) {
             return response()->json($blog, 201);
         } else {

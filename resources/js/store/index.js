@@ -16,12 +16,12 @@ export default new Vuex.Store({
     },
     mutations: {
         set_content_load(state, boolean) { state.contentLoad = boolean },
-        set_btn_load(state) { state.btnLoad = !state.btnLoad },
+        switch_btn_load(state) { state.btnLoad = !state.btnLoad },
         switch_dialog(state) { state.dialog = !state.dialog },
         set_dialog(state, boolean) { state.dialog = boolean }
     },
     actions: {
-        setBtnLoad(context) { context.commit("set_btn_load") },
+        switchBtnLoad(context) { context.commit("switch_btn_load") },
         setContentLoad(context, boolean) { context.commit("set_content_load", boolean) },
         switchDialog(context) { context.commit("switch_dialog") },
         setDialog(context, boolean) { context.commit("set_login_dialog", boolean) }

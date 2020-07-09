@@ -4,7 +4,6 @@
       <v-col cols="2">
         <v-card>
           <v-container fluid>
-            <!-- <p>{{ categoryNames[0] }}</p> -->
             <!-- <v-checkbox
               :input-value="selected.length === categories.length"
               :indeterminate="categories.length > selected.length && !!selected.length"
