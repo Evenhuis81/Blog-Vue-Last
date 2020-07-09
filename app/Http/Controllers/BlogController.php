@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Blog;
 use Illuminate\Http\Request;
 use App\Http\Requests\Blog\CreateBlog;
+use Illuminate\Support\Facades\Storage;
 
 class BlogController extends Controller
 {
@@ -25,9 +26,7 @@ class BlogController extends Controller
      */
     public function index()
     {
-        // $blogs = Blog::find(1)->comments;
         $blogs = Blog::with('comments', 'owner', 'categories')->get();
-        // $blogs = Blog::orderBy('created_at', 'DESC')->with()->get();
         return response()->json($blogs);
     }
 
@@ -50,11 +49,16 @@ class BlogController extends Controller
     // public function store(Request $request)
     public function store(CreateBlog $request)
     {
-        // $validated = $request->all();
-        dd($request->all());
-
+        $validated = $request->validated();
+        $file_name = $this->storeImage($validated['image']);
+        $validated['imagepath'] = $file_name;
         if ($blog = Blog::create($validated)) {
-            return response()->json($blog, 201);
+            if ($blog->categories()->sync($validated["category_ids"])) {
+                return response()->json($blog, 201);
+            } else {
+                // this needs action for removing the just created blog, but it's a bit overdone
+                return response()->json(['errors' => ['server' => ['Error creating Categories for Blog']]], 500);
+            }
         } else {
             return response()->json(['errors' => ['server' => ['Error creating Blog']]], 500);
         }
@@ -119,5 +123,14 @@ class BlogController extends Controller
         } catch (\Throwable $th) {
             return response()->json($th);
         }
+    }
+
+    public function storeImage($img)
+    {
+            $name = $img->getClientOriginalName();
+            $file_name = 'blogimages/'.date('YmdHis',time()).'-'.$name;
+            $imgcont = $img->get();
+            Storage::disk('public')->put($file_name, $imgcont);
+        return $file_name;
     }
 }

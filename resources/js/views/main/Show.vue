@@ -4,7 +4,7 @@
       <v-img
         class="white--text align-end"
         height="400px"
-        src="https://cdn.vuetifyjs.com/images/cards/docks.jpg"
+        :src="blog.imagepath ? '/storage/blogimages/20200709190446-16923.jpg' : 'https://cdn.vuetifyjs.com/images/cards/docks.jpg'"
       >
         <v-card-title>{{ blog.title }}</v-card-title>
       </v-img>
@@ -24,7 +24,12 @@
 
       <v-card-actions v-if="userId == blog.owner_id">
         <v-btn
-          @click="$router.push({ name: 'updateblog', params: { id: blog.id } })"
+          @click="
+              $router.push({
+                  name: 'updateblog',
+                  params: { id: blog.id }
+              })
+          "
           color="primary"
           text
         >Edit</v-btn>
@@ -48,6 +53,9 @@ export default {
       userId: "auth/userId",
       btnLoad: "btnLoad"
     }),
+    blogImage() {
+      return "https://cdn.vuetifyjs.com/images/cards/docks.jpg";
+    },
     blog() {
       return this.getBlog(this.id);
     },
@@ -62,13 +70,13 @@ export default {
   methods: {
     ...mapActions({
       deleteBlog: "blogs/deleteBlog",
-      setBtnLoad: "setBtnLoad",
+      switchBtnLoad: "switchBtnLoad",
       snackbar: "snackbar/snackbar"
     }),
     blogDelete(blogId) {
       const answer = window.confirm("Do you really want to delete this blog?");
       if (answer) {
-        this.setBtnLoad;
+        this.switchBtnLoad;
         // need to set some sort of load thing here
         this.deleteBlog(blogId)
           .then(() => {
@@ -83,7 +91,7 @@ export default {
             console.log(err);
           })
           .finally(() => {
-            this.setBtnLoad();
+            this.switchBtnLoad();
           });
       }
     }

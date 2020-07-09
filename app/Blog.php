@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Blog extends Model
 {
-    protected $fillable = ['title', 'description', 'owner_id', 'premium'];
+    protected $fillable = ['title', 'description', 'owner_id', 'premium', 'imagepath'];
 
     // One to Many relation (inverse) x2
     public function owner()
