@@ -5,13 +5,10 @@
 </template>
 
 <script>
-import { mapGetters } from "vuex";
-import { mapActions } from "vuex";
-
 export default {
     data: () => ({
         config: {
-            type: "create",
+            type: "createBlog",
             title: true,
             description: true,
             categories: true,

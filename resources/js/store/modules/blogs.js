@@ -2,7 +2,6 @@ export default {
     namespaced: true,
     state: {
         blogs: []
-        // blog: []
     },
     mutations: {
         set_blogs(state, blogs) {
@@ -65,8 +64,6 @@ export default {
                 .sort(
                     (a, b) => new Date(b.created_at) - new Date(a.created_at)
                 );
-            // console.log(newArr)
-            // return newArr
         },
         blog: state => id => {
             return state.blogs.find(blog => blog.id == id);
@@ -81,7 +78,7 @@ export default {
                     (a, b) => new Date(b.created_at) - new Date(a.created_at)
                 );
         },
-        editFormData: (state, getters) => id => {
+        updateFormData: (state, getters) => id => {
             let blog = getters.blog(id);
             let formData = {
                 title: blog.title,

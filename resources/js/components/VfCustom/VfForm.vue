@@ -47,17 +47,17 @@
 
         <v-checkbox
             v-if="config.premium"
-            class="my-10"
             v-model="data.premium"
+            class="my-10"
             label="Premium Content?"
         ></v-checkbox>
 
-        <v-subheader style="height: 20px" class="px-1 mt-7"
+        <v-subheader v-if="config.imageInput" style="height: 20px" class="px-1 mt-7"
             >Image Upload</v-subheader
         >
         <v-file-input
-            v-model="tempImage"
             v-if="config.imageInput"
+            v-model="data.tempImage"
             accept="image/*"
             :rules="rules.image"
             label="Select"
@@ -119,7 +119,7 @@ export default {
         ...mapGetters({
             btnLoad: "btnLoad",
             categories: "categories/categories",
-            categoryNames: "categories/categoryNames"
+            categoryNames: "categories/categoryNames",
         })
     },
     methods: {
@@ -129,26 +129,43 @@ export default {
             snackbar: "snackbar/snackbar"
         }),
         submitForm() {
+
+            // check if input has changed
+            //   if (
+            //     JSON.stringify(this.form) ===
+            //     JSON.stringify(this.editFormData(this.id))
+            //   ) {
+            //     this.errors.submitForm = [["You haven't changed anything!"]];
+            //     return;
+            //   }
+
+            //   this.updateBlog({ form: this.form, id: this.id })
+            //     .then(response => {
+            //       this.$router.push({ name: "blog", params: { id: this.id } });
+            //       this.snackbar({
+            //         text: "You have successfully edited your blog",
+            //         color: "teal"
+            //       });
             this.activateRules();
             var vm = this;
             setTimeout(function() {
                 if (vm.$refs.form.validate()) {
                     vm.switchBtnLoad();
+                    
                     // get ids for categorynames for syncing in backend
                     vm.data.category_ids = vm.categories
                         .filter(cat => vm.tempCategories.includes(cat.name))
                         .map(x => x.id);
-
+                    
                     // needed for sending/saving files
                     var formData = new FormData();
                     formData.append("props", JSON.stringify(vm.data));
                     formData.append("image", vm.tempImage);
 
                     // dynamic dispatch to create/edit blog
-                    vm[vm.config.type + "Blog"](formData)
+                    vm[vm.config.type](formData)
                         .then(res => {
                             if (vm.config.type == "create") {
-                                // console.log(res.data.id);
                                 vm.$router.push({
                                     name: "dashboard"
                                     // params: { id: res.data.id - 1 }
@@ -209,6 +226,12 @@ export default {
     },
     mounted() {
         this.$refs[this.config.focus].focus();
+        // TODO make (global?) function (dynamic)
+        if (this.config.type == "update") {
+        this.tempCategories = this.categories
+            .filter(cat => this.data.category_ids.includes(cat.id))
+            .map(x => x.name)
+        }
     }
 };
 </script>
