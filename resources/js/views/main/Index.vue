@@ -38,7 +38,7 @@
           </v-card-text>
           <v-card-actions class="justify-center">
             <v-btn
-              @click="blog.premium ? switchDialog() : $router.push({ path: '/blogs/' + blog.id + '/show' })"
+              @click="blog.premium ? premiumBlog(blog.id) : $router.push({ path: '/blogs/' + blog.id + '/show' })"
               text
               class="mb-5"
             >READ MORE...</v-btn>
@@ -94,17 +94,20 @@ export default {
   },
   methods: {
     ...mapActions(["switchDialog"]),
+    premiumBlog(id) {
+      if (this.authenticated && this.userPremium) {
+        //  console.log("yes") : console.log("no");
+        //  console.log("yes") : console.log("no");
+        this.$router.push({ name: "blog", params: { id } });
+      } else {
+        this.switchDialog(this.authenticated);
+      }
+    },
     randomnr() {
       return Math.floor(Math.random() * 255) + 1;
     },
     blogCreatedFromNow(date) {
       return this.$moment(date).fromNow();
-    },
-    gotoBlog(premium, id) {
-      this.authenticated ? console.log("yes") : console.log("no");
-      console.log(premium);
-      this.userPremium ? console.log("yes") : console.log("no");
-      this.$router.push({ path: "/blog/" + id });
     }
   },
   created() {

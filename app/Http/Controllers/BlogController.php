@@ -54,6 +54,7 @@ class BlogController extends Controller
         $validated['imagepath'] = $file_name;
         if ($blog = Blog::create($validated)) {
             if ($blog->categories()->sync($validated["category_ids"])) {
+                $blog->load('owner', 'categories');
                 return response()->json($blog, 201);
             } else {
                 // this needs action for removing the just created blog, but it's a bit overdone

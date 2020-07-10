@@ -4,9 +4,14 @@
       <v-img
         class="white--text align-end"
         height="400px"
-        :src="blog.imagepath ? '/storage/blogimages/20200709190446-16923.jpg' : 'https://cdn.vuetifyjs.com/images/cards/docks.jpg'"
+        :src="blog.imagepath ? '/storage/' + blog.imagepath : 'https://cdn.vuetifyjs.com/images/cards/docks.jpg'"
       >
-        <v-card-title>{{ blog.title }}</v-card-title>
+        <v-card-title>
+          {{ blog.title }}
+          <span
+            style="color: #FFD700"
+          >{{ blog.premium ? "&nbsp; (premium article)" : "" }}</span>
+        </v-card-title>
       </v-img>
 
       <v-card-subtitle class="pb-2">

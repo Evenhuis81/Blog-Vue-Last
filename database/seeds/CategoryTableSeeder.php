@@ -29,12 +29,9 @@ class CategoryTableSeeder extends Seeder
             array_push($image_names, str_split($element, 24)[1]);
         }
         foreach ($arr_names as $key => $element) {
-            // explode('-', $element)[0];
             Category::create([
                 'name' => explode("-", explode("/", $element)[3])[0],
-                // 'image_name' => $element,
                 'subheader' => $subheader[$key],
-                // 'caroussel_color' => $color[$key],
             ]);
         }
     }

@@ -60,8 +60,8 @@ class UserTableSeeder extends Seeder
                 'name' => $faker->firstName(rand(0,1) ? 'male' : 'female').' '.$faker->lastName,
                 'email' => $faker->unique()->safeEmail,
                 'password' => bcrypt($faker->password),
-                'role' => $step > 5 ? 'author' : 'reader',
-                'premium' => true
+                'role' => $step > 4 ? 'author' : 'reader',
+                'premium' => $step > 4 ? rand(0, 1) : true
             ]);
         };
     }

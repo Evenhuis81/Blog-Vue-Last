@@ -7,7 +7,11 @@
     </router-link>
     <!-- Center: App Title -->
     <v-spacer></v-spacer>
-    <v-toolbar-title @click="() => { $router.push('/snackbutton') }" class="ml-4 white--text" v-text="spaTitle"></v-toolbar-title>
+    <v-toolbar-title
+      @click="() => { $router.push('/secrettestroute') }"
+      class="ml-4 white--text"
+      v-text="spaTitle"
+    ></v-toolbar-title>
     <!-- Right: Login- register- & usericons/menus -->
     <v-spacer></v-spacer>
     <user-navigation></user-navigation>
